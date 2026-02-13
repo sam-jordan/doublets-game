@@ -1,0 +1,23 @@
+{
+  "name": "doublets-game",
+  "version": "1.0.0",
+  "description": "An NYT Games-style web app for playing the word game Doublets",
+  "homepage": "https://github.com/sam-jordan/doublets-game#readme",
+  "bugs": {
+    "url": "https://github.com/sam-jordan/doublets-game/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sam-jordan/doublets-game.git"
+  },
+  "license": "ISC",
+  "author": "sam-jordan",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
