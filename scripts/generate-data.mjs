@@ -31,16 +31,24 @@ function findLinkedWords() {
     return wordLinkMapping;
 }
 
-function generateData() {
+function readLinkedWords() {
     try {
-        fs.readFileSync('./scripts/linked-words.json');
+        const wordLinkMapping = new Map(Object.entries(JSON.parse(fs.readFileSync('./scripts/linked-words.json', 'utf-8'))));
         console.log('Linked words found...');
+        return wordLinkMapping;
     } catch {
         const wordLinkMapping = findLinkedWords();
         const wordLinkMappingAsJSON = JSON.stringify(Object.fromEntries(wordLinkMapping));
         fs.writeFileSync('./scripts/linked-words.json', wordLinkMappingAsJSON);
         console.log('Linked words written to disk...');
+        return wordLinkMapping;
     }
+}
+
+function generateData() {
+    const wordLinkMapping = readLinkedWords();
+
+    console.log(wordLinkMapping);
 }
 
 generateData();
