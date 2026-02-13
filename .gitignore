@@ -1,2 +1,4 @@
 node_modules
 dist
+
+scripts/five-letter-words.txt
