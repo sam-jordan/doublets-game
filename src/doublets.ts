@@ -4,12 +4,12 @@ export async function guess(game: string[], index: number): Promise<void> {
     let valid = false;
 
     while (!valid) {
-        const answer = (await input({ message: '' })).toUpperCase();
+        const answer = (await input({ message: '' }));
 
         const response = await fetch(`https://freedictionaryapi.com/api/v1/entries/en/${answer}`);
 
-        if ((await response.json()).entries && getWordDiff(game[index-1], answer) === 1) {
-            game.splice(index, 0, answer);
+        if ((await response.json()).entries.length > 0 && getWordDiff(game[index-1], answer.toUpperCase()) === 1) {
+            game.splice(index, 0, answer.toUpperCase());
             valid = true;
         } else {
             console.log('Invalid guess, try again!');
