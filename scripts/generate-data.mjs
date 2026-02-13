@@ -45,10 +45,50 @@ function readLinkedWords() {
     }
 }
 
+function getWordDiff(word1, word2) {
+    const diff = []
+
+    if (word1.length !== word1.length) {
+        return 0;
+    }
+
+    for (const char of word1.split('')) {
+        if (!word2.split('').includes(char)) {
+            diff.push(char);
+        }
+    }
+
+    return diff.length;
+}
+
 function generateData() {
     const wordLinkMapping = readLinkedWords();
 
-    console.log(wordLinkMapping);
+    const validPuzzles = [];
+    for (const word of wordLinkMapping.keys()) {
+        const exploredWords = [];
+        const chainedWords = [];
+
+        function findChainedWords(word, index) {
+            exploredWords.push(word);
+
+            if (index === 5) {
+                chainedWords.push(word);
+            }
+
+            for (const linkedWord of wordLinkMapping.get(word)) {
+                if (!exploredWords.includes(linkedWord) && getWordDiff(exploredWords[0], linkedWord) === index + 1) {
+                    findChainedWords(linkedWord, index+1);
+                }
+            }
+        }
+
+        findChainedWords(word, 0);
+        const validPairs = chainedWords.map(chainedWord => [word, chainedWord]);
+        validPuzzles.push(...validPairs)
+    }
+
+    return validPuzzles;
 }
 
 generateData();
