@@ -1,22 +1,17 @@
-import { input } from '@inquirer/prompts';
+import { guess } from './doublets.js';
 
-const game = ['BEST', 'GOAL'];
+async function main() {
+    const game = ['BEST', 'GOAL'];
 
-async function guess() {
-    const answer = await input({ message: '' });
-
-    const response = await fetch(`https://freedictionaryapi.com/api/v1/entries/en/${answer}`);
-
-    if ((await response.json()).entries) {
-        game.push(answer);
-    }
-}
-
-function main() {
     console.log('-'.repeat(32));
     console.log(`${game[0]} => ${game[1]}`);
-    console.log('-'.repeat(32));
-    guess();
+    
+    for (let i = 1; i < game[0].length; i++) {
+        console.log('-'.repeat(32));
+        await guess(game, i);
+    }
+
+    console.log(game);
 }
 
 main();
