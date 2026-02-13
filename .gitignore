@@ -2,3 +2,4 @@ node_modules
 dist
 
 scripts/five-letter-words.txt
+scripts/linked-words.json

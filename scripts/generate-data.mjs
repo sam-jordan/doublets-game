@@ -5,7 +5,7 @@ import { EOL } from 'node:os';
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
 
-function generateData() {
+function findLinkedWords() {
     const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase());
     const wordLinkMapping = new Map();
 
@@ -28,7 +28,19 @@ function generateData() {
         console.log(`${words.indexOf(word)} / ${words.length}`)
     }
 
-    console.log(wordLinkMapping);
+    return wordLinkMapping;
+}
+
+function generateData() {
+    try {
+        fs.readFileSync('./scripts/linked-words.json');
+        console.log('Linked words found...');
+    } catch {
+        const wordLinkMapping = findLinkedWords();
+        const wordLinkMappingAsJSON = JSON.stringify(Object.fromEntries(wordLinkMapping));
+        fs.writeFileSync('./scripts/linked-words.json', wordLinkMappingAsJSON);
+        console.log('Linked words written to disk...');
+    }
 }
 
 generateData();
