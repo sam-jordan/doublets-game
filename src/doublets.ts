@@ -1,17 +1,28 @@
 import { input } from "@inquirer/prompts";
 
 export async function guess(game: string[], index: number): Promise<void> {
-    const answer = await input({ message: '' });
+    let valid = false;
 
-    const response = await fetch(`https://freedictionaryapi.com/api/v1/entries/en/${answer}`);
+    while (!valid) {
+        const answer = (await input({ message: '' })).toUpperCase();
 
-    if ((await response.json()).entries && getWordDiff(game[index-1], answer) === 1) {
-        game.splice(index, 0, answer);
+        const response = await fetch(`https://freedictionaryapi.com/api/v1/entries/en/${answer}`);
+
+        if ((await response.json()).entries && getWordDiff(game[index-1], answer) === 1) {
+            game.splice(index, 0, answer);
+            valid = true;
+        } else {
+            console.log('Invalid guess, try again!');
+        }
     }
 }
 
 function getWordDiff(word1: string, word2: string): number {
     const diff = []
+
+    if (word1.length !== word1.length) {
+        return 0;
+    }
 
     for (const char of word1.split('')) {
         if (!word2.split('').includes(char)) {

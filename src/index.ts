@@ -11,7 +11,8 @@ async function main() {
         await guess(game, i);
     }
 
-    console.log(game);
+    console.log('-'.repeat(32));
+    console.log('You win!');
 }
 
 main();
