@@ -9,6 +9,7 @@ function findLinkedWords() {
     const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase());
     const wordLinkMapping = new Map();
 
+    console.log('Linking words...');
     for (const word of words) {
         const wordAsArray = word.split('');
         const linkedWords = [];
@@ -25,24 +26,12 @@ function findLinkedWords() {
         }
 
         wordLinkMapping.set(word, linkedWords);
-        console.log(`${words.indexOf(word)} / ${words.length}`)
+        if (words.indexOf(word) % 100 === 0) {
+            console.log(`${words.indexOf(word)} / ${words.length}`);
+        }
     }
 
     return wordLinkMapping;
-}
-
-function readLinkedWords() {
-    try {
-        const wordLinkMapping = new Map(Object.entries(JSON.parse(fs.readFileSync('./scripts/linked-words.json', 'utf-8'))));
-        console.log('Linked words found...');
-        return wordLinkMapping;
-    } catch {
-        const wordLinkMapping = findLinkedWords();
-        const wordLinkMappingAsJSON = JSON.stringify(Object.fromEntries(wordLinkMapping));
-        fs.writeFileSync('./scripts/linked-words.json', wordLinkMappingAsJSON);
-        console.log('Linked words written to disk...');
-        return wordLinkMapping;
-    }
 }
 
 function getWordDiff(word1, word2) {
@@ -62,7 +51,7 @@ function getWordDiff(word1, word2) {
 }
 
 function generateData() {
-    const wordLinkMapping = readLinkedWords();
+    const wordLinkMapping = findLinkedWords();
 
     const validPuzzles = [];
     for (const word of wordLinkMapping.keys()) {
@@ -92,4 +81,6 @@ function generateData() {
     return validPuzzles;
 }
 
-generateData();
+const data = generateData();
+fs.writeFileSync('./scripts/puzzles.json', JSON.stringify({ pairs: data }));
+console.log('Generated data written to puzzles.json!');
