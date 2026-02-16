@@ -1,4 +1,4 @@
-// Words sourced from: https://cs.stanford.edu/~knuth/sgb-words.txt
+// Words sourced from: https://cs.stanford.edu/~knuth/sgb-words.txt (Uses the first 3499 entries)
 
 import fs from 'node:fs';
 import { EOL } from 'node:os';
@@ -88,6 +88,7 @@ function generateData() {
         validPuzzles.push(...validPairs)
     }
 
+    console.log(`Data generated successfully! Pairs generated: ${validPuzzles.length}`);
     return validPuzzles;
 }
 
