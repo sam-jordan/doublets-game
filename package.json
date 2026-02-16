@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "generate-data": "tsc && node scripts/generate-data.mjs",
+    "generate-data": "node scripts/generate-data.mjs",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
