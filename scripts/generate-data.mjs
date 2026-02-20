@@ -1,4 +1,4 @@
-// Words sourced from: https://cs.stanford.edu/~knuth/sgb-words.txt (Uses the first 3499 entries)
+// Words sourced from: https://cs.stanford.edu/~knuth/sgb-words.txt
 
 import fs from 'node:fs';
 import { EOL } from 'node:os';
@@ -6,32 +6,36 @@ import { EOL } from 'node:os';
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
 
 function findLinkedWords() {
-    const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase());
-    const wordLinkMapping = new Map();
+    try {
+        const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase()).slice(0, 3500);
+        const wordLinkMapping = new Map();
 
-    console.log('Linking words...');
-    for (const word of words) {
-        const wordAsArray = word.split('');
-        const linkedWords = [];
-        
-        for (let i = 0; i < wordAsArray.length; i++) {
-            for (let j = 0; j < LETTERS.length; j++) {
-                const updatedWordAsArray = [...wordAsArray]
-                updatedWordAsArray[i] = LETTERS[j];
-                const updatedWordAsString = updatedWordAsArray.join('');
-                if (words.includes(updatedWordAsString) && !linkedWords.includes(updatedWordAsString) && updatedWordAsString !== word) {
-                    linkedWords.push(updatedWordAsString);
+        console.log('Linking words...');
+        for (const word of words) {
+            const wordAsArray = word.split('');
+            const linkedWords = [];
+            
+            for (let i = 0; i < wordAsArray.length; i++) {
+                for (let j = 0; j < LETTERS.length; j++) {
+                    const updatedWordAsArray = [...wordAsArray]
+                    updatedWordAsArray[i] = LETTERS[j];
+                    const updatedWordAsString = updatedWordAsArray.join('');
+                    if (words.includes(updatedWordAsString) && !linkedWords.includes(updatedWordAsString) && updatedWordAsString !== word) {
+                        linkedWords.push(updatedWordAsString);
+                    }
                 }
+            }
+
+            wordLinkMapping.set(word, linkedWords);
+            if (words.indexOf(word) % 100 === 0) {
+                console.log(`${words.indexOf(word)} / ${words.length}`);
             }
         }
 
-        wordLinkMapping.set(word, linkedWords);
-        if (words.indexOf(word) % 100 === 0) {
-            console.log(`${words.indexOf(word)} / ${words.length}`);
-        }
+        return wordLinkMapping;
+    } catch {
+        throw new Error('Unable to read the file of words!');
     }
-
-    return wordLinkMapping;
 }
 
 function getWordDiff(word1, word2) {
