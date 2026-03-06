@@ -14,8 +14,8 @@ export default function App() {
         });
         setWords(nextWords);
     }
-    
+
     return <div>
-        {words.map((word, index) => <Word key={index} word={word} setWord={(value: string) => handleSetWord(index, value)}/>)}
+        {words.map((word, index) => <Word key={index} word={word} setWord={index === 0 || index === 5 ? undefined : (value: string) => handleSetWord(index, value)}/>)}
     </div>
 }
