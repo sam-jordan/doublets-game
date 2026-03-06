@@ -1,15 +1,11 @@
-import { useState } from "react";
-
-export default function Word(props: { word?: string, writeable: boolean }) {
-    const [value, setValue] = useState<string | undefined>(props.word);
-
+export default function Word(props: { word?: string, setWord: any}) {
     return (
         <div>
-            {props.writeable ? <input 
+            <input 
                 type="text"
-                value={value}
-                onChange={(e) => setValue((e.target.value).toUpperCase())}
-            /> : <p>{value}</p>}
+                value={props.word}
+                onChange={(e) => props.setWord((e.target.value).toUpperCase())}
+            />
         </div>
     );
 } 
