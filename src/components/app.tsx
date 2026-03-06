@@ -3,13 +3,20 @@ import Word from "./word";
 import validateGuesses from "../logic/validate-guesses";
 
 export default function App() {
-    const [words, setWords] = useState(['WORDS', '', '', '', '', 'CHINA']);
+    const [words, setWords] = useState<string[][]>([
+        ['W', 'O', 'R', 'D', 'S'],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['C', 'H', 'I', 'N', 'A'],
+    ]);
     const [submitText, setSubmitText] = useState('');
 
     function handleSetWord(index: number, value: string) {
         const nextWords = words.map((word, i) => {
             if (i === index) {
-                return value;
+                return value.split('');
             } else {
                 return word;
             }

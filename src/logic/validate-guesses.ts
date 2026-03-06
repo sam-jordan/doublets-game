@@ -1,13 +1,13 @@
-export default function validateGuesses(words: string[], setSubmitText: React.Dispatch<React.SetStateAction<string>>) {
-    console.log(words.includes(''))
+export default function validateGuesses(words: string[][], setSubmitText: React.Dispatch<React.SetStateAction<string>>) {
+    const stringWords = words.map(word => word.join(''));
 
-    if (words.includes('')) {
+    if (stringWords.includes('')) {
         setSubmitText('The start and end word are not connected!');
         return;
     }
 
     for (let i = 0; i < words.length - 1; i++) {
-        const diff = getWordDiff(words[i], words[i+1]);
+        const diff = getWordDiff(stringWords[i], stringWords[i+1]);
 
         if (diff !== 1) {
             setSubmitText('There should only be one character that changes between each word!');
