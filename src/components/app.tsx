@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Word from "./word";
+import validateGuesses from "../logic/validate-guesses";
 
 export default function App() {
-    const [words, setWords] = useState(['WORDS', '', '', '', '', 'FILTH']);
+    const [words, setWords] = useState(['WORDS', '', '', '', '', 'CHINA']);
+    const [submitText, setSubmitText] = useState('');
 
     function handleSetWord(index: number, value: string) {
         const nextWords = words.map((word, i) => {
@@ -17,5 +19,7 @@ export default function App() {
 
     return <div>
         {words.map((word, index) => <Word key={index} word={word} setWord={index === 0 || index === 5 ? undefined : (value: string) => handleSetWord(index, value)}/>)}
+        <button onClick={() => validateGuesses(words, setSubmitText)}>Submit Guesses</button>
+        <p>{submitText}</p>
     </div>
 }
