@@ -24,8 +24,10 @@ export default function App() {
         setWords(nextWords);
     }
 
-    return <div>
-        {words.map((word, index) => <Word key={index} word={word} setWord={index === 0 || index === 5 ? undefined : (value: string) => handleSetWord(index, value)}/>)}
+    return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family)">
+        <div>
+            {words.map((word, index) => <Word key={index} word={word} setWord={index === 0 || index === 5 ? undefined : (value: string) => handleSetWord(index, value)}/>)}
+        </div>
         <button onClick={() => validateGuesses(words, setSubmitText)}>Submit Guesses</button>
         <p>{submitText}</p>
     </div>
