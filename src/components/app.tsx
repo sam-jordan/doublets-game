@@ -69,7 +69,10 @@ export default function App() {
             {splitWords(guesses, 5).map((word, index) => <Word key={index} word={word} />)}
             <Word key={'end'} word={puzzle[1].split('')}/>    
         </div>
-        <button onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
+        <div className="flex gap-8 mt-4">
+            <button onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
+            <button onClick={() => setGuesses(new Array(20).fill(' '))}>Reset Guesses</button>
+        </div>
         <p>{submitText}</p>
     </div>
 }
