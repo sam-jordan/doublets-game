@@ -27,14 +27,33 @@ export default function App() {
         if (e.key === 'Enter') {
             validateGuesses(splitWords(guesses, 5), setSubmitText);
         }
+
+        if (e.key === 'Backspace') {
+            handleBackspace();
+        }
     }
 
     function handleGuess(value: string) {
-        const firstEmptyLetter = guesses.indexOf(' ');
+        const nextIndex = guesses.findIndex(letter => letter === ' ');
 
         const nextGuesses = guesses.map((letter, i) => {
-            if (firstEmptyLetter === -1 ? i === guesses.length - 1 : i === firstEmptyLetter) {
+            if (nextIndex === -1 ? i === guesses.length - 1 : i === nextIndex) {
                 return value.toUpperCase();
+            } else {
+                return letter;
+            }
+        });
+
+        setSubmitText('');
+        setGuesses(nextGuesses);
+    }
+
+    function handleBackspace() {
+        const currentIndex = guesses.findLastIndex(letter => letter !== ' ');
+
+        const nextGuesses = guesses.map((letter, i) => {
+            if (currentIndex !== -1 && i === currentIndex) {
+                return ' '
             } else {
                 return letter;
             }
