@@ -1,34 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Word from "./word";
 import validateGuesses from "../logic/validate-guesses";
+import splitWords from "../logic/split-words";
 
 export default function App() {
-    const [words, setWords] = useState<string[][]>([
-        ['W', 'O', 'R', 'D', 'S'],
-        ['', '', '', '', ''],
-        ['', '', '', '', ''],
-        ['', '', '', '', ''],
-        ['', '', '', '', ''],
-        ['C', 'H', 'I', 'N', 'A'],
-    ]);
+    const [guesses, setGuesses] = useState(new Array(20).fill(' '));
     const [submitText, setSubmitText] = useState('');
 
-    function handleSetWord(index: number, value: string) {
-        const nextWords = words.map((word, i) => {
-            if (i === index) {
-                return value.split('');
+    const puzzle = ['WORDS', 'CHINA'];
+
+    useEffect(() => {
+        document.body.addEventListener('keyup', handleKeyPress);
+
+        return () => {
+            document.body.removeEventListener('keyup', handleKeyPress);
+        }
+    }, [guesses]);
+
+    function handleKeyPress(e: KeyboardEvent) {
+        e.preventDefault();
+
+        if (/^[a-z]$/.test(e.key)) {
+            handleGuess(e.key);
+        } 
+        
+        if (e.key === 'Enter') {
+            validateGuesses(splitWords(guesses, 5), setSubmitText);
+        }
+    }
+
+    function handleGuess(value: string) {
+        const firstEmptyLetter = guesses.indexOf(' ');
+
+        const nextGuesses = guesses.map((letter, i) => {
+            if (firstEmptyLetter === -1 ? i === guesses.length - 1 : i === firstEmptyLetter) {
+                return value.toUpperCase();
             } else {
-                return word;
+                return letter;
             }
         });
-        setWords(nextWords);
+
+        setSubmitText('');
+        setGuesses(nextGuesses);
     }
 
     return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family)">
         <div>
-            {words.map((word, index) => <Word key={index} word={word} setWord={index === 0 || index === 5 ? undefined : (value: string) => handleSetWord(index, value)}/>)}
+            <Word key={'start'} word={puzzle[0].split('')}/>
+            {splitWords(guesses, 5).map((word, index) => <Word key={index} word={word} />)}
+            <Word key={'end'} word={puzzle[1].split('')}/>    
         </div>
-        <button onClick={() => validateGuesses(words, setSubmitText)}>Submit Guesses</button>
+        <button onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
         <p>{submitText}</p>
     </div>
 }
