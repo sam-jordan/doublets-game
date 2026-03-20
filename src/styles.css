@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-dark-gray: rgb(26, 26, 27);
+  --color-dark-bg: rgb(18,18,19);
+  --color-inactive-border: rgb(58,58,60);
+  --color-button-bg: rgb(129,131,132);
 }
 
 @theme {

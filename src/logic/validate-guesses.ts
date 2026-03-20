@@ -1,7 +1,7 @@
 export default function validateGuesses(words: string[][], setSubmitText: React.Dispatch<React.SetStateAction<string>>) {
     const stringWords = words.map(word => word.join(''));
 
-    if (stringWords.includes('')) {
+    if (stringWords.includes('     ')) {
         setSubmitText('The start and end word are not connected!');
         return;
     }

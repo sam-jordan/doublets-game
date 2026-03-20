@@ -8,27 +8,31 @@ export default function App() {
     const [submitText, setSubmitText] = useState('');
 
     const puzzle = ['WORDS', 'CHINA'];
+    const keyboard = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'], ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace']]
 
     useEffect(() => {
-        document.body.addEventListener('keyup', handleKeyPress);
+        function handleKeyUp(e: KeyboardEvent) {
+            e.preventDefault();
+            handleType(e.key);
+        }
+
+        document.body.addEventListener('keyup', handleKeyUp);
 
         return () => {
-            document.body.removeEventListener('keyup', handleKeyPress);
+            document.body.removeEventListener('keyup', handleKeyUp);
         }
     }, [guesses]);
 
-    function handleKeyPress(e: KeyboardEvent) {
-        e.preventDefault();
-
-        if (/^[a-z]$/.test(e.key)) {
-            handleGuess(e.key);
+    function handleType(key: string) {
+        if (/^[a-z|A-Z]$/.test(key)) {
+            handleGuess(key);
         } 
         
-        if (e.key === 'Enter') {
+        if (key === 'Enter') {
             validateGuesses(splitWords(guesses, 5), setSubmitText);
         }
 
-        if (e.key === 'Backspace') {
+        if (key === 'Backspace') {
             handleBackspace();
         }
     }
@@ -37,7 +41,7 @@ export default function App() {
         const nextIndex = guesses.findIndex(letter => letter === ' ');
 
         const nextGuesses = guesses.map((letter, i) => {
-            if (nextIndex === -1 ? i === guesses.length - 1 : i === nextIndex) {
+            if (nextIndex !== -1 && i === nextIndex) {
                 return value.toUpperCase();
             } else {
                 return letter;
@@ -63,16 +67,20 @@ export default function App() {
         setGuesses(nextGuesses);
     }
 
-    return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family)">
+    return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family) w-screen h-screen gap-y-2">
+        <h1>Doublets</h1>
         <div>
             <Word key={'start'} word={puzzle[0].split('')}/>
             {splitWords(guesses, 5).map((word, index) => <Word key={index} word={word} />)}
             <Word key={'end'} word={puzzle[1].split('')}/>    
         </div>
         <div className="flex gap-8 mt-4">
-            <button onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
-            <button onClick={() => setGuesses(new Array(20).fill(' '))}>Reset Guesses</button>
+            <button className='bg-button-bg rounded-sm' onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
+            <button className='bg-button-bg rounded-sm' onClick={() => setGuesses(new Array(20).fill(' '))}>Reset Guesses</button>
         </div>
         <p>{submitText}</p>
+        <div className="flex flex-col items-center gap-y-2">
+            {keyboard.map(row => <div className="flex gap-x-2">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleType(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
+        </div>   
     </div>
 }
