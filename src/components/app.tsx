@@ -70,17 +70,17 @@ export default function App() {
     return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family) w-screen h-screen gap-y-2">
         <h1>Doublets</h1>
         <div>
-            <Word key={'start'} word={puzzle[0].split('')}/>
-            {splitWords(guesses, 5).map((word, index) => <Word key={index} word={word} />)}
-            <Word key={'end'} word={puzzle[1].split('')}/>    
+            <Word key={'start'} word={puzzle[0].split('')} modifiable={false} />
+            {splitWords(guesses, 5).map((word, index) => <Word key={index} word={word} modifiable={true} />)}
+            <Word key={'end'} word={puzzle[1].split('')} modifiable={false} />    
         </div>
         <div className="flex gap-8 mt-4">
-            <button className='bg-button-bg rounded-sm' onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
-            <button className='bg-button-bg rounded-sm' onClick={() => setGuesses(new Array(20).fill(' '))}>Reset Guesses</button>
+            <button className='bg-button-bg rounded-sm p-2' onClick={() => validateGuesses(splitWords(guesses, 5), setSubmitText)}>Submit Guesses</button>
+            <button className='bg-button-bg rounded-sm p-2' onClick={() => { setGuesses(new Array(20).fill(' ')); setSubmitText(''); }}>Reset Guesses</button>
         </div>
         <p>{submitText}</p>
-        <div className="flex flex-col items-center gap-y-2">
-            {keyboard.map(row => <div className="flex gap-x-2">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleType(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
+        <div className="flex flex-col items-center gap-y-1.5">
+            {keyboard.map(row => <div className="flex gap-x-1.5">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleType(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
         </div>   
     </div>
 }
