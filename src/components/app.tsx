@@ -5,7 +5,7 @@ import { emptyGuesses } from "../logic/empty-guesses";
 import { getPuzzle } from "../logic/get-puzzle";
 
 export default function App() {
-    const [guesses, setGuesses] = useState<{ index: number, letters: string[], status: string }[]>(emptyGuesses);
+    const [guesses, setGuesses] = useState<{ index: number, letters: string[], status: string }[]>(emptyGuesses());
     const [currentGuess, setCurrentGuess] = useState<number>(0);
 
     const puzzle = getPuzzle();
