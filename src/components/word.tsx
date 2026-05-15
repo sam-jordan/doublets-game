@@ -16,13 +16,12 @@ function buildCharacterStyling(char: string, status: string): string {
     const base = (status === 'unchecked' ? 'border-2 border-inactive-border ' : (status === 'puzzle' ? 'bg-white text-dark-bg ' : ' ')) + 'text-3xl max-h-12 max-w-12 flex justify-center items-center';
 
     const puzzle = getPuzzle();
-
-    if (puzzle[0].split('').includes(char) && status === 'checked') {
-        return base + ' bg-pink-500';
+    if (puzzle[1].split('').includes(char) && status === 'checked') {
+        return base + ' bg-correct';
     }
 
-    if (puzzle[1].split('').includes(char) && status === 'checked') {
-        return base + ' bg-purple-500';
+    if (status === 'checked') {
+        return base + ' bg-inactive-border';
     }
 
     return base;
