@@ -3,10 +3,12 @@ import Word from "./word";
 import { validateWord } from "../logic/validate-word";
 import { emptyGuesses } from "../logic/empty-guesses";
 import { getPuzzle } from "../logic/get-puzzle";
+import Popup from "./popup";
 
 export default function App() {
     const [guesses, setGuesses] = useState<{ index: number, letters: string[], status: string }[]>(emptyGuesses());
     const [currentGuess, setCurrentGuess] = useState<number>(0);
+    const [popupMessage, setPopupMessage] = useState<string>();
 
     const puzzle = getPuzzle();
     const keyboard = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'], ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace']]
@@ -62,28 +64,25 @@ export default function App() {
 
     // TODO - definitely want more feedback here - guess valid/invalid - popup, animation, text highlighting
     async function handleGuess() {
-        // TODO - investigate dictionary API responses to see if this is actually needed
-        const isFullWord = !guesses[currentGuess].letters.includes(' ');
+        // TODO - likely want this in an Effect (contains API call)
+        const validation = await validateWord(guesses[currentGuess].letters, currentGuess === 0 ? puzzle[0].split('') : guesses[currentGuess - 1].letters);
 
-        if (isFullWord) {
-            // TODO - likely want this in an Effect (contains API call)
-            const validation = await validateWord(guesses[currentGuess].letters, currentGuess === 0 ? puzzle[0].split('') : guesses[currentGuess - 1].letters);
+        if (validation.valid) {
+            const nextGuesses = guesses.map(guess => {
+                if (guess.index === currentGuess) {
+                    return {
+                        ...guess,
+                        status: 'checked',
+                    };
+                } else {
+                    return guess;
+                }
+            });
 
-            if (validation.valid && validation.changed.length === 1) {
-                const nextGuesses = guesses.map(guess => {
-                    if (guess.index === currentGuess) {
-                        return {
-                            ...guess,
-                            status: 'checked',
-                        };
-                    } else {
-                        return guess;
-                    }
-                });
-
-                setGuesses(nextGuesses);
-                setCurrentGuess(currentGuess + 1);
-            }
+            setGuesses(nextGuesses);
+            setCurrentGuess(currentGuess + 1);
+        } else {
+            showValidationPopup(validation.message);
         }
     }
 
@@ -109,8 +108,17 @@ export default function App() {
         setGuesses(nextGuesses);
     }
 
+    function showValidationPopup(message: string) {
+        setPopupMessage(message);
+
+        setTimeout(() => {
+            setPopupMessage(undefined);
+        }, 2_000);
+    };
+
     return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family) w-screen h-screen gap-y-2">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
+        <Popup message={popupMessage} />
         <div>
             <Word key={'start'} word={puzzle[0].split('')} status='puzzle' />
             {guesses.map((word, index) => <Word key={index} word={word.letters} status={word.status} />)}
