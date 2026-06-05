@@ -121,7 +121,7 @@ export default function App() {
         }, 2_000);
     };
 
-    // TODO - allow current guess to be selected and allow extra guesses to be added
+    // TODO - allow current guess to be selected and allow for difficulty selection - will need 4, 5 or 6 guess rows
     return <div className="flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen ">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
         <Popup message={popupMessage} />
