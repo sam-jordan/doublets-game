@@ -3,17 +3,22 @@ export type WordStatus = {
     message: string;
 } | { valid: true };
 
-// TODO - evaluate if forcing all guesses to have 1 char difference is good design
-export async function validateWord(word: string[], previous: string[]): Promise<WordStatus> {
+// TODO - evaluate if actually forcing the guesses to have 1 char difference is good design
+export async function validateWord(word: string[], previous: string[], puzzle: string[]): Promise<WordStatus> {
     if (word.includes(' ')) {
         return { valid: false, message: 'Not enough letters' };
     };
+
+    if (puzzle.includes(word.join(''))) {
+        return { valid: false, message: 'Do not guess the start or end words!' };
+    }
 
     const response = await fetch(`https://freedictionaryapi.com/api/v1/entries/en/${word.join('')}`);
     if (!(await response.json()).entries) {
         return { valid: false, message: 'Not in word list' };
     }
 
+    // TODO - refactor this to check character positions
     const diff = []
     for (let i = 0; i < word.length; i++) {
         if (!previous.includes(word[i])) {
@@ -22,7 +27,7 @@ export async function validateWord(word: string[], previous: string[]): Promise<
     }
 
     if (diff.length !== 1) {
-        return { valid: false, message: 'Too many letters changed' };
+        return { valid: false, message: 'Change only one letter between guesses!' };
     }
 
     return { valid: true };

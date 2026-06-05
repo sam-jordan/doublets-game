@@ -65,7 +65,7 @@ export default function App() {
     // TODO - definitely want more feedback here - guess valid/invalid - popup, animation, text highlighting
     async function handleGuess() {
         // TODO - likely want this in an Effect (contains API call)
-        const validation = await validateWord(guesses[currentGuess].letters, currentGuess === 0 ? puzzle[0].split('') : guesses[currentGuess - 1].letters);
+        const validation = await validateWord(guesses[currentGuess].letters, currentGuess === 0 ? puzzle[0].split('') : guesses[currentGuess - 1].letters, puzzle);
 
         if (validation.valid) {
             const nextGuesses = guesses.map(guess => {
@@ -80,9 +80,14 @@ export default function App() {
             });
 
             setGuesses(nextGuesses);
-            setCurrentGuess(currentGuess + 1);
+
+            if (currentGuess === 3) {
+                showPopup('Splendid');
+            } else {
+                setCurrentGuess(currentGuess + 1);
+            }
         } else {
-            showValidationPopup(validation.message);
+            showPopup(validation.message);
         }
     }
 
@@ -108,7 +113,7 @@ export default function App() {
         setGuesses(nextGuesses);
     }
 
-    function showValidationPopup(message: string) {
+    function showPopup(message: string) {
         setPopupMessage(message);
 
         setTimeout(() => {
@@ -116,17 +121,19 @@ export default function App() {
         }, 2_000);
     };
 
-    return <div className="flex flex-col justify-center items-center text-xl font-(family-name:--use-font-family) w-screen h-screen gap-y-2">
+    // TODO - allow current guess to be selected and allow extra guesses to be added
+    return <div className="flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen ">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
         <Popup message={popupMessage} />
-        <div>
-            <Word key={'start'} word={puzzle[0].split('')} status='puzzle' />
-            {guesses.map((word, index) => <Word key={index} word={word.letters} status={word.status} />)}
-            <Word key={'end'} word={puzzle[1].split('')} status='puzzle' />
-        </div>
-        <button className='bg-button-bg rounded-sm p-2 cursor-pointer' onClick={() => { setGuesses(emptyGuesses()); setCurrentGuess(0); }}>RESET GUESSES</button>
-        <div className="flex flex-col items-center gap-y-1.5">
-            {keyboard.map(row => <div className="flex gap-x-1.5">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleKeyUp(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
+        <div className="flex gap-x-32 items-center">
+            <div>
+                <Word key={'start'} word={puzzle[0].split('')} status='puzzle' />
+                {guesses.map((word, index) => <Word key={index} word={word.letters} status={word.status} />)}
+                <Word key={'end'} word={puzzle[1].split('')} status='puzzle' />
+            </div>
+            <div className="flex flex-col items-center gap-y-1.5">
+                {keyboard.map(row => <div className="flex gap-x-1.5">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleKeyUp(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
+            </div>
         </div>
     </div>
 }
