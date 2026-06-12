@@ -4,16 +4,18 @@ import { validateWord } from "../logic/validate-word";
 import { emptyGuesses } from "../logic/empty-guesses";
 import { getPuzzle } from "../logic/get-puzzle";
 import Popup from "./popup";
+import { Difficulties } from "../logic/types/difficulties";
+import type { Guess } from "../logic/types/guess";
+import { Status } from "../logic/types/status";
 
 export default function App() {
-    const [guesses, setGuesses] = useState<{ index: number, letters: string[], status: string }[]>(emptyGuesses(4));
+    const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
     const [currentGuess, setCurrentGuess] = useState<number>(0);
     const [popupMessage, setPopupMessage] = useState<string>();
-    const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
+    const [difficulty, setDifficulty] = useState<Difficulties>(Difficulties.EASY);
 
     const puzzle = getPuzzle(difficulty);
-
-    const keyboard = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'], ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace']]
+    const keyboard = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'], ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace']];
 
     useEffect(() => {
         function handleKeyboardEvent(e: KeyboardEvent) {
@@ -42,6 +44,7 @@ export default function App() {
         }
     }
 
+    // FIX - will not use updated currentGuess until typed in (React wizardry needed)
     function handleType(value: string) {
         const nextIndex = guesses[currentGuess].letters.findIndex(letter => letter === ' ');
 
@@ -74,7 +77,7 @@ export default function App() {
                 if (guess.index === currentGuess) {
                     return {
                         ...guess,
-                        status: 'checked',
+                        status: Status.CHECKED as Status.CHECKED,
                     };
                 } else {
                     return guess;
@@ -83,9 +86,9 @@ export default function App() {
 
             setGuesses(nextGuesses);
 
-            if (currentGuess === 3) {
-                showPopup('Splendid');
-            } else {
+            // TODO - no current way to win - add a SUBMIT button that checks over all guesses, shows 'Splendid' popup
+            const maxGuesses = 4 + difficulty; // Will need changed if increasing the length of chain per difficulty
+            if (currentGuess < maxGuesses - 1) {
                 setCurrentGuess(currentGuess + 1);
             }
         } else {
@@ -94,6 +97,7 @@ export default function App() {
     }
 
     function handleBackspace() {
+        guesses[currentGuess].status = Status.UNCHECKED;
         const currentIndex = guesses[currentGuess].letters.findLastIndex(letter => letter !== ' ');
 
         const nextGuesses = guesses.map(guess => {
@@ -123,18 +127,35 @@ export default function App() {
         }, 2_000);
     };
 
+    function handleDifficulty(nextDifficulty: Difficulties) {
+        if (nextDifficulty === difficulty) {
+            return;
+        }
+
+        const guessesLength = nextDifficulty === Difficulties.EASY ? 4 : (nextDifficulty === Difficulties.MEDIUM ? 5 : 6);
+
+        setDifficulty(nextDifficulty);
+        setCurrentGuess(0);
+        setGuesses(emptyGuesses(guessesLength));
+    }
+
     // TODO - allow current guess to be selected and allow for difficulty selection - will need 4, 5 or 6 guess rows, add buttons
     return <div className="flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen ">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
         <Popup message={popupMessage} />
         <div className="flex gap-x-32 items-center">
             <div>
-                <Word key={'start'} word={puzzle.startWord.split('')} status='puzzle' difficulty={difficulty} />
-                {guesses.map((word, index) => <Word key={index} word={word.letters} status={word.status} difficulty={difficulty} />)}
-                <Word key={'end'} word={puzzle.endWord.split('')} status='puzzle' difficulty={difficulty} />
+                <Word key={'start-word'} index={'start'} letters={puzzle.startWord.split('')} status={Status.PUZZLE} difficulty={difficulty} />
+                {guesses.map(guess => <Word key={`guess-${guess.index}`} index={guess.index} letters={guess.letters} status={guess.status} difficulty={difficulty} setCurrentGuess={setCurrentGuess} />)}
+                <Word key={'end-word'} index={'end'} letters={puzzle.endWord.split('')} status={Status.PUZZLE} difficulty={difficulty} />
             </div>
             <div className="flex flex-col items-center gap-y-1.5">
-                {keyboard.map(row => <div className="flex gap-x-1.5">{row.map(key => <button key={key} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleKeyUp(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
+                <div className="flex gap-x-1.5">
+                    <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleDifficulty(Difficulties.EASY)}>EASY</button>
+                    <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleDifficulty(Difficulties.MEDIUM)}>MEDIUM</button>
+                    <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleDifficulty(Difficulties.HARD)}>HARD</button>
+                </div>
+                {keyboard.map(row => <div key={`keyboard-row-${keyboard.indexOf(row)}`} className="flex gap-x-1.5">{row.map(key => <button key={`keyboard-${key}`} className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleKeyUp(key)}>{key === 'Backspace' ? '⌫' : key.toUpperCase()}</button>)}</div>)}
             </div>
         </div>
     </div>
