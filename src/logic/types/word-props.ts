@@ -11,6 +11,7 @@ type PuzzleProps = {
 
 type GuessProps = Guess & {
     difficulty: Difficulties,
+    currentGuess: boolean,
     setCurrentGuess: React.Dispatch<React.SetStateAction<number>>,
 };
 

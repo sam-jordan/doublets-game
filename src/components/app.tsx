@@ -139,14 +139,13 @@ export default function App() {
         setGuesses(emptyGuesses(guessesLength));
     }
 
-    // TODO - allow current guess to be selected and allow for difficulty selection - will need 4, 5 or 6 guess rows, add buttons
     return <div className="flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen ">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
         <Popup message={popupMessage} />
         <div className="flex gap-x-32 items-center">
             <div>
                 <Word key={'start-word'} index={'start'} letters={puzzle.startWord.split('')} status={Status.PUZZLE} difficulty={difficulty} />
-                {guesses.map(guess => <Word key={`guess-${guess.index}`} index={guess.index} letters={guess.letters} status={guess.status} difficulty={difficulty} setCurrentGuess={setCurrentGuess} />)}
+                {guesses.map(guess => <Word key={`guess-${guess.index}`} index={guess.index} letters={guess.letters} status={guess.status} difficulty={difficulty} currentGuess={guess.index === currentGuess} setCurrentGuess={setCurrentGuess} />)}
                 <Word key={'end-word'} index={'end'} letters={puzzle.endWord.split('')} status={Status.PUZZLE} difficulty={difficulty} />
             </div>
             <div className="flex flex-col items-center gap-y-1.5">
