@@ -53,6 +53,7 @@ function getWordDiff(word1, word2) {
     return diff.length;
 }
 
+// TODO - consider using an increasingly small subset of the words as difficulty increases
 function generateData(wordLinkMapping, chainLength) {
     const validPuzzles = [];
     for (const startWord of wordLinkMapping.keys()) {

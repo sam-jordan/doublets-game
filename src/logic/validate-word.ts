@@ -1,15 +1,17 @@
+import type { Puzzle } from "./get-puzzle";
+
 export type WordStatus = {
     valid: false;
     message: string;
 } | { valid: true };
 
 // TODO - evaluate if actually forcing the guesses to have 1 char difference is good design
-export async function validateWord(word: string[], previous: string[], puzzle: string[]): Promise<WordStatus> {
+export async function validateWord(word: string[], previous: string[], puzzle: Puzzle): Promise<WordStatus> {
     if (word.includes(' ')) {
         return { valid: false, message: 'Not enough letters' };
     };
 
-    if (puzzle.includes(word.join(''))) {
+    if (Object.values(puzzle).includes(word.join(''))) {
         return { valid: false, message: 'Do not guess the start or end words!' };
     }
 
