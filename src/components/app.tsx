@@ -70,7 +70,7 @@ export default function App() {
     // TODO - definitely want more feedback here - guess valid/invalid - popup, animation, text highlighting
     async function handleGuess() {
         // TODO - likely want this in an Effect (contains API call)
-        const validation = await validateWord(guesses[currentGuess].letters, currentGuess === 0 ? puzzle.startWord.split('') : guesses[currentGuess - 1].letters, puzzle);
+        const validation = await validateWord(guesses[currentGuess].letters, puzzle);
 
         if (validation.valid) {
             const nextGuesses = guesses.map(guess => {

@@ -1,12 +1,13 @@
 import type { Puzzle } from "./get-puzzle";
+import type { Guess } from "./types/guess";
+import { Status } from "./types/status";
 
-export type WordStatus = {
+type Validation = {
     valid: false;
     message: string;
 } | { valid: true };
 
-// TODO - refactor to account for being able to choose the current guess (i.e. only check diffs at the end?)
-export async function validateWord(word: string[], previous: string[], puzzle: Puzzle): Promise<WordStatus> {
+export async function validateWord(word: string[], puzzle: Puzzle): Promise<Validation> {
     if (word.includes(' ')) {
         return { valid: false, message: 'Not enough letters' };
     };
@@ -20,16 +21,40 @@ export async function validateWord(word: string[], previous: string[], puzzle: P
         return { valid: false, message: 'Not in word list' };
     }
 
-    // const diff = []
-    // for (let i = 0; i < word.length; i++) {
-    //     if (!previous.includes(word[i])) {
-    //         diff.push(i);
-    //     }
-    // }
+    return { valid: true };
+}
 
-    // if (diff.length !== 1) {
-    //     return { valid: false, message: 'Change only one letter between guesses!' };
-    // }
+export function validateSolution(guesses: Guess[], puzzle: Puzzle): Validation {
+    const solution = [
+        {
+            index: 0,
+            letters: puzzle.startWord.split(''),
+            status: Status.CHECKED,
+        },
+        ...(guesses.map(guess => ({ ...guess, index: guess.index + 1 }))),
+        {
+            index: guesses.length + 1,
+            letters: puzzle.endWord.split(''),
+            status: Status.CHECKED,
+        },
+    ];
+
+    for (const word of solution) {
+        if (word.index === 0) {
+            break;
+        }
+
+        const diff = [];
+        for (let i = 0; i < word.letters.length; i++) {
+            if (guesses[word.index - 1].letters[i] !== word.letters[i]) {
+                diff.push(word.letters[i]);
+            }
+        }
+
+        if (diff.length !== 1) {
+            return { valid: false, message: 'Change only one letter between guesses!' };
+        }
+    }
 
     return { valid: true };
 }
