@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Word from "./word";
-import { validateWord } from "../logic/validate-word";
+import { validateSolution, validateWord } from "../logic/validate-word";
 import { emptyGuesses } from "../logic/empty-guesses";
 import { getPuzzle } from "../logic/get-puzzle";
 import Popup from "./popup";
@@ -86,7 +86,6 @@ export default function App() {
 
             setGuesses(nextGuesses);
 
-            // TODO - no current way to win - add a SUBMIT button that checks over all guesses, shows 'Splendid' popup
             const maxGuesses = 4 + difficulty; // Will need changed if increasing the length of chain per difficulty
             if (currentGuess < maxGuesses - 1) {
                 setCurrentGuess(currentGuess + 1);
@@ -139,6 +138,16 @@ export default function App() {
         setGuesses(emptyGuesses(guessesLength));
     }
 
+    async function handleSubmit() {
+        const validation = await validateSolution(guesses, puzzle);
+
+        if (validation.valid) {
+            showPopup('Splendid!');
+        } else {
+            showPopup(validation.message);
+        }
+    }
+
     return <div className="flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen ">
         <h1 className="text-3xl text-correct">DOUBLETS</h1>
         <Popup message={popupMessage} />
@@ -149,6 +158,7 @@ export default function App() {
                 <Word key={'end-word'} index={'end'} letters={puzzle.endWord.split('')} status={Status.PUZZLE} difficulty={difficulty} />
             </div>
             <div className="flex flex-col items-center gap-y-1.5">
+                <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={handleSubmit}>SUBMIT</button>
                 <div className="flex gap-x-1.5">
                     <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleDifficulty(Difficulties.EASY)}>EASY</button>
                     <button className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer' onClick={() => handleDifficulty(Difficulties.MEDIUM)}>MEDIUM</button>

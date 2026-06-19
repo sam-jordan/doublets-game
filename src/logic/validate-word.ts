@@ -24,7 +24,7 @@ export async function validateWord(word: string[], puzzle: Puzzle): Promise<Vali
     return { valid: true };
 }
 
-export function validateSolution(guesses: Guess[], puzzle: Puzzle): Validation {
+export async function validateSolution(guesses: Guess[], puzzle: Puzzle): Promise<Validation> {
     const solution = [
         {
             index: 0,
@@ -41,7 +41,12 @@ export function validateSolution(guesses: Guess[], puzzle: Puzzle): Validation {
 
     for (const word of solution) {
         if (word.index === 0) {
-            break;
+            continue;
+        }
+
+        const wordValidation = await validateWord(word.letters, puzzle);
+        if (wordValidation.valid !== true) {
+            return wordValidation;
         }
 
         const diff = [];
