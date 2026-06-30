@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Word from "./word";
-import { validateSolution, validateWord } from "../logic/validate-word";
+import { validateSolution, validateWord } from "../logic/validators";
 import { emptyGuesses } from "../logic/empty-guesses";
 import { getPuzzle } from "../logic/get-puzzle";
 import Popup from "./popup";

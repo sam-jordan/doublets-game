@@ -5,7 +5,9 @@ import { EOL } from 'node:os';
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
 
-function findLinkedWords() {
+// Reads the file of words, and generates a mapping between each word and all the 
+// valid words that can be reached by changing a single letter.
+function findLinkedWords(): Map<string, string[]> {
     try {
         const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase()).slice(0, 3500);
         const wordLinkMapping = new Map<string, string[]>();
@@ -41,12 +43,12 @@ function findLinkedWords() {
 function generateData(wordLinkMapping: Map<string, string[]>, chainLength: number) {
     const validPuzzles = [];
     for (const startWord of wordLinkMapping.keys()) {
-        const endWords = new Map();
+        const endWords = new Map<string, number>();
 
         function findEndWords(word: string, index: number, chain: string[]) {
             const nextChain = [...chain, word];
 
-            if (!endWords.has(word) || endWords.get(word) > index) {
+            if (!endWords.has(word) || endWords.get(word)! > index) {
                 endWords.set(word, index);
             }
 
