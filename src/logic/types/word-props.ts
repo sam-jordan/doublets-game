@@ -1,18 +1,18 @@
-import type { Difficulties } from "./difficulties";
-import type { Guess } from "./guess";
-import type { Status } from "./status";
+import type {Difficulties} from './difficulties';
+import type {Guess} from './guess';
+import type {Status} from './status';
 
 type PuzzleProps = {
-    index: string,
-    letters: string[],
-    status: Status.PUZZLE,
-    difficulty: Difficulties,
+  index: string;
+  letters: string[];
+  status: Status.PUZZLE;
+  difficulty: Difficulties;
 };
 
 type GuessProps = Guess & {
-    difficulty: Difficulties,
-    currentGuess: boolean,
-    setCurrentGuess: React.Dispatch<React.SetStateAction<number>>,
+  difficulty: Difficulties;
+  currentGuess: boolean;
+  setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type WordProps = PuzzleProps | GuessProps;
