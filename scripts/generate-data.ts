@@ -8,11 +8,11 @@ const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
 function findLinkedWords() {
     try {
         const words = fs.readFileSync('./scripts/five-letter-words.txt', 'utf-8').split(EOL).map(word => word.toUpperCase()).slice(0, 3500);
-        const wordLinkMapping = new Map();
+        const wordLinkMapping = new Map<string, string[]>();
 
         for (const word of words) {
             const wordAsArray = word.split('');
-            const linkedWords = [];
+            const linkedWords: string[] = [];
 
             for (let i = 0; i < wordAsArray.length; i++) {
                 for (let j = 0; j < LETTERS.length; j++) {
@@ -37,36 +37,20 @@ function findLinkedWords() {
     }
 }
 
-function getWordDiff(word1, word2) {
-    const diff = []
-
-    if (word1.length !== word2.length) {
-        return 0;
-    }
-
-    for (const char of word1.split('')) {
-        if (!word2.split('').includes(char)) {
-            diff.push(char);
-        }
-    }
-
-    return diff.length;
-}
-
 // TODO - consider using an increasingly small subset of the words as difficulty increases
-function generateData(wordLinkMapping, chainLength) {
+function generateData(wordLinkMapping: Map<string, string[]>, chainLength: number) {
     const validPuzzles = [];
     for (const startWord of wordLinkMapping.keys()) {
         const endWords = new Map();
 
-        function findEndWords(word, index, chain) {
+        function findEndWords(word: string, index: number, chain: string[]) {
             const nextChain = [...chain, word];
 
             if (!endWords.has(word) || endWords.get(word) > index) {
                 endWords.set(word, index);
             }
 
-            for (const linkedWord of wordLinkMapping.get(word)) {
+            for (const linkedWord of wordLinkMapping.get(word)!) {
                 if (!nextChain.includes(linkedWord) && index < chainLength) {
                     findEndWords(linkedWord, index + 1, nextChain);
                 }
@@ -74,7 +58,7 @@ function generateData(wordLinkMapping, chainLength) {
         }
 
         findEndWords(startWord, 0, []);
-        const pairs = Array.from(endWords).filter(([key, value]) => value === chainLength).map(([key, value]) => ({ startWord, endWord: key }));
+        const pairs = Array.from(endWords).filter(([_key, value]) => value === chainLength).map(([key, _value]) => ({ startWord, endWord: key }));
 
         if (Array.from(wordLinkMapping.keys()).indexOf(startWord) % 100 === 0) {
             console.log(`Generating ${chainLength < 6 ? 'easy' : (chainLength < 7 ? 'medium' : 'hard')} data... ${Array.from(wordLinkMapping.keys()).indexOf(startWord)}/${wordLinkMapping.size}`);
