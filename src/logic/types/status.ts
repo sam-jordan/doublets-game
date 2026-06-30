@@ -1,5 +1,5 @@
 export enum Status {
-  PUZZLE,
-  CHECKED,
-  UNCHECKED,
+    PUZZLE,
+    CHECKED,
+    UNCHECKED,
 }
