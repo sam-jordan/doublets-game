@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { validateSolution, validateWord } from '../logic/validators';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { Difficulties } from '../logic/types/difficulties';
-import type { Guess } from '../logic/types/guess';
-import { Status } from '../logic/types/status';
 import Popup from './popup';
 import Word from './word';
+import { Difficulties, Status, type Guess } from '../logic/types';
 
 export default function App() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));

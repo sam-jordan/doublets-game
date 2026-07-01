@@ -1,6 +1,22 @@
-import type { Difficulties } from './difficulties';
-import type { Guess } from './guess';
-import type { Status } from './status';
+export enum Difficulties {
+    EASY,
+    MEDIUM,
+    HARD,
+}
+
+export enum Status {
+    PUZZLE,
+    CHECKED,
+    UNCHECKED,
+}
+
+export type Guess = {
+    index: number;
+    letters: string[];
+    status: Status.CHECKED | Status.UNCHECKED;
+};
+
+export type Puzzle = { startWord: string; endWord: string };
 
 type PuzzleProps = {
     index: string;

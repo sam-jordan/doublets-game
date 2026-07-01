@@ -1,6 +1,5 @@
 import { getPuzzle } from '../logic/get-puzzle';
-import type { WordProps } from '../logic/types/word-props';
-import { Status } from '../logic/types/status';
+import { Status, type WordProps } from '../logic/types';
 
 export default function Word(props: WordProps) {
     function handleClick() {

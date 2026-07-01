@@ -1,6 +1,4 @@
-import { Difficulties } from './types/difficulties';
-
-export type Puzzle = { startWord: string; endWord: string };
+import { Difficulties } from "./types";
 
 export function getPuzzle(difficulty: Difficulties) {
     // Temporary while building frontend

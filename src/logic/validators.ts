@@ -1,7 +1,5 @@
 import { z } from 'zod';
-import type { Puzzle } from './get-puzzle';
-import type { Guess } from './types/guess';
-import { Status } from './types/status';
+import { Status, type Guess, type Puzzle } from './types';
 
 type Validation =
     | {
