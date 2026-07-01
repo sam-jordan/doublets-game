@@ -38,6 +38,7 @@ export default function App() {
         // Else if (key === 'Enter') {
         //     await handleGuess();
         // }
+
         else if (key === 'Backspace') {
             handleBackspace();
         }
@@ -161,10 +162,19 @@ export default function App() {
     }
 
     return (
-        <div className='flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen '>
-            <h1 className='text-3xl text-correct'>DOUBLETS</h1>
+        <div className='font-(family-name:--use-font-family) w-screen h-screen'>
+            <header className='flex justify-evenly border-b-1 py-2'>
+                <h1 className='text-3xl text-correct'>DOUBLETS</h1>
+                <div>
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                            <path fill="rgb(255, 255, 255)" d="M96 176C96 149.5 117.5 128 144 128C170.5 128 192 149.5 192 176L192 288L448 288L448 176C448 149.5 469.5 128 496 128C522.5 128 544 149.5 544 176L544 192L560 192C586.5 192 608 213.5 608 240L608 288C625.7 288 640 302.3 640 320C640 337.7 625.7 352 608 352L608 400C608 426.5 586.5 448 560 448L544 448L544 464C544 490.5 522.5 512 496 512C469.5 512 448 490.5 448 464L448 352L192 352L192 464C192 490.5 170.5 512 144 512C117.5 512 96 490.5 96 464L96 448L80 448C53.5 448 32 426.5 32 400L32 352C14.3 352 0 337.7 0 320C0 302.3 14.3 288 32 288L32 240C32 213.5 53.5 192 80 192L96 192L96 176z"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
             <Popup showPopup={popupMessage !== ''} message={popupMessage} />
-            <div className='flex gap-x-32 items-center'>
+            <div className='flex justify-evenly items-center mt-16'>
                 <div>
                     <Word
                         key={'start-word'}
@@ -192,43 +202,7 @@ export default function App() {
                         difficulty={difficulty}
                     />
                 </div>
-                <div className='flex flex-col items-center gap-y-1.5'>
-                    <button
-                        className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                        onClick={() => {
-                            void (async () => handleSubmit());
-                        }}
-                    >
-                        SUBMIT
-                    </button>
-                    <div className='flex gap-x-1.5'>
-                        <button
-                            className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                            onClick={() => {
-                                handleDifficulty(Difficulties.EASY);
-                            }}
-                        >
-                            EASY
-                        </button>
-                        <button
-                            className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                            onClick={() => {
-                                handleDifficulty(Difficulties.MEDIUM);
-                            }}
-                        >
-                            MEDIUM
-                        </button>
-                        <button
-                            className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                            onClick={() => {
-                                handleDifficulty(Difficulties.HARD);
-                            }}
-                        >
-                            HARD
-                        </button>
-                    </div>
-                    <Keyboard handleKeyUp={handleKeyUp}/>
-                </div>
+                <Keyboard handleKeyUp={handleKeyUp}/>
             </div>
         </div>
     );

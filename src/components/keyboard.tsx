@@ -5,7 +5,7 @@ export default function Keyboard(props: { handleKeyUp: (key: string) => void }) 
         ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'],
     ];
 
-    return <>
+    return <div className='flex flex-col items-center gap-y-1.5'> 
         {keyboard.map(row => (
             <div
                 key={`keyboard-row-${keyboard.indexOf(row)}`}
@@ -26,5 +26,5 @@ export default function Keyboard(props: { handleKeyUp: (key: string) => void }) 
                 ))}
             </div>
         ))}
-    </>
+    </div>
 }
