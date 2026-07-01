@@ -33,13 +33,35 @@ export default function App() {
     function handleKeyUp(key: string) {
         if (/^[a-z]$/iv.test(key)) {
             handleType(key);
-        }
+        } else {
+            switch(key) {
+                case 'Enter':
+                    if (currentGuess === guesses.length - 1) {
+                        handleSubmit();
+                    } else {
+                        setCurrentGuess(currentGuess + 1);
+                    }  
+                    break;
 
-        // Else if (key === 'Enter') {
-        //     await handleGuess();
-        // }
-        else if (key === 'Backspace') {
-            handleBackspace();
+                case 'Backspace':
+                    handleBackspace();
+                    break;
+
+                case 'ArrowUp':
+                    if (currentGuess !== 0) {
+                        setCurrentGuess(currentGuess - 1);
+                    }
+                    break;
+
+                case 'ArrowDown':
+                    if (currentGuess < guesses.length - 1) {
+                        setCurrentGuess(currentGuess + 1);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
@@ -149,8 +171,8 @@ export default function App() {
         setGuesses(emptyGuesses(guessesLength));
     }
 
-    async function handleSubmit() {
-        const validation = await validateSolution(guesses, puzzle);
+    function handleSubmit() {
+        const validation = validateSolution(guesses, puzzle);
 
         if (validation.valid) {
             showPopup('Splendid!');

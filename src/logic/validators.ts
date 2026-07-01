@@ -48,10 +48,10 @@ export async function validateWord(
     return { valid: true };
 }
 
-export async function validateSolution(
+export function validateSolution(
     guesses: Word[],
     puzzle: Puzzle
-): Promise<Validation> {
+): Validation {
     const solution = [
         {
             index: 0,
@@ -72,10 +72,10 @@ export async function validateSolution(
         }
 
         // eslint-disable-next-line no-await-in-loop
-        const wordValidation = await validateWord(word.letters, puzzle);
-        if (!wordValidation.valid) {
-            return wordValidation;
-        }
+        // const wordValidation = await validateWord(word.letters, puzzle);
+        // if (!wordValidation.valid) {
+        //     return wordValidation;
+        // }
 
         const diff = [];
         for (let i = 0; i < word.letters.length; i++) {
