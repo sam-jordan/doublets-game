@@ -34,7 +34,9 @@
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^5.1.1",
         "globals": "^16.5.0",
+        "lint-staged": "^17.0.8",
         "prettier": "^3.9.4",
+        "sort-package-json": "^4.0.0",
         "typescript": "~5.9.3",
         "vite": "^7.3.1",
         "xo": "^3.0.2"
