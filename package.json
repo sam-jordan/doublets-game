@@ -1,46 +1,46 @@
 {
-    "name": "doublets-game",
-    "version": "1.0.0",
-    "description": "An NYT Games-style web app for playing the word game Doublets",
-    "homepage": "https://github.com/sam-jordan/doublets-game#readme",
-    "bugs": {
-        "url": "https://github.com/sam-jordan/doublets-game/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sam-jordan/doublets-game.git"
-    },
-    "license": "ISC",
-    "author": "sam-jordan",
-    "type": "module",
-    "scripts": {
-        "generate-data": "node scripts/generate-data.mjs",
-        "dev": "vite",
-        "build": "tsc -b && vite build",
-        "lint": "xo && prettier .",
-        "lint:fix": "xo --fix && prettier . --write",
-        "preview": "vite preview",
-        "prepare": "husky"
-    },
-    "dependencies": {
-        "@tailwindcss/vite": "^4.2.1",
-        "react": "^19.2.0",
-        "react-dom": "^19.2.0",
-        "tailwindcss": "^4.2.1",
-        "zod": "^4.4.3"
-    },
-    "devDependencies": {
-        "@types/node": "^24.10.1",
-        "@types/react": "^19.2.7",
-        "@types/react-dom": "^19.2.3",
-        "@vitejs/plugin-react": "^5.1.1",
-        "globals": "^16.5.0",
-        "husky": "^9.1.7",
-        "lint-staged": "^17.0.8",
-        "prettier": "^3.9.4",
-        "sort-package-json": "^4.0.0",
-        "typescript": "~5.9.3",
-        "vite": "^7.3.1",
-        "xo": "^3.0.2"
-    }
+  "name": "doublets-game",
+  "version": "1.0.0",
+  "description": "An NYT Games-style web app for playing the word game Doublets",
+  "homepage": "https://github.com/sam-jordan/doublets-game#readme",
+  "bugs": {
+    "url": "https://github.com/sam-jordan/doublets-game/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sam-jordan/doublets-game.git"
+  },
+  "license": "ISC",
+  "author": "sam-jordan",
+  "type": "module",
+  "scripts": {
+    "generate-data": "node scripts/generate-data.mjs",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "xo && prettier .",
+    "lint:fix": "xo --fix && prettier . --write",
+    "preview": "vite preview",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.2.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "prettier": "^3.9.4",
+    "sort-package-json": "^4.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "xo": "^3.0.2"
+  }
 }
