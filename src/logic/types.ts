@@ -5,30 +5,29 @@ export enum Difficulties {
 }
 
 export enum Status {
-    PUZZLE,
+    FIXED,
     CHECKED,
     UNCHECKED,
 }
 
-export type Guess = {
+export type Word = {
     index: number;
     letters: string[];
-    status: Status.CHECKED | Status.UNCHECKED;
+    status: Status;
 };
 
 export type Puzzle = { startWord: string; endWord: string };
 
-type PuzzleProps = {
-    index: string;
-    letters: string[];
-    status: Status.PUZZLE;
+type FixedProps = Word & {
+    status: Status.FIXED;
     difficulty: Difficulties;
 };
 
-type GuessProps = Guess & {
+type GuessProps = Word & {
+    status: Status.CHECKED | Status.UNCHECKED;
     difficulty: Difficulties;
     currentGuess: boolean;
     setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type WordProps = PuzzleProps | GuessProps;
+export type RowProps = FixedProps | GuessProps;

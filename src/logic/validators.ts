@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Status, type Guess, type Puzzle } from './types';
+import { Status, type Word, type Puzzle } from './types';
 
 type Validation =
     | {
@@ -49,20 +49,20 @@ export async function validateWord(
 }
 
 export async function validateSolution(
-    guesses: Guess[],
+    guesses: Word[],
     puzzle: Puzzle
 ): Promise<Validation> {
     const solution = [
         {
             index: 0,
             letters: puzzle.startWord.split(''),
-            status: Status.CHECKED,
+            status: Status.FIXED,
         },
         ...guesses.map(guess => ({ ...guess, index: guess.index + 1 })),
         {
             index: guesses.length + 1,
             letters: puzzle.endWord.split(''),
-            status: Status.CHECKED,
+            status: Status.FIXED,
         },
     ];
 

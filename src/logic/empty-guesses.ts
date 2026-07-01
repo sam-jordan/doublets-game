@@ -1,13 +1,12 @@
-import { Status, type Guess } from './types';
+import { Status, type Word } from './types';
 
-export function emptyGuesses(guesses: number): Guess[] {
+export function emptyGuesses(guesses: number): Word[] {
     return Array.from({ length: guesses })
         .keys()
         .map(item => ({
             index: item,
             letters: Array.from({ length: 5 }, _ => ' '),
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-            status: Status.UNCHECKED as Status.UNCHECKED,
+            status: Status.UNCHECKED,
         }))
         .toArray();
 }

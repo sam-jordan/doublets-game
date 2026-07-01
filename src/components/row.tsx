@@ -1,9 +1,9 @@
 import { getPuzzle } from '../logic/get-puzzle';
-import { Status, type WordProps } from '../logic/types';
+import { Status, type RowProps } from '../logic/types';
 
-export default function Word(props: WordProps) {
+export default function Row(props: RowProps) {
     function handleClick() {
-        if (props.status !== Status.PUZZLE) {
+        if (props.status !== Status.FIXED) {
             props.setCurrentGuess(props.index);
         }
     }
@@ -34,14 +34,15 @@ export default function Word(props: WordProps) {
 function buildCharacterStyling(
     char: string,
     index: number,
-    props: WordProps
+    props: RowProps
 ): string {
     const isCurrentGuess =
-        props.status === Status.PUZZLE ? false : props.currentGuess;
-    const base = 'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
+        props.status === Status.FIXED ? false : props.currentGuess;
+    const base =
+        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
     const puzzle = getPuzzle(props.difficulty);
 
-    if (props.status === Status.PUZZLE) {
+    if (props.status === Status.FIXED) {
         return base + ' bg-white text-dark-bg border-white';
     }
 
@@ -53,5 +54,7 @@ function buildCharacterStyling(
         return base + ' bg-inactive-border';
     }
 
-    return base + (isCurrentGuess ? ' border-white' : ' border-inactive-border');
+    return (
+        base + (isCurrentGuess ? ' border-white' : ' border-inactive-border')
+    );
 }
