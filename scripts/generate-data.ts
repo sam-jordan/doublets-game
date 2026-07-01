@@ -3,33 +3,7 @@
 import fs from 'node:fs';
 import { EOL } from 'node:os';
 
-const LETTERS = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'X',
-    'Y',
-    'Z',
-];
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 // Reads the file of words, and generates a mapping between each word and all the
 // valid words that can be reached by changing a single letter.
@@ -38,30 +12,28 @@ function findLinkedWords(): Map<string, string[]> {
         const words = fs
             .readFileSync('./scripts/five-letter-words.txt', 'utf8')
             .split(EOL)
-            .map(word => word.toUpperCase())
+            .map(word => word.toUpperCase().split(''))
             .slice(0, 3500);
         const wordLinkMapping = new Map<string, string[]>();
 
         for (const word of words) {
-            const wordAsArray = word.split('');
             const linkedWords: string[] = [];
 
-            for (let i = 0; i < wordAsArray.length; i++) {
-                for (const LETTER of LETTERS) {
-                    const updatedWordAsArray = [...wordAsArray];
-                    updatedWordAsArray[i] = LETTER;
-                    const updatedWordAsString = updatedWordAsArray.join('');
+            for (let i = 0; i < word.length; i++) {
+                for (const letter of LETTERS) {
+                    const updatedWord = [...word];
+                    updatedWord[i] = letter;
                     if (
-                        words.includes(updatedWordAsString) &&
-                        !linkedWords.includes(updatedWordAsString) &&
-                        updatedWordAsString !== word
+                        words.includes(updatedWord) &&
+                        !linkedWords.includes(updatedWord.join('')) &&
+                        updatedWord !== word
                     ) {
-                        linkedWords.push(updatedWordAsString);
+                        linkedWords.push(updatedWord.join(''));
                     }
                 }
             }
 
-            wordLinkMapping.set(word, linkedWords);
+            wordLinkMapping.set(word.join(''), linkedWords);
             if (words.indexOf(word) % 100 === 0) {
                 console.log(
                     `Linking words... ${words.indexOf(word)}/${words.length}`
@@ -99,13 +71,14 @@ function generateData(
         }
 
         findEndWords(startWord, 0, []);
-        const pairs = [...endWords]
+        const pairs = endWords
+            .entries()
             .filter(([_key, value]) => value === chainLength)
             .map(([key, _value]) => ({ startWord, endWord: key }));
 
-        if ([...wordLinkMapping.keys()].indexOf(startWord) % 100 === 0) {
+        if (wordLinkMapping.keys().toArray().indexOf(startWord) % 100 === 0) {
             console.log(
-                `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} data... ${[...wordLinkMapping.keys()].indexOf(startWord)}/${wordLinkMapping.size}`
+                `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} data... ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
             );
         }
 

@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import type { Puzzle } from './get-puzzle';
 import type { Guess } from './types/guess';
 import { Status } from './types/status';
@@ -8,6 +9,18 @@ type Validation =
           message: string;
       }
     | { valid: true };
+
+const dictionaryWord = z.object({
+    word: z.string(),
+    entries: z.array(
+        z.object({
+            language: z.object({
+                code: z.string(),
+                name: z.string(),
+            }),
+        })
+    ),
+});
 
 export async function validateWord(
     word: string[],
@@ -27,7 +40,10 @@ export async function validateWord(
     const response = await fetch(
         `https://freedictionaryapi.com/api/v1/entries/en/${word.join('')}`
     );
-    if (!(await response.json()).entries) {
+
+    const parsed = dictionaryWord.safeParse(await response.json());
+
+    if (parsed.error) {
         return { valid: false, message: 'Not in word list' };
     }
 
@@ -57,6 +73,7 @@ export async function validateSolution(
             continue;
         }
 
+        // eslint-disable-next-line no-await-in-loop
         const wordValidation = await validateWord(word.letters, puzzle);
         if (!wordValidation.valid) {
             return wordValidation;

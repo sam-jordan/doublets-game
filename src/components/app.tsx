@@ -11,7 +11,7 @@ import Word from './word';
 export default function App() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
     const [currentGuess, setCurrentGuess] = useState<number>(0);
-    const [popupMessage, setPopupMessage] = useState<string>();
+    const [popupMessage, setPopupMessage] = useState<string>('');
     const [difficulty, setDifficulty] = useState<Difficulties>(
         Difficulties.EASY
     );
@@ -24,9 +24,9 @@ export default function App() {
     ];
 
     useEffect(() => {
-        function handleKeyboardEvent(e: KeyboardEvent) {
-            e.preventDefault();
-            handleKeyUp(e.key);
+        function handleKeyboardEvent(event: KeyboardEvent) {
+            event.preventDefault();
+            handleKeyUp(event.key);
         }
 
         document.body.addEventListener('keyup', handleKeyboardEvent);
@@ -34,18 +34,17 @@ export default function App() {
         return () => {
             document.body.removeEventListener('keyup', handleKeyboardEvent);
         };
-    }, [guesses]);
+    });
 
     function handleKeyUp(key: string) {
-        if (/^[a-z|]$/i.test(key)) {
+        if (/^[a-z]$/iv.test(key)) {
             handleType(key);
         }
 
-        if (key === 'Enter') {
-            handleGuess();
-        }
-
-        if (key === 'Backspace') {
+        // Else if (key === 'Enter') {
+        //     await handleGuess();
+        // }
+        else if (key === 'Backspace') {
             handleBackspace();
         }
     }
@@ -87,7 +86,8 @@ export default function App() {
                 if (guess.index === currentGuess) {
                     return {
                         ...guess,
-                        status: Status.CHECKED,
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+                        status: Status.CHECKED as Status.CHECKED,
                     };
                 }
 
@@ -135,7 +135,7 @@ export default function App() {
         setPopupMessage(message);
 
         setTimeout(() => {
-            setPopupMessage(undefined);
+            setPopupMessage('');
         }, 2000);
     }
 
@@ -169,7 +169,7 @@ export default function App() {
     return (
         <div className='flex flex-col justify-evenly items-center text-xl font-(family-name:--use-font-family) w-screen h-screen '>
             <h1 className='text-3xl text-correct'>DOUBLETS</h1>
-            <Popup message={popupMessage} />
+            <Popup showPopup={popupMessage !== ''} message={popupMessage} />
             <div className='flex gap-x-32 items-center'>
                 <div>
                     <Word
@@ -201,7 +201,9 @@ export default function App() {
                 <div className='flex flex-col items-center gap-y-1.5'>
                     <button
                         className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                        onClick={handleSubmit}
+                        onClick={() => {
+                            void (async () => handleSubmit());
+                        }}
                     >
                         SUBMIT
                     </button>

@@ -37,7 +37,7 @@ function buildCharacterStyling(
     index: number,
     props: WordProps
 ): string {
-    const currentGuess =
+    const isCurrentGuess =
         props.status === Status.PUZZLE ? false : props.currentGuess;
     const base = 'text-3xl max-h-12 max-w-12 flex justify-center items-center';
     const puzzle = getPuzzle(props.difficulty);
@@ -54,5 +54,5 @@ function buildCharacterStyling(
         return base + ' bg-inactive-border';
     }
 
-    return base + (currentGuess ? '' : ' border-2 border-inactive-border');
+    return base + (isCurrentGuess ? '' : ' border-2 border-inactive-border');
 }
