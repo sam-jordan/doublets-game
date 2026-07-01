@@ -11,7 +11,7 @@ export default function Word(props: WordProps) {
     return (
         <div
             tabIndex={0}
-            className='grid grid-cols-5 w-66 h-13 focus:outline-none'
+            className='grid grid-cols-5 w-66 h-13'
             onClick={handleClick}
         >
             {props.letters.map((character, charIndex) => (
@@ -38,11 +38,11 @@ function buildCharacterStyling(
 ): string {
     const isCurrentGuess =
         props.status === Status.PUZZLE ? false : props.currentGuess;
-    const base = 'text-3xl max-h-12 max-w-12 flex justify-center items-center';
+    const base = 'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
     const puzzle = getPuzzle(props.difficulty);
 
     if (props.status === Status.PUZZLE) {
-        return base + ' bg-white text-dark-bg';
+        return base + ' bg-white text-dark-bg border-white';
     }
 
     if (props.status === Status.CHECKED) {
@@ -53,5 +53,5 @@ function buildCharacterStyling(
         return base + ' bg-inactive-border';
     }
 
-    return base + (isCurrentGuess ? '' : ' border-2 border-inactive-border');
+    return base + (isCurrentGuess ? ' border-white' : ' border-inactive-border');
 }

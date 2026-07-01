@@ -5,6 +5,7 @@ import { getPuzzle } from '../logic/get-puzzle';
 import { Difficulties, Status, type Guess } from '../logic/types';
 import Popup from './popup';
 import Word from './word';
+import Keyboard from './keyboard';
 
 export default function App() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
@@ -15,11 +16,6 @@ export default function App() {
     );
 
     const puzzle = getPuzzle(difficulty);
-    const keyboard = [
-        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-        ['Enter', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Backspace'],
-    ];
 
     useEffect(() => {
         function handleKeyboardEvent(event: KeyboardEvent) {
@@ -47,7 +43,6 @@ export default function App() {
         }
     }
 
-    // FIX - will not use updated currentGuess until typed in (React wizardry needed)
     function handleType(value: string) {
         const nextIndex = guesses[currentGuess].letters.indexOf(' ');
 
@@ -94,7 +89,8 @@ export default function App() {
 
             setGuesses(nextGuesses);
 
-            const maxGuesses = 4 + difficulty; // Will need changed if increasing the length of chain per difficulty
+            // Will need changed if increasing the length of chain per difficulty
+            const maxGuesses = 4 + difficulty; 
             if (currentGuess < maxGuesses - 1) {
                 setCurrentGuess(currentGuess + 1);
             }
@@ -231,26 +227,7 @@ export default function App() {
                             HARD
                         </button>
                     </div>
-                    {keyboard.map(row => (
-                        <div
-                            key={`keyboard-row-${keyboard.indexOf(row)}`}
-                            className='flex gap-x-1.5'
-                        >
-                            {row.map(key => (
-                                <button
-                                    key={`keyboard-${key}`}
-                                    className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
-                                    onClick={() => {
-                                        handleKeyUp(key);
-                                    }}
-                                >
-                                    {key === 'Backspace'
-                                        ? '⌫'
-                                        : key.toUpperCase()}
-                                </button>
-                            ))}
-                        </div>
-                    ))}
+                    <Keyboard handleKeyUp={handleKeyUp}/>
                 </div>
             </div>
         </div>
