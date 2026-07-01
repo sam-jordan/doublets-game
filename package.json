@@ -19,7 +19,8 @@
         "build": "tsc -b && vite build",
         "lint": "xo && prettier .",
         "lint:fix": "xo --fix && prettier . --write",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prepare": "husky"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.1",
