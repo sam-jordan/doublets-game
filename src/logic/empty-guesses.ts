@@ -1,4 +1,4 @@
-import { Status, type Guess } from "./types";
+import { Status, type Guess } from './types';
 
 export function emptyGuesses(guesses: number): Guess[] {
     return Array.from({ length: guesses })

@@ -1,4 +1,4 @@
-import { Difficulties } from "./types";
+import { Difficulties } from './types';
 
 export function getPuzzle(difficulty: Difficulties) {
     // Temporary while building frontend
