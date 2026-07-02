@@ -1,26 +1,11 @@
-import { z } from 'zod';
-import { Status, type Word, type Puzzle } from './types';
+import {
+    dictionaryWord,
+    type Guess,
+    type Puzzle,
+    type Validation,
+} from './types';
 
-type Validation =
-    | {
-          valid: false;
-          message: string;
-      }
-    | { valid: true };
-
-const dictionaryWord = z.object({
-    word: z.string(),
-    entries: z.array(
-        z.object({
-            language: z.object({
-                code: z.string(),
-                name: z.string(),
-            }),
-        })
-    ),
-});
-
-export async function validateWord(
+async function validateWord(
     word: string[],
     puzzle: Puzzle
 ): Promise<Validation> {
@@ -41,6 +26,7 @@ export async function validateWord(
 
     const parsed = dictionaryWord.safeParse(await response.json());
 
+    // FIX - this one is returning false positives
     if (parsed.error) {
         return { valid: false, message: 'Not in word list' };
     }
@@ -48,46 +34,47 @@ export async function validateWord(
     return { valid: true };
 }
 
-export function validateSolution(
-    guesses: Word[],
-    puzzle: Puzzle
-): Validation {
-    const solution = [
-        {
-            index: 0,
-            letters: puzzle.startWord.split(''),
-            status: Status.FIXED,
-        },
-        ...guesses.map(guess => ({ ...guess, index: guess.index + 1 })),
-        {
-            index: guesses.length + 1,
-            letters: puzzle.endWord.split(''),
-            status: Status.FIXED,
-        },
-    ];
-
-    for (const word of solution) {
-        if (word.index === 0) {
+export function getChanged(word: string[], previous: string[]) {
+    const diff = [];
+    for (const [i, element] of word.entries()) {
+        if (element === ' ') {
             continue;
         }
 
-        // eslint-disable-next-line no-await-in-loop
-        // const wordValidation = await validateWord(word.letters, puzzle);
-        // if (!wordValidation.valid) {
-        //     return wordValidation;
-        // }
-
-        const diff = [];
-        for (let i = 0; i < word.letters.length; i++) {
-            if (guesses[word.index - 1].letters[i] !== word.letters[i]) {
-                diff.push(word.letters[i]);
-            }
+        if (previous[i] !== element) {
+            diff.push(i);
         }
+    }
 
-        if (diff.length !== 1) {
+    return diff;
+}
+
+export async function validateSolution(
+    guesses: Guess[],
+    puzzle: Puzzle
+): Promise<Validation> {
+    for (const guess of guesses) {
+        // eslint-disable-next-line no-await-in-loop
+        const result = await validateWord(guess.letters, puzzle);
+
+        if (!result.valid) {
             return {
                 valid: false,
-                message: 'Change only one letter between guesses!',
+                message: `Guess ${guess.index + 1}: ${result.message}`,
+            };
+        }
+
+        const changed = getChanged(
+            guess.letters,
+            guess.index === 0
+                ? puzzle.startWord.split('')
+                : guesses[guess.index - 1].letters
+        );
+
+        if (changed.length !== 1) {
+            return {
+                valid: false,
+                message: `Guess ${guess.index + 1}: Change only one letter between guesses!`,
             };
         }
     }

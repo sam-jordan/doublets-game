@@ -1,9 +1,8 @@
-import { getPuzzle } from '../logic/get-puzzle';
-import { Status, type RowProps } from '../logic/types';
+import { WordTypes, type RowProps } from '../logic/types';
 
 export default function Row(props: RowProps) {
     function handleClick() {
-        if (props.status !== Status.FIXED) {
+        if (props.type !== WordTypes.FIXED) {
             props.setCurrentGuess(props.index);
         }
     }
@@ -30,28 +29,34 @@ export default function Row(props: RowProps) {
     );
 }
 
-// TODO - add an indicator for letters that changed from the last guess
 function buildCharacterStyling(
-    char: string,
+    character: string,
     index: number,
     props: RowProps
 ): string {
     const isCurrentGuess =
-        props.status === Status.FIXED ? false : props.currentGuess;
+        props.type === WordTypes.FIXED ? false : props.currentGuess;
     const base =
         'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
-    const puzzle = getPuzzle(props.difficulty);
 
-    if (props.status === Status.FIXED) {
+    if (props.type === WordTypes.FIXED) {
         return base + ' bg-white text-dark-bg border-white';
     }
 
-    if (props.status === Status.CHECKED) {
-        if (puzzle.endWord.split('')[index] === char) {
-            return base + ' bg-correct';
-        }
+    if (props.changed.includes(index)) {
+        return (
+            base +
+            ' bg-correct border-correct' +
+            (isCurrentGuess ? ' border-white' : '')
+        );
+    }
 
-        return base + ' bg-inactive-border';
+    if (character !== ' ') {
+        return (
+            base +
+            ' bg-inactive-border' +
+            (isCurrentGuess ? ' border-white' : ' border-inactive-border')
+        );
     }
 
     return (

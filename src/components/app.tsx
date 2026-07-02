@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/strict-void-return */
+
 import { useEffect, useState } from 'react';
-import { validateSolution, validateWord } from '../logic/validators';
+import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { Difficulties, Status, type Word } from '../logic/types';
+import { Difficulties, WordTypes, type Guess } from '../logic/types';
 import Popup from './popup';
-import Row from './row';
+import Word from './word';
 import Keyboard from './keyboard';
 
 export default function App() {
-    const [guesses, setGuesses] = useState<Word[]>(emptyGuesses(4));
+    const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
     const [currentGuess, setCurrentGuess] = useState<number>(0);
-    const [popupMessage, setPopupMessage] = useState<string>('');
+    const [popup, setPopup] = useState<{ show: boolean; message: string }>({
+        show: false,
+        message: '',
+    });
     const [difficulty, setDifficulty] = useState<Difficulties>(
         Difficulties.EASY
     );
@@ -18,9 +23,9 @@ export default function App() {
     const puzzle = getPuzzle(difficulty);
 
     useEffect(() => {
-        function handleKeyboardEvent(event: KeyboardEvent) {
+        async function handleKeyboardEvent(event: KeyboardEvent) {
             event.preventDefault();
-            handleKeyUp(event.key);
+            await handleKeyUp(event.key);
         }
 
         document.body.addEventListener('keyup', handleKeyboardEvent);
@@ -30,55 +35,74 @@ export default function App() {
         };
     });
 
-    function handleKeyUp(key: string) {
+    async function handleKeyUp(key: string) {
         if (/^[a-z]$/iv.test(key)) {
             handleType(key);
         } else {
-            switch(key) {
-                case 'Enter':
+            switch (key) {
+                case 'Enter': {
                     if (currentGuess === guesses.length - 1) {
-                        handleSubmit();
+                        await handleSubmit();
                     } else {
                         setCurrentGuess(currentGuess + 1);
-                    }  
-                    break;
+                    }
 
-                case 'Backspace':
+                    break;
+                }
+
+                case 'Backspace': {
                     handleBackspace();
                     break;
+                }
 
-                case 'ArrowUp':
+                case 'ArrowUp': {
                     if (currentGuess !== 0) {
                         setCurrentGuess(currentGuess - 1);
                     }
-                    break;
 
-                case 'ArrowDown':
+                    break;
+                }
+
+                case 'ArrowDown': {
                     if (currentGuess < guesses.length - 1) {
                         setCurrentGuess(currentGuess + 1);
                     }
-                    break;
 
-                default:
                     break;
+                }
+
+                default: {
+                    break;
+                }
             }
         }
     }
 
     function handleType(value: string) {
         const nextIndex = guesses[currentGuess].letters.indexOf(' ');
+        const nextGuess = {
+            ...guesses[currentGuess],
+            letters: guesses[currentGuess].letters.map((letter, index) => {
+                if (nextIndex !== -1 && index === nextIndex) {
+                    return value.toUpperCase();
+                }
+
+                return letter;
+            }),
+        };
+
+        const changed = getChanged(
+            nextGuess.letters,
+            nextGuess.index === 0
+                ? puzzle.startWord.split('')
+                : guesses[nextGuess.index - 1].letters
+        );
 
         const nextGuesses = guesses.map(guess => {
             if (guess.index === currentGuess) {
                 return {
-                    ...guess,
-                    letters: guess.letters.map((letter, index) => {
-                        if (nextIndex !== -1 && index === nextIndex) {
-                            return value.toUpperCase();
-                        }
-
-                        return letter;
-                    }),
+                    ...nextGuess,
+                    changed,
                 };
             }
 
@@ -88,55 +112,34 @@ export default function App() {
         setGuesses(nextGuesses);
     }
 
-    // TODO - definitely want more feedback here - guess valid/invalid - popup, animation, text highlighting
-    async function handleGuess() {
-        // TODO - likely want this in an Effect (contains API call)
-        const validation = await validateWord(
-            guesses[currentGuess].letters,
-            puzzle
-        );
-
-        if (validation.valid) {
-            const nextGuesses = guesses.map(guess => {
-                if (guess.index === currentGuess) {
-                    return {
-                        ...guess,
-                        status: Status.CHECKED,
-                    };
-                }
-
-                return guess;
-            });
-
-            setGuesses(nextGuesses);
-
-            // Will need changed if increasing the length of chain per difficulty
-            const maxGuesses = 4 + difficulty;
-            if (currentGuess < maxGuesses - 1) {
-                setCurrentGuess(currentGuess + 1);
-            }
-        } else {
-            showPopup(validation.message);
-        }
-    }
-
     function handleBackspace() {
-        guesses[currentGuess].status = Status.UNCHECKED;
         const currentIndex = guesses[currentGuess].letters.findLastIndex(
             letter => letter !== ' '
         );
 
+        const nextGuess = {
+            ...guesses[currentGuess],
+            letters: guesses[currentGuess].letters.map((letter, i) => {
+                if (currentIndex !== -1 && i === currentIndex) {
+                    return ' ';
+                }
+
+                return letter;
+            }),
+        };
+
+        const changed = getChanged(
+            nextGuess.letters,
+            nextGuess.index === 0
+                ? puzzle.startWord.split('')
+                : guesses[nextGuess.index - 1].letters
+        );
+
         const nextGuesses = guesses.map(guess => {
             if (guess.index === currentGuess) {
                 return {
-                    ...guess,
-                    letters: guess.letters.map((letter, i) => {
-                        if (currentIndex !== -1 && i === currentIndex) {
-                            return ' ';
-                        }
-
-                        return letter;
-                    }),
+                    ...nextGuess,
+                    changed,
                 };
             }
 
@@ -146,39 +149,35 @@ export default function App() {
         setGuesses(nextGuesses);
     }
 
-    function showPopup(message: string) {
-        setPopupMessage(message);
+    // function handleDifficulty(nextDifficulty: Difficulties) {
+    //     if (nextDifficulty === difficulty) {
+    //         return;
+    //     }
+
+    //     const guessesLength =
+    //         nextDifficulty === Difficulties.EASY
+    //             ? 4
+    //             : nextDifficulty === Difficulties.MEDIUM
+    //               ? 5
+    //               : 6;
+
+    //     setDifficulty(nextDifficulty);
+    //     setCurrentGuess(0);
+    //     setGuesses(emptyGuesses(guessesLength));
+    // }
+
+    async function handleSubmit() {
+        const result = await validateSolution(guesses, puzzle);
+
+        if (result.valid) {
+            setPopup({ show: true, message: 'Splendid!' });
+        } else {
+            setPopup({ show: true, message: result.message });
+        }
 
         setTimeout(() => {
-            setPopupMessage('');
+            setPopup({ ...popup, show: false });
         }, 2000);
-    }
-
-    function handleDifficulty(nextDifficulty: Difficulties) {
-        if (nextDifficulty === difficulty) {
-            return;
-        }
-
-        const guessesLength =
-            nextDifficulty === Difficulties.EASY
-                ? 4
-                : nextDifficulty === Difficulties.MEDIUM
-                  ? 5
-                  : 6;
-
-        setDifficulty(nextDifficulty);
-        setCurrentGuess(0);
-        setGuesses(emptyGuesses(guessesLength));
-    }
-
-    function handleSubmit() {
-        const validation = validateSolution(guesses, puzzle);
-
-        if (validation.valid) {
-            showPopup('Splendid!');
-        } else {
-            showPopup(validation.message);
-        }
     }
 
     return (
@@ -210,33 +209,31 @@ export default function App() {
                     </button>
                 </div>
             </header>
-            <Popup showPopup={popupMessage !== ''} message={popupMessage} />
+            <Popup popup={popup} />
             <div className='flex justify-evenly items-center mt-16'>
                 <div>
-                    <Row
+                    <Word
                         key={'start-word'}
                         index={100}
                         letters={puzzle.startWord.split('')}
-                        status={Status.FIXED}
-                        difficulty={difficulty}
+                        type={WordTypes.FIXED}
                     />
                     {guesses.map(guess => (
-                        <Row
+                        <Word
                             key={`guess-${guess.index}`}
                             index={guess.index}
                             letters={guess.letters}
-                            status={guess.status}
-                            difficulty={difficulty}
+                            type={guess.type}
+                            changed={guess.changed}
                             currentGuess={guess.index === currentGuess}
                             setCurrentGuess={setCurrentGuess}
                         />
                     ))}
-                    <Row
+                    <Word
                         key={'end-word'}
                         index={101}
                         letters={puzzle.endWord.split('')}
-                        status={Status.FIXED}
-                        difficulty={difficulty}
+                        type={WordTypes.FIXED}
                     />
                 </div>
                 <Keyboard handleKeyUp={handleKeyUp} />

@@ -1,33 +1,54 @@
+import z from 'zod';
+
 export enum Difficulties {
     EASY,
     MEDIUM,
     HARD,
 }
 
-export enum Status {
+export enum WordTypes {
     FIXED,
-    CHECKED,
-    UNCHECKED,
+    GUESS,
 }
-
-export type Word = {
-    index: number;
-    letters: string[];
-    status: Status;
-};
 
 export type Puzzle = { startWord: string; endWord: string };
 
-type FixedProps = Word & {
-    status: Status.FIXED;
-    difficulty: Difficulties;
+type Word = {
+    index: number;
+    letters: string[];
 };
 
-type GuessProps = Word & {
-    status: Status.CHECKED | Status.UNCHECKED;
-    difficulty: Difficulties;
+export type Guess = Word & {
+    type: WordTypes.GUESS;
+    changed: number[];
+};
+
+type Fixed = Word & {
+    type: WordTypes.FIXED;
+};
+
+type GuessProps = Guess & {
     currentGuess: boolean;
     setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export type RowProps = FixedProps | GuessProps;
+export type RowProps = Fixed | GuessProps;
+
+export type Validation =
+    | {
+          valid: false;
+          message: string;
+      }
+    | { valid: true };
+
+export const dictionaryWord = z.object({
+    word: z.string(),
+    entries: z.array(
+        z.object({
+            language: z.object({
+                code: z.string(),
+                name: z.string(),
+            }),
+        })
+    ),
+});

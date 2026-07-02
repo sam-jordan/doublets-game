@@ -14,6 +14,7 @@ const xoConfig: FlatXoConfig = [
         rules: {
             // Unavoidable part of declaring Zod schemas
             'unicorn/max-nested-calls': 'warn',
+            '@eslint-community/eslint-comments/require-description': 'off',
         },
     },
 ];

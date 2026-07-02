@@ -1,12 +1,13 @@
-import { Status, type Word } from './types';
+import { WordTypes, type Guess } from './types';
 
-export function emptyGuesses(guesses: number): Word[] {
+export function emptyGuesses(guesses: number): Guess[] {
     return Array.from({ length: guesses })
         .keys()
         .map(item => ({
             index: item,
             letters: Array.from({ length: 5 }, _ => ' '),
-            status: Status.UNCHECKED,
+            type: WordTypes.GUESS.valueOf(),
+            changed: [],
         }))
         .toArray();
 }
