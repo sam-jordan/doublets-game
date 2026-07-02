@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './components/app';
+import Game from './components/game';
 
 createRoot(document.querySelector('#root')!).render(
     <StrictMode>
-        <App />
+        <Game />
     </StrictMode>
 );

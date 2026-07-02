@@ -10,7 +10,7 @@ import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
 
-export default function App() {
+export default function Game() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
     const [currentGuess, setCurrentGuess] = useState<number>(0);
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
