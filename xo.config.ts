@@ -1,6 +1,8 @@
 import { type FlatXoConfig } from 'xo';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 const xoConfig: FlatXoConfig = [
+    jsxA11y.flatConfigs.recommended,
     {
         files: '**/*.{js,ts,tsx}',
         space: 4,

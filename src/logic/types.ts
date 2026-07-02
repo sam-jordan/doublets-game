@@ -43,12 +43,14 @@ export type Validation =
 
 export const dictionaryWord = z.object({
     word: z.string(),
-    entries: z.array(
-        z.object({
-            language: z.object({
-                code: z.string(),
-                name: z.string(),
-            }),
-        })
-    ).min(1),
+    entries: z
+        .array(
+            z.object({
+                language: z.object({
+                    code: z.string(),
+                    name: z.string(),
+                }),
+            })
+        )
+        .min(1),
 });

@@ -8,7 +8,7 @@ export default function Row(props: RowProps) {
     }
 
     return (
-        <div
+        <button
             tabIndex={0}
             className='grid grid-cols-5 w-66 h-13'
             onClick={handleClick}
@@ -25,7 +25,7 @@ export default function Row(props: RowProps) {
                     <strong>{character}</strong>
                 </div>
             ))}
-        </div>
+        </button>
     );
 }
 
