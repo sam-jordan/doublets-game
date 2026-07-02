@@ -117,36 +117,40 @@ export default function App() {
             letter => letter !== ' '
         );
 
-        const nextGuess = {
-            ...guesses[currentGuess],
-            letters: guesses[currentGuess].letters.map((letter, i) => {
-                if (currentIndex !== -1 && i === currentIndex) {
-                    return ' ';
+        if (currentIndex === -1 && currentGuess > 0) {
+            setCurrentGuess(currentGuess - 1);
+        } else {
+            const nextGuess = {
+                ...guesses[currentGuess],
+                letters: guesses[currentGuess].letters.map((letter, i) => {
+                    if (i === currentIndex) {
+                        return ' ';
+                    }
+
+                    return letter;
+                }),
+            };
+
+            const changed = getChanged(
+                nextGuess.letters,
+                nextGuess.index === 0
+                    ? puzzle.startWord.split('')
+                    : guesses[nextGuess.index - 1].letters
+            );
+
+            const nextGuesses = guesses.map(guess => {
+                if (guess.index === currentGuess) {
+                    return {
+                        ...nextGuess,
+                        changed,
+                    };
                 }
 
-                return letter;
-            }),
-        };
+                return guess;
+            });
 
-        const changed = getChanged(
-            nextGuess.letters,
-            nextGuess.index === 0
-                ? puzzle.startWord.split('')
-                : guesses[nextGuess.index - 1].letters
-        );
-
-        const nextGuesses = guesses.map(guess => {
-            if (guess.index === currentGuess) {
-                return {
-                    ...nextGuess,
-                    changed,
-                };
-            }
-
-            return guess;
-        });
-
-        setGuesses(nextGuesses);
+            setGuesses(nextGuesses);
+        }
     }
 
     // function handleDifficulty(nextDifficulty: Difficulties) {
