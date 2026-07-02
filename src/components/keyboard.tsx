@@ -17,7 +17,7 @@ export default function Keyboard(props: {
                     {row.map(key => (
                         <button
                             key={`keyboard-${key}`}
-                            className='bg-button-bg rounded-sm py-4 px-4 cursor-pointer'
+                            className='bg-grey-light rounded-sm py-4 px-4 cursor-pointer'
                             onClick={() => {
                                 props.handleKeyUp(key);
                             }}

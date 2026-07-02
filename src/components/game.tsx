@@ -186,8 +186,8 @@ export default function Game() {
     }
 
     return (
-        <div className='font-(family-name:--use-font-family) w-screen h-screen'>
-            <Header handleDifficulty={handleDifficulty}/>
+        <div className='font-(family-name:--use-font-family) w-screen h-screen bg-grey-dark text-white'>
+            <Header handleDifficulty={handleDifficulty} />
             <Popup popup={popup} />
             <div className='flex justify-evenly items-center mt-16'>
                 <div>

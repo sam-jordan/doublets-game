@@ -40,13 +40,13 @@ function buildCharacterStyling(
         'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
 
     if (props.type === WordTypes.FIXED) {
-        return base + ' bg-white text-dark-bg border-white';
+        return base + ' bg-white text-grey-dark border-white';
     }
 
     if (props.changed.includes(index)) {
         return (
             base +
-            ' bg-correct border-correct' +
+            ' bg-pink-bright border-pink-bright' +
             (isCurrentGuess ? ' border-white' : '')
         );
     }
@@ -54,12 +54,10 @@ function buildCharacterStyling(
     if (character !== ' ') {
         return (
             base +
-            ' bg-inactive-border' +
-            (isCurrentGuess ? ' border-white' : ' border-inactive-border')
+            ' bg-grey-mid' +
+            (isCurrentGuess ? ' border-white' : ' border-grey-mid')
         );
     }
 
-    return (
-        base + (isCurrentGuess ? ' border-white' : ' border-inactive-border')
-    );
+    return base + (isCurrentGuess ? ' border-white' : ' border-grey-mid');
 }

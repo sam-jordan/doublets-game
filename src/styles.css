@@ -1,10 +1,10 @@
 @import 'tailwindcss';
 
 @theme {
-    --color-dark-bg: rgb(18, 18, 19);
-    --color-inactive-border: rgb(58, 58, 60);
-    --color-button-bg: rgb(129, 131, 132);
-    --color-correct: rgb(219, 19, 122);
+    --color-grey-dark: rgb(18, 18, 19);
+    --color-grey-mid: rgb(58, 58, 60);
+    --color-grey-light: rgb(129, 131, 132);
+    --color-pink-bright: rgb(219, 19, 122);
 }
 
 @theme {

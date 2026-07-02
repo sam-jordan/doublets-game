@@ -54,3 +54,8 @@ export const dictionaryWord = z.object({
         )
         .min(1),
 });
+
+export enum Pages {
+    START,
+    GAME,
+}
