@@ -50,5 +50,5 @@ export const dictionaryWord = z.object({
                 name: z.string(),
             }),
         })
-    ),
+    ).min(1),
 });

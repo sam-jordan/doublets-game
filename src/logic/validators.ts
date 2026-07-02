@@ -21,12 +21,11 @@ async function validateWord(
     }
 
     const response = await fetch(
-        `https://freedictionaryapi.com/api/v1/entries/en/${word.join('')}`
+        `https://freedictionaryapi.com/api/v1/entries/en/${word.join('').toLowerCase()}`
     );
 
     const parsed = dictionaryWord.safeParse(await response.json());
 
-    // FIX - this one is returning false positives
     if (parsed.error) {
         return { valid: false, message: 'Not in word list' };
     }
