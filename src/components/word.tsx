@@ -40,7 +40,7 @@ function buildCharacterStyling(
         'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
 
     if (props.type === WordTypes.FIXED) {
-        return base + ' bg-white text-grey-dark border-white';
+        return base + ' bg-white text-grey-very-dark border-white';
     }
 
     if (props.changed.includes(index)) {

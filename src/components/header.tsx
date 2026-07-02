@@ -7,7 +7,7 @@ export default function Header(props: {
     const [showDifficulties, setShowDifficulties] = useState<boolean>();
 
     return (
-        <header className='flex justify-between border-b-1 px-4'>
+        <header className='flex justify-between border-b px-4'>
             <h1 className='text-3xl text-pink-bright py-2'>DOUBLETS</h1>
             <div className='flex justify-between gap-x-2'>
                 <button
