@@ -186,10 +186,10 @@ export default function Game() {
     }
 
     return (
-        <div className='font-(family-name:--use-font-family) w-screen h-screen bg-grey-very-dark text-white'>
+        <div className='font-(family-name:--use-font-family) w-screen h-screen bg-grey-very-dark text-white flex flex-col'>
             <Header handleDifficulty={handleDifficulty} />
             <Popup popup={popup} />
-            <div className='flex justify-evenly items-center mt-16'>
+            <div className='flex justify-evenly items-center grow'>
                 <div>
                     <Word
                         key={'start-word'}
