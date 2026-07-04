@@ -10,12 +10,12 @@ export default function App() {
     }
 
     return (
-        <div className='font-(family-name:--use-font-family) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
+        <div className='font-(family-name:--start-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
                 <svg>
                     <use xlinkHref='../../static/logo.svg' />
                 </svg>
-                <h2 className='text-5xl'>Doublets</h2>
+                <h2 className='text-5xl font-bold'>Doublets</h2>
                 <p className='text-2xl text-center'>
                     Get from the start word to the end <br /> by changing one
                     letter at a time.
@@ -24,7 +24,7 @@ export default function App() {
                     onClick={() => {
                         setPage(Pages.GAME);
                     }}
-                    className='bg-grey-very-dark text-xl py-2 rounded-3xl w-32'
+                    className='font-(family-name:--game-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer'
                 >
                     Play
                 </button>
