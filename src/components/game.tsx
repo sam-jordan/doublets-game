@@ -20,6 +20,7 @@ export default function Game() {
     const [difficulty, setDifficulty] = useState<Difficulties>(
         Difficulties.EASY
     );
+    const [gameOver, setGameOver] = useState<boolean>(false);
 
     const puzzle = getPuzzle(difficulty);
 
@@ -37,6 +38,10 @@ export default function Game() {
     });
 
     async function handleKeyUp(key: string) {
+        if (gameOver) {
+            return;
+        }
+
         if (/^[a-z]$/iv.test(key)) {
             handleType(key);
         } else {
@@ -169,6 +174,7 @@ export default function Game() {
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
         setGuesses(emptyGuesses(guessesLength));
+        setGameOver(false);
     }
 
     async function handleSubmit() {
@@ -176,6 +182,7 @@ export default function Game() {
 
         if (result.valid) {
             setPopup({ show: true, message: 'Splendid!' });
+            setGameOver(true);
         } else {
             setPopup({ show: true, message: result.message });
         }
