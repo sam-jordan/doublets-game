@@ -97,22 +97,38 @@ export default function Game() {
             }),
         };
 
-        const changed = getChanged(
-            nextGuess.letters,
-            nextGuess.index === 0
-                ? puzzle.startWord.split('')
-                : guesses[nextGuess.index - 1].letters
-        );
-
         const nextGuesses = guesses.map(guess => {
             if (guess.index === currentGuess) {
+                const changed = getChanged(
+                    nextGuess.letters,
+                    nextGuess.index === 0
+                        ? puzzle.startWord.split('')
+                        : guesses[nextGuess.index - 1].letters
+                );
+
                 return {
                     ...nextGuess,
                     changed,
                 };
             }
 
-            return guess;
+            if (guess.index === currentGuess + 1) {
+                const changed = getChanged(
+                    guess.letters,
+                    nextGuess.letters
+                );
+
+                return { ...guess, changed };
+            }
+
+            const changed = getChanged(
+                guess.letters,
+                guess.index === 0
+                    ? puzzle.startWord.split('')
+                    : guesses[guess.index - 1].letters
+            );
+
+            return { ...guess, changed };
         });
 
         setGuesses(nextGuesses);
