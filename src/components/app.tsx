@@ -10,9 +10,13 @@ export default function App() {
     }
 
     return <div className='font-(family-name:--use-font-family) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
-        <div className='flex flex-col justify-between gap-4'>
+        <div className='flex flex-col justify-between items-center gap-4'>
+            <svg>
+                <use xlinkHref='../../static/logo.svg' />
+            </svg>
             <h2 className='text-5xl'>Doublets</h2>
-            <button onClick={() => setPage(Pages.GAME)} className='bg-grey-very-dark text-xl py-2 rounded-3xl'>
+            <p className='text-2xl text-center'>Get from the start word to the end <br /> by changing one letter at a time.</p>
+            <button onClick={() => setPage(Pages.GAME)} className='bg-grey-very-dark text-xl py-2 rounded-3xl w-32'>
                 Play
             </button>
         </div>
