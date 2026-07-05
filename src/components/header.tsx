@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
-    handleDifficulty: (nextDifficulty: Difficulties) => void;
+    handleDifficulty: (nextDifficulty: Difficulties) => void,
+    showHelp: boolean,
+    setShowHelp: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-    const [showDifficulties, setShowDifficulties] = useState<boolean>();
+    const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
 
     return (
         <header className='flex justify-between border-b px-4'>
@@ -63,7 +65,7 @@ export default function Header(props: {
                         </li>
                     </ul>
                 ) : null}
-                <button className='w-12 p-2 hover:bg-grey-mid'>
+                <button className='w-12 p-2 hover:bg-grey-mid' onClick={() => props.setShowHelp(!props.showHelp)}>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 640 640'

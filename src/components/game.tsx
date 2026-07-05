@@ -9,6 +9,7 @@ import Popup from './popup';
 import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
+import Help from './help';
 
 export default function Game() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
@@ -21,6 +22,7 @@ export default function Game() {
         Difficulties.EASY
     );
     const [gameOver, setGameOver] = useState<boolean>(false);
+    const [showHelp, setShowHelp] = useState<boolean>(false);
 
     const puzzle = getPuzzle(difficulty);
 
@@ -113,10 +115,7 @@ export default function Game() {
             }
 
             if (guess.index === currentGuess + 1) {
-                const changed = getChanged(
-                    guess.letters,
-                    nextGuess.letters
-                );
+                const changed = getChanged(guess.letters, nextGuess.letters);
 
                 return { ...guess, changed };
             }
@@ -210,8 +209,9 @@ export default function Game() {
 
     return (
         <div className='font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col'>
-            <Header handleDifficulty={handleDifficulty} />
+            <Header handleDifficulty={handleDifficulty} showHelp={showHelp} setShowHelp={setShowHelp} />
             <Popup popup={popup} />
+            <Help showHelp={showHelp} setShowHelp={setShowHelp} />
             <div className='flex justify-evenly items-center grow'>
                 <div>
                     <Word
