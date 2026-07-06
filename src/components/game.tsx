@@ -40,10 +40,6 @@ export default function Game() {
     });
 
     async function handleKeyUp(key: string) {
-        if (gameOver) {
-            return;
-        }
-
         if (/^[a-z]$/iv.test(key)) {
             handleType(key);
         } else {
@@ -87,6 +83,10 @@ export default function Game() {
     }
 
     function handleType(value: string) {
+        if (gameOver) {
+            return;
+        }
+
         const nextIndex = guesses[currentGuess].letters.indexOf(' ');
         const nextGuess = {
             ...guesses[currentGuess],
@@ -134,6 +134,10 @@ export default function Game() {
     }
 
     function handleBackspace() {
+        if (gameOver) {
+            return;
+        }
+
         const currentIndex = guesses[currentGuess].letters.findLastIndex(
             letter => letter !== ' '
         );
@@ -193,6 +197,10 @@ export default function Game() {
     }
 
     async function handleSubmit() {
+        if (gameOver) {
+            return;
+        }
+
         const result = await validateSolution(guesses, puzzle);
 
         if (result.valid) {
