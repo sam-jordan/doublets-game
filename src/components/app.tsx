@@ -5,6 +5,13 @@ import Game from './game';
 export default function App() {
     const [page, setPage] = useState<Pages>(Pages.START);
 
+    const date = Temporal.Now.plainDateISO();
+    const formatter = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+
     if (page === Pages.GAME) {
         return <Game />;
     }
@@ -15,7 +22,7 @@ export default function App() {
                 <svg>
                     <use xlinkHref='../../static/logo.svg' />
                 </svg>
-                <h2 className='text-5xl font-bold'>Doublets</h2>
+                <h2 className='text-5xl font-extrabold'>Doublets</h2>
                 <p className='text-2xl text-center'>
                     Get from the start word to the end <br /> by changing one
                     letter at a time.
@@ -28,6 +35,7 @@ export default function App() {
                 >
                     Play
                 </button>
+                <p className='font-(family-name:--game-fonts)'>{formatter.format(date)}</p>
             </div>
         </div>
     );

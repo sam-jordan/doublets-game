@@ -10,7 +10,7 @@ export default function Header(props: {
 
     return (
         <header className='flex justify-between border-b px-4'>
-            <h1 className='text-3xl text-pink-bright py-2'>DOUBLETS</h1>
+            <h1 className='font-(family-name:--start-fonts) text-3xl text-pink-bright py-2 font-extrabold'>DOUBLETS</h1>
             <div className='flex justify-between gap-x-2'>
                 <button
                     className={
