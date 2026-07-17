@@ -1,20 +1,16 @@
 import { useState } from 'react';
+import { DateTime } from 'luxon';
 import { Pages } from '../logic/types';
 import Game from './game';
 
 export default function App() {
     const [page, setPage] = useState<Pages>(Pages.START);
 
-    const date = Temporal.Now.plainDateISO();
-    const formatter = new Intl.DateTimeFormat('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    });
-
     if (page === Pages.GAME) {
         return <Game />;
     }
+
+    const date = DateTime.now();
 
     return (
         <div className='font-(family-name:--title-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
@@ -36,7 +32,7 @@ export default function App() {
                     Play
                 </button>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {formatter.format(date)}
+                    {date.toLocaleString(DateTime.DATE_MED)}
                 </p>
             </div>
         </div>
