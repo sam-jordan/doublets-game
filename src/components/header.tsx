@@ -10,7 +10,7 @@ export default function Header(props: {
 
     return (
         <header className='flex justify-between border-b px-4'>
-            <h1 className='font-(family-name:--start-fonts) text-3xl text-pink-bright py-2 font-extrabold'>DOUBLETS</h1>
+            <h1 className='font-(family-name:--title-fonts) text-3xl text-pink-bright py-2 font-extrabold'>DOUBLETS</h1>
             <div className='flex justify-between gap-x-2'>
                 <button
                     className={
@@ -32,7 +32,7 @@ export default function Header(props: {
                     </svg>
                 </button>
                 {showDifficulties ? (
-                    <ul className='absolute top-13'>
+                    <ul className='font-(family-name:--standard-fonts) absolute top-13'>
                         <li>
                             <button
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'

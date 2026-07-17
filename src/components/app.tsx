@@ -17,7 +17,7 @@ export default function App() {
     }
 
     return (
-        <div className='font-(family-name:--start-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
+        <div className='font-(family-name:--title-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
                 <svg>
                     <use xlinkHref='../../static/logo.svg' />
@@ -31,11 +31,11 @@ export default function App() {
                     onClick={() => {
                         setPage(Pages.GAME);
                     }}
-                    className='font-(family-name:--game-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer'
+                    className='font-(family-name:--standard-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer'
                 >
                     Play
                 </button>
-                <p className='font-(family-name:--game-fonts)'>{formatter.format(date)}</p>
+                <p className='font-(family-name:--standard-fonts)'>{formatter.format(date)}</p>
             </div>
         </div>
     );
