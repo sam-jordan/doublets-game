@@ -15,3 +15,19 @@
         'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic',
         Arial, sans-serif;
 }
+
+@theme {
+    --animate-throb: throb 100ms linear;
+
+    @keyframes throb {
+
+        0%,
+        100% {
+            transform: scale(100%, 100%);
+        }
+
+        50% {
+            transform: scale(95%, 95%);
+        }
+    }
+}

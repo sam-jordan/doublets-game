@@ -30,6 +30,7 @@ type Fixed = Word & {
 type GuessProps = Guess & {
     currentGuess: boolean;
     setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
+    lastTyped: number | undefined;
 };
 
 export type RowProps = Fixed | GuessProps;

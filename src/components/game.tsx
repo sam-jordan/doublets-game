@@ -24,6 +24,7 @@ export default function Game() {
     );
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [showHelp, setShowHelp] = useState<boolean>(false);
+    const [lastTyped, setLastTyped] = useState<number | undefined>(null);
 
     const puzzle = getPuzzle(difficulty);
 
@@ -52,6 +53,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess + 1);
                     }
 
+                    setLastTyped(null);
                     break;
                 }
 
@@ -65,6 +67,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess - 1);
                     }
 
+                    setLastTyped(null);
                     break;
                 }
 
@@ -73,6 +76,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess + 1);
                     }
 
+                    setLastTyped(null);
                     break;
                 }
 
@@ -131,6 +135,7 @@ export default function Game() {
             return { ...guess, changed };
         });
 
+        setLastTyped(nextIndex);
         setGuesses(nextGuesses);
     }
 
@@ -175,6 +180,7 @@ export default function Game() {
                 return guess;
             });
 
+            setLastTyped(null);
             setGuesses(nextGuesses);
         }
     }
@@ -248,6 +254,7 @@ export default function Game() {
                                 changed={guess.changed}
                                 currentGuess={guess.index === currentGuess}
                                 setCurrentGuess={setCurrentGuess}
+                                lastTyped={lastTyped}
                             />
                         ))}
                         <Word

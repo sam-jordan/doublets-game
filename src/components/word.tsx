@@ -40,8 +40,15 @@ function buildCharacterStyling(
 ): string {
     const isCurrentGuess =
         props.type === WordTypes.FIXED ? false : props.currentGuess;
-    const base =
-        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
+    const useThrob =
+        props.type !== WordTypes.FIXED &&
+        isCurrentGuess &&
+        index === props.lastTyped &&
+        character !== ' ';
+    const base = clsx(
+        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2',
+        useThrob ? 'animate-throb' : ''
+    );
 
     if (props.type === WordTypes.FIXED) {
         return clsx(base, 'bg-white text-grey-very-dark border-white');
