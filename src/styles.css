@@ -20,6 +20,7 @@
     --animate-throb: throb 100ms linear;
     --animate-shake: shake 150ms ease-in-out;
     --animate-fade-out: fade-out 500ms linear 1500ms;
+    --animate-jump: jump 500ms ease-in-out;
 
     @keyframes throb {
 
@@ -56,6 +57,18 @@
 
         100% {
             opacity: 0;
+        }
+    }
+
+    @keyframes jump {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-2%);
         }
     }
 }

@@ -4,11 +4,16 @@ import { WordTypes, type RowProps } from '../logic/types';
 export default function Row(props: RowProps) {
     const useShake =
         props.type !== WordTypes.FIXED && props.useShake === props.index;
+    const useJump =
+        props.type !== WordTypes.FIXED && props.useJump === props.index;
 
     function handleClick() {
-        if (props.type !== WordTypes.FIXED) {
-            props.setCurrentGuess(props.index);
+        if (props.type === WordTypes.FIXED) {
+            return;
         }
+
+        props.setCurrentGuess(props.index);
+        props.setUseJump(props.index);
     }
 
     return (
@@ -17,7 +22,8 @@ export default function Row(props: RowProps) {
             className={clsx(
                 'grid grid-cols-5 w-66 h-13',
                 props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
-                useShake ? 'animate-shake' : ''
+                useShake ? 'animate-shake' : '',
+                useJump ? 'animate-jump' : ''
             )}
             onClick={handleClick}
         >

@@ -26,7 +26,8 @@ export default function Game() {
     const [showHelp, setShowHelp] = useState<boolean>(false);
 
     const [lastTyped, setLastTyped] = useState<number | undefined>();
-    const [useShake, setUseShake] = useState<number>();
+    const [useShake, setUseShake] = useState<number | undefined>();
+    const [useJump, setUseJump] = useState<number | undefined>();
 
     const puzzle = getPuzzle(difficulty);
 
@@ -53,6 +54,7 @@ export default function Game() {
                         await handleSubmit();
                     } else {
                         setCurrentGuess(currentGuess + 1);
+                        setUseJump(currentGuess + 1);
                     }
 
                     setLastTyped(undefined);
@@ -67,6 +69,7 @@ export default function Game() {
                 case 'ArrowUp': {
                     if (currentGuess !== 0) {
                         setCurrentGuess(currentGuess - 1);
+                        setUseJump(currentGuess - 1);
                     }
 
                     setLastTyped(undefined);
@@ -76,6 +79,7 @@ export default function Game() {
                 case 'ArrowDown': {
                     if (currentGuess < guesses.length - 1) {
                         setCurrentGuess(currentGuess + 1);
+                        setUseJump(currentGuess + 1);
                     }
 
                     setLastTyped(undefined);
@@ -152,6 +156,7 @@ export default function Game() {
 
         if (currentIndex === -1 && currentGuess > 0) {
             setCurrentGuess(currentGuess - 1);
+            setUseJump(currentGuess - 1);
         } else {
             const nextGuess = {
                 ...guesses[currentGuess],
@@ -261,6 +266,8 @@ export default function Game() {
                                 setCurrentGuess={setCurrentGuess}
                                 lastTyped={lastTyped}
                                 useShake={useShake}
+                                useJump={useJump}
+                                setUseJump={setUseJump}
                             />
                         ))}
                         <Word

@@ -27,12 +27,18 @@ type Fixed = Word & {
     type: WordTypes.FIXED;
 };
 
-type GuessProps = Guess & {
-    currentGuess: boolean;
-    setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
+type Animations = {
     lastTyped: number | undefined;
     useShake: number | undefined;
+    useJump: number | undefined;
+    setUseJump: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
+
+type GuessProps = Guess &
+    Animations & {
+        currentGuess: boolean;
+        setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
+    };
 
 export type RowProps = Fixed | GuessProps;
 
