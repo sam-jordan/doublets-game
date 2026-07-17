@@ -17,8 +17,8 @@
         "generate-data": "node scripts/generate-data.mjs",
         "dev": "vite",
         "build": "tsc -b && vite build",
-        "lint": "xo && prettier .",
-        "lint:fix": "xo --fix && prettier . --write",
+        "lint": "prettier --check . && xo",
+        "lint:fix": "prettier --write . && xo --fix",
         "preview": "vite preview",
         "prepare": "husky"
     },

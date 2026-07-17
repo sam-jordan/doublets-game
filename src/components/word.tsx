@@ -11,7 +11,10 @@ export default function Row(props: RowProps) {
     return (
         <button
             tabIndex={0}
-            className={clsx('grid grid-cols-5 w-66 h-13', props.type === WordTypes.FIXED ? '' : 'cursor-pointer')}
+            className={clsx(
+                'grid grid-cols-5 w-66 h-13',
+                props.type === WordTypes.FIXED ? '' : 'cursor-pointer'
+            )}
             onClick={handleClick}
         >
             {props.letters.map((character, charIndex) => (
@@ -46,13 +49,17 @@ function buildCharacterStyling(
 
     if (props.changed.includes(index)) {
         return clsx(
-            base, 'bg-pink-bright border-pink-bright', isCurrentGuess ? 'border-white' : ''
+            base,
+            'bg-pink-bright border-pink-bright',
+            isCurrentGuess ? 'border-white' : ''
         );
     }
 
     if (character !== ' ') {
         return clsx(
-            base, 'bg-grey-mid', isCurrentGuess ? 'border-white' : 'border-grey-mid'
+            base,
+            'bg-grey-mid',
+            isCurrentGuess ? 'border-white' : 'border-grey-mid'
         );
     }
 

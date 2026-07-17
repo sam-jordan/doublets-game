@@ -9,7 +9,7 @@ export default function App() {
     const formatter = new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
     });
 
     if (page === Pages.GAME) {
@@ -35,7 +35,9 @@ export default function App() {
                 >
                     Play
                 </button>
-                <p className='font-(family-name:--standard-fonts)'>{formatter.format(date)}</p>
+                <p className='font-(family-name:--standard-fonts)'>
+                    {formatter.format(date)}
+                </p>
             </div>
         </div>
     );

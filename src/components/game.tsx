@@ -188,8 +188,8 @@ export default function Game() {
             nextDifficulty === Difficulties.EASY
                 ? 4
                 : nextDifficulty === Difficulties.MEDIUM
-                    ? 5
-                    : 6;
+                  ? 5
+                  : 6;
 
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
@@ -219,8 +219,17 @@ export default function Game() {
     return (
         <div>
             <Help showHelp={showHelp} setShowHelp={setShowHelp} />
-            <div className={clsx('font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col', showHelp ? 'brightness-50' : '')}>
-                <Header handleDifficulty={handleDifficulty} showHelp={showHelp} setShowHelp={setShowHelp} />
+            <div
+                className={clsx(
+                    'font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col',
+                    showHelp ? 'brightness-50' : ''
+                )}
+            >
+                <Header
+                    handleDifficulty={handleDifficulty}
+                    showHelp={showHelp}
+                    setShowHelp={setShowHelp}
+                />
                 <Popup popup={popup} />
                 <div className='flex justify-evenly items-center grow'>
                     <div>
