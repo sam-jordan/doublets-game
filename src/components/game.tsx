@@ -10,6 +10,7 @@ import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
 import Help from './help';
+import clsx from 'clsx';
 
 export default function Game() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
@@ -187,8 +188,8 @@ export default function Game() {
             nextDifficulty === Difficulties.EASY
                 ? 4
                 : nextDifficulty === Difficulties.MEDIUM
-                  ? 5
-                  : 6;
+                    ? 5
+                    : 6;
 
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
@@ -216,37 +217,39 @@ export default function Game() {
     }
 
     return (
-        <div className='font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col'>
-            <Header handleDifficulty={handleDifficulty} showHelp={showHelp} setShowHelp={setShowHelp} />
-            <Popup popup={popup} />
+        <div>
             <Help showHelp={showHelp} setShowHelp={setShowHelp} />
-            <div className='flex justify-evenly items-center grow'>
-                <div>
-                    <Word
-                        key={'start-word'}
-                        index={100}
-                        letters={puzzle.startWord.split('')}
-                        type={WordTypes.FIXED}
-                    />
-                    {guesses.map(guess => (
+            <div className={clsx('font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col', showHelp ? 'brightness-50' : '')}>
+                <Header handleDifficulty={handleDifficulty} showHelp={showHelp} setShowHelp={setShowHelp} />
+                <Popup popup={popup} />
+                <div className='flex justify-evenly items-center grow'>
+                    <div>
                         <Word
-                            key={`guess-${guess.index}`}
-                            index={guess.index}
-                            letters={guess.letters}
-                            type={guess.type}
-                            changed={guess.changed}
-                            currentGuess={guess.index === currentGuess}
-                            setCurrentGuess={setCurrentGuess}
+                            key={'start-word'}
+                            index={100}
+                            letters={puzzle.startWord.split('')}
+                            type={WordTypes.FIXED}
                         />
-                    ))}
-                    <Word
-                        key={'end-word'}
-                        index={101}
-                        letters={puzzle.endWord.split('')}
-                        type={WordTypes.FIXED}
-                    />
+                        {guesses.map(guess => (
+                            <Word
+                                key={`guess-${guess.index}`}
+                                index={guess.index}
+                                letters={guess.letters}
+                                type={guess.type}
+                                changed={guess.changed}
+                                currentGuess={guess.index === currentGuess}
+                                setCurrentGuess={setCurrentGuess}
+                            />
+                        ))}
+                        <Word
+                            key={'end-word'}
+                            index={101}
+                            letters={puzzle.endWord.split('')}
+                            type={WordTypes.FIXED}
+                        />
+                    </div>
+                    <Keyboard handleKeyUp={handleKeyUp} />
                 </div>
-                <Keyboard handleKeyUp={handleKeyUp} />
             </div>
         </div>
     );

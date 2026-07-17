@@ -1,4 +1,5 @@
 import { WordTypes, type RowProps } from '../logic/types';
+import clsx from 'clsx';
 
 export default function Row(props: RowProps) {
     function handleClick() {
@@ -10,7 +11,7 @@ export default function Row(props: RowProps) {
     return (
         <button
             tabIndex={0}
-            className='grid grid-cols-5 w-66 h-13'
+            className={clsx('grid grid-cols-5 w-66 h-13', props.type !== WordTypes.FIXED ? 'cursor-pointer' : '')}
             onClick={handleClick}
         >
             {props.letters.map((character, charIndex) => (
