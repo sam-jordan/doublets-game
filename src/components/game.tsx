@@ -24,7 +24,9 @@ export default function Game() {
     );
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [showHelp, setShowHelp] = useState<boolean>(false);
+
     const [lastTyped, setLastTyped] = useState<number | undefined>();
+    const [useShake, setUseShake] = useState<number>();
 
     const puzzle = getPuzzle(difficulty);
 
@@ -214,10 +216,13 @@ export default function Game() {
             setPopup({ show: true, message: 'Splendid!' });
             setGameOver(true);
         } else {
+            setUseShake(result.index);
             setPopup({ show: true, message: result.message });
         }
 
+        // TODO - add a ref to dispose of any existing timeouts when submitting
         setTimeout(() => {
+            setUseShake(undefined);
             setPopup({ ...popup, show: false });
         }, 2000);
     }
@@ -255,6 +260,7 @@ export default function Game() {
                                 currentGuess={guess.index === currentGuess}
                                 setCurrentGuess={setCurrentGuess}
                                 lastTyped={lastTyped}
+                                useShake={useShake}
                             />
                         ))}
                         <Word

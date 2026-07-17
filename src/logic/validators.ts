@@ -7,16 +7,18 @@ import {
 
 async function validateWord(
     word: string[],
+    index: number,
     puzzle: Puzzle
 ): Promise<Validation> {
     if (word.includes(' ')) {
-        return { valid: false, message: 'Not enough letters' };
+        return { valid: false, message: 'Not enough letters', index };
     }
 
     if (Object.values(puzzle).includes(word.join(''))) {
         return {
             valid: false,
             message: 'Do not guess the start or end words!',
+            index,
         };
     }
 
@@ -27,7 +29,7 @@ async function validateWord(
     const parsed = dictionaryWord.safeParse(await response.json());
 
     if (parsed.error) {
-        return { valid: false, message: 'Not in word list' };
+        return { valid: false, message: 'Not in word list', index };
     }
 
     return { valid: true };
@@ -54,12 +56,13 @@ export async function validateSolution(
 ): Promise<Validation> {
     for (const guess of guesses) {
         // eslint-disable-next-line no-await-in-loop
-        const result = await validateWord(guess.letters, puzzle);
+        const result = await validateWord(guess.letters, guess.index, puzzle);
 
         if (!result.valid) {
             return {
                 valid: false,
                 message: `Guess ${guess.index + 1}: ${result.message}`,
+                index: result.index,
             };
         }
 
@@ -74,6 +77,7 @@ export async function validateSolution(
             return {
                 valid: false,
                 message: `Guess ${guess.index + 1}: Change only one letter between guesses!`,
+                index: guess.index,
             };
         }
     }

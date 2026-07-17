@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import { WordTypes, type RowProps } from '../logic/types';
 
 export default function Row(props: RowProps) {
+    const useShake =
+        props.type !== WordTypes.FIXED && props.useShake === props.index;
+
     function handleClick() {
         if (props.type !== WordTypes.FIXED) {
             props.setCurrentGuess(props.index);
@@ -13,7 +16,8 @@ export default function Row(props: RowProps) {
             tabIndex={0}
             className={clsx(
                 'grid grid-cols-5 w-66 h-13',
-                props.type === WordTypes.FIXED ? '' : 'cursor-pointer'
+                props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
+                useShake ? 'animate-shake' : ''
             )}
             onClick={handleClick}
         >

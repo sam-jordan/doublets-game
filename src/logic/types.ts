@@ -31,6 +31,7 @@ type GuessProps = Guess & {
     currentGuess: boolean;
     setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
     lastTyped: number | undefined;
+    useShake: number | undefined;
 };
 
 export type RowProps = Fixed | GuessProps;
@@ -39,6 +40,7 @@ export type Validation =
     | {
           valid: false;
           message: string;
+          index: number;
       }
     | { valid: true };
 
