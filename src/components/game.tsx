@@ -24,7 +24,7 @@ export default function Game() {
     );
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [showHelp, setShowHelp] = useState<boolean>(false);
-    const [lastTyped, setLastTyped] = useState<number | undefined>(null);
+    const [lastTyped, setLastTyped] = useState<number | undefined>();
 
     const puzzle = getPuzzle(difficulty);
 
@@ -53,7 +53,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess + 1);
                     }
 
-                    setLastTyped(null);
+                    setLastTyped(undefined);
                     break;
                 }
 
@@ -67,7 +67,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess - 1);
                     }
 
-                    setLastTyped(null);
+                    setLastTyped(undefined);
                     break;
                 }
 
@@ -76,7 +76,7 @@ export default function Game() {
                         setCurrentGuess(currentGuess + 1);
                     }
 
-                    setLastTyped(null);
+                    setLastTyped(undefined);
                     break;
                 }
 
@@ -180,7 +180,7 @@ export default function Game() {
                 return guess;
             });
 
-            setLastTyped(null);
+            setLastTyped(undefined);
             setGuesses(nextGuesses);
         }
     }
