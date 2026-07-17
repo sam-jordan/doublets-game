@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-void-return */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuesses } from '../logic/empty-guesses';
@@ -28,6 +28,8 @@ export default function Game() {
     const [lastTyped, setLastTyped] = useState<number | undefined>();
     const [useShake, setUseShake] = useState<number | undefined>();
     const [useJump, setUseJump] = useState<number | undefined>();
+
+    const timeoutRef = useRef<number | undefined>(undefined);
 
     const puzzle = getPuzzle(difficulty);
 
@@ -215,6 +217,11 @@ export default function Game() {
             return;
         }
 
+        setPopup({ ...popup, show: false });
+        if (typeof timeoutRef.current === 'number') {
+            clearTimeout(timeoutRef.current);
+        }
+
         const result = await validateSolution(guesses, puzzle);
 
         if (result.valid) {
@@ -225,8 +232,7 @@ export default function Game() {
             setPopup({ show: true, message: result.message });
         }
 
-        // TODO - add a ref to dispose of any existing timeouts when submitting
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
             setUseShake(undefined);
             setPopup({ ...popup, show: false });
         }, 2000);
