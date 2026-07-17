@@ -25,9 +25,9 @@ export default function Game() {
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [showHelp, setShowHelp] = useState<boolean>(false);
 
-    const [lastTyped, setLastTyped] = useState<number | undefined>();
-    const [useShake, setUseShake] = useState<number | undefined>();
-    const [useJump, setUseJump] = useState<number | undefined>();
+    const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
+    const [useShake, setUseShake] = useState<number | undefined>(undefined);
+    const [useJump, setUseJump] = useState<number | undefined>(undefined);
 
     const timeoutRef = useRef<number | undefined>(undefined);
 

@@ -20,7 +20,9 @@
         "lint": "prettier --check . && xo",
         "lint:fix": "prettier --write . && xo --fix",
         "prepare": "husky",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.1",
@@ -32,20 +34,25 @@
         "zod": "^4.4.3"
     },
     "devDependencies": {
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
         "@types/eslint-plugin-jsx-a11y": "^6.10.1",
         "@types/luxon": "^3.7.2",
         "@types/node": "^24.10.1",
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^5.1.1",
+        "@vitest/coverage-v8": "^4.1.10",
         "eslint-plugin-jsx-a11y": "^6.10.2",
         "globals": "^16.5.0",
         "husky": "^9.1.7",
+        "jsdom": "^29.1.1",
         "lint-staged": "^17.0.8",
         "prettier": "^3.9.4",
         "sort-package-json": "^4.0.0",
         "typescript": "~5.9.3",
         "vite": "^7.3.1",
+        "vitest": "^4.1.10",
         "xo": "^3.0.2"
     }
 }
