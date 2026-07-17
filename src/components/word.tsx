@@ -1,5 +1,5 @@
-import { WordTypes, type RowProps } from '../logic/types';
 import clsx from 'clsx';
+import { WordTypes, type RowProps } from '../logic/types';
 
 export default function Row(props: RowProps) {
     function handleClick() {
@@ -11,7 +11,7 @@ export default function Row(props: RowProps) {
     return (
         <button
             tabIndex={0}
-            className={clsx('grid grid-cols-5 w-66 h-13', props.type !== WordTypes.FIXED ? 'cursor-pointer' : '')}
+            className={clsx('grid grid-cols-5 w-66 h-13', props.type === WordTypes.FIXED ? '' : 'cursor-pointer')}
             onClick={handleClick}
         >
             {props.letters.map((character, charIndex) => (
@@ -41,24 +41,20 @@ function buildCharacterStyling(
         'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2';
 
     if (props.type === WordTypes.FIXED) {
-        return base + ' bg-white text-grey-very-dark border-white';
+        return clsx(base, 'bg-white text-grey-very-dark border-white');
     }
 
     if (props.changed.includes(index)) {
-        return (
-            base +
-            ' bg-pink-bright border-pink-bright' +
-            (isCurrentGuess ? ' border-white' : '')
+        return clsx(
+            base, 'bg-pink-bright border-pink-bright', isCurrentGuess ? 'border-white' : ''
         );
     }
 
     if (character !== ' ') {
-        return (
-            base +
-            ' bg-grey-mid' +
-            (isCurrentGuess ? ' border-white' : ' border-grey-mid')
+        return clsx(
+            base, 'bg-grey-mid', isCurrentGuess ? 'border-white' : 'border-grey-mid'
         );
     }
 
-    return base + (isCurrentGuess ? ' border-white' : ' border-grey-mid');
+    return clsx(base, isCurrentGuess ? 'border-white' : 'border-grey-mid');
 }

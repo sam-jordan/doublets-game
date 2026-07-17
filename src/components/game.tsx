@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-void-return */
 
 import { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
@@ -10,7 +11,6 @@ import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
 import Help from './help';
-import clsx from 'clsx';
 
 export default function Game() {
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));

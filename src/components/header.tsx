@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import clsx from 'clsx';
 import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
@@ -14,8 +15,7 @@ export default function Header(props: {
             <div className='flex justify-between gap-x-2'>
                 <button
                     className={
-                        'w-12 p-2 cursor-pointer ' +
-                        (showDifficulties ? 'bg-grey-mid' : 'hover:bg-grey-mid')
+                        clsx('w-12 p-2 cursor-pointer', showDifficulties ? 'bg-grey-mid' : 'hover:bg-grey-mid')
                     }
                     onClick={() => {
                         setShowDifficulties(!showDifficulties);
@@ -65,7 +65,7 @@ export default function Header(props: {
                         </li>
                     </ul>
                 ) : null}
-                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer' onClick={() => props.setShowHelp(!props.showHelp)}>
+                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer' onClick={() => { props.setShowHelp(!props.showHelp); }}>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 640 640'

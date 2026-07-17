@@ -6,10 +6,10 @@ export default function App() {
     const [page, setPage] = useState<Pages>(Pages.START);
 
     const date = Temporal.Now.plainDateISO();
-    const formatter = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
     });
 
     if (page === Pages.GAME) {
