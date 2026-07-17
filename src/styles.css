@@ -19,6 +19,7 @@
 @theme {
     --animate-throb: throb 100ms linear;
     --animate-shake: shake 150ms ease-in-out;
+    --animate-fade-out: fade-out 500ms linear 1500ms;
 
     @keyframes throb {
 
@@ -45,6 +46,16 @@
 
         75% {
             transform: translateX(2%);
+        }
+    }
+
+    @keyframes fade-out {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
         }
     }
 }
