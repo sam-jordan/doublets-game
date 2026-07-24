@@ -1,15 +1,11 @@
-import {
-    dictionaryWord,
-    type Guess,
-    type Puzzle,
-    type Validation,
-} from './types';
+import allowed from '../../static/allowed-words.json' with { type: 'json' };
+import { type Guess, type Puzzle, type Validation } from './types';
 
-async function validateWord(
+function validateWord(
     word: string[],
     index: number,
     puzzle: Puzzle
-): Promise<Validation> {
+): Validation {
     if (word.includes(' ')) {
         return { valid: false, message: 'Not enough letters', index };
     }
@@ -22,13 +18,7 @@ async function validateWord(
         };
     }
 
-    const response = await fetch(
-        `https://freedictionaryapi.com/api/v1/entries/en/${word.join('').toLowerCase()}`
-    );
-
-    const parsed = dictionaryWord.safeParse(await response.json());
-
-    if (parsed.error) {
+    if (!allowed.words.includes(word.join(''))) {
         return { valid: false, message: 'Not in word list', index };
     }
 
@@ -50,13 +40,9 @@ export function getChanged(word: string[], previous: string[]) {
     return diff;
 }
 
-export async function validateSolution(
-    guesses: Guess[],
-    puzzle: Puzzle
-): Promise<Validation> {
+export function validateSolution(guesses: Guess[], puzzle: Puzzle): Validation {
     for (const guess of guesses) {
-        // eslint-disable-next-line no-await-in-loop
-        const result = await validateWord(guess.letters, guess.index, puzzle);
+        const result = validateWord(guess.letters, guess.index, puzzle);
 
         if (!result.valid) {
             return {

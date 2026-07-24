@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-void-return */
-
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { getChanged, validateSolution } from '../logic/validators';
@@ -36,9 +34,9 @@ export default function Game() {
     const puzzle = getPuzzle(difficulty);
 
     useEffect(() => {
-        async function handleKeyboardEvent(event: KeyboardEvent) {
+        function handleKeyboardEvent(event: KeyboardEvent) {
             event.preventDefault();
-            await handleKeyUp(event.key);
+            handleKeyUp(event.key);
         }
 
         document.body.addEventListener('keyup', handleKeyboardEvent);
@@ -48,14 +46,14 @@ export default function Game() {
         };
     });
 
-    async function handleKeyUp(key: string) {
+    function handleKeyUp(key: string) {
         if (/^[a-z]$/iv.test(key)) {
             handleType(key);
         } else {
             switch (key) {
                 case 'Enter': {
                     if (currentGuess === guesses.length - 1) {
-                        await handleSubmit();
+                        handleSubmit();
                     } else {
                         setCurrentGuess(currentGuess + 1);
                         setUseJump(currentGuess + 1);
@@ -214,7 +212,7 @@ export default function Game() {
         setGameOver(false);
     }
 
-    async function handleSubmit() {
+    function handleSubmit() {
         if (gameOver) {
             return;
         }
@@ -224,7 +222,7 @@ export default function Game() {
             clearTimeout(timeoutRef.current);
         }
 
-        const result = await validateSolution(guesses, puzzle);
+        const result = validateSolution(guesses, puzzle);
 
         if (result.valid) {
             setPopup({ show: true, message: 'Splendid!' });

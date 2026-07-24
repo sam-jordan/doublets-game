@@ -1,5 +1,3 @@
-import z from 'zod';
-
 export enum Difficulties {
     EASY,
     MEDIUM,
@@ -49,20 +47,6 @@ export type Validation =
           index: number;
       }
     | { valid: true };
-
-export const dictionaryWord = z.object({
-    word: z.string(),
-    entries: z
-        .array(
-            z.object({
-                language: z.object({
-                    code: z.string(),
-                    name: z.string(),
-                }),
-            })
-        )
-        .min(1),
-});
 
 export enum Pages {
     START,
