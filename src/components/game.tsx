@@ -13,6 +13,7 @@ import Header from './header';
 import Help from './help';
 
 export default function Game() {
+    // Game state
     const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
     const [currentGuess, setCurrentGuess] = useState<number>(0);
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
@@ -25,6 +26,7 @@ export default function Game() {
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [showHelp, setShowHelp] = useState<boolean>(false);
 
+    // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
     const [useShake, setUseShake] = useState<number | undefined>(undefined);
     const [useJump, setUseJump] = useState<number | undefined>(undefined);
