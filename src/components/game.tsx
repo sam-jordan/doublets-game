@@ -285,7 +285,7 @@ export default function Game() {
                     setShowHelp={setShowHelp}
                 />
                 <Popup popup={popup} />
-                <div className='flex justify-evenly items-center grow'>
+                <div className='flex flex-col justify-center items-center grow gap-4'>
                     <div>
                         <Word
                             key={'start-word'}
