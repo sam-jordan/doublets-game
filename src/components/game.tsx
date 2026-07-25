@@ -38,6 +38,7 @@ export default function Game() {
 
     const puzzle = getPuzzle(difficulty);
 
+    // TODO - prevent this animation from running when switching difficulty
     useEffect(() => {
         const timers: number[] = [];
         if (solved[difficulty]) {
@@ -79,7 +80,7 @@ export default function Game() {
                 clearTimeout(timer);
             }
         };
-    }, [solved[difficulty]]);
+    }, [solved]);
 
     useEffect(() => {
         function handleKeyboardEvent(event: KeyboardEvent) {
