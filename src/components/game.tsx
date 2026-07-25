@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-computed-property-existence-check */
+
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { getChanged, validateSolution } from '../logic/validators';
@@ -12,7 +14,7 @@ import Help from './help';
 
 export default function Game() {
     // Game state
-    const [guesses, setGuesses] = useState<Guess[]>(emptyGuesses(4));
+    const [guesses, setGuesses] = useState<Guess[][]>(emptyGuesses());
     const [currentGuess, setCurrentGuess] = useState<number>(0);
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
         show: false,
@@ -21,7 +23,9 @@ export default function Game() {
     const [difficulty, setDifficulty] = useState<Difficulties>(
         Difficulties.EASY
     );
-    const [gameOver, setGameOver] = useState<boolean>(false);
+    const [solved, setSolved] = useState<boolean[]>(
+        Array.from({ length: 3 }, _ => false)
+    );
     const [showHelp, setShowHelp] = useState<boolean>(false);
 
     // Animations
@@ -52,7 +56,7 @@ export default function Game() {
         } else {
             switch (key) {
                 case 'Enter': {
-                    if (currentGuess === guesses.length - 1) {
+                    if (currentGuess === guesses[difficulty].length - 1) {
                         handleSubmit();
                     } else {
                         setCurrentGuess(currentGuess + 1);
@@ -79,7 +83,7 @@ export default function Game() {
                 }
 
                 case 'ArrowDown': {
-                    if (currentGuess < guesses.length - 1) {
+                    if (currentGuess < guesses[difficulty].length - 1) {
                         setCurrentGuess(currentGuess + 1);
                         setUseJump(currentGuess + 1);
                     }
@@ -96,51 +100,63 @@ export default function Game() {
     }
 
     function handleType(value: string) {
-        if (gameOver) {
+        if (solved[difficulty]) {
             return;
         }
 
-        const nextIndex = guesses[currentGuess].letters.indexOf(' ');
+        const nextIndex =
+            guesses[difficulty][currentGuess].letters.indexOf(' ');
         const nextGuess = {
-            ...guesses[currentGuess],
-            letters: guesses[currentGuess].letters.map((letter, index) => {
-                if (nextIndex !== -1 && index === nextIndex) {
-                    return value.toUpperCase();
-                }
+            ...guesses[difficulty][currentGuess],
+            letters: guesses[difficulty][currentGuess].letters.map(
+                (letter, index) => {
+                    if (nextIndex !== -1 && index === nextIndex) {
+                        return value.toUpperCase();
+                    }
 
-                return letter;
-            }),
+                    return letter;
+                }
+            ),
         };
 
-        const nextGuesses = guesses.map(guess => {
-            if (guess.index === currentGuess) {
-                const changed = getChanged(
-                    nextGuess.letters,
-                    nextGuess.index === 0
-                        ? puzzle.startWord.split('')
-                        : guesses[nextGuess.index - 1].letters
-                );
+        const nextGuesses = guesses.map((difficultyGuesses, index) => {
+            if (index === difficulty.valueOf()) {
+                return difficultyGuesses.map(guess => {
+                    if (guess.index === currentGuess) {
+                        const changed = getChanged(
+                            nextGuess.letters,
+                            nextGuess.index === 0
+                                ? puzzle.startWord.split('')
+                                : difficultyGuesses[nextGuess.index - 1].letters
+                        );
 
-                return {
-                    ...nextGuess,
-                    changed,
-                };
+                        return {
+                            ...nextGuess,
+                            changed,
+                        };
+                    }
+
+                    if (guess.index === currentGuess + 1) {
+                        const changed = getChanged(
+                            guess.letters,
+                            nextGuess.letters
+                        );
+
+                        return { ...guess, changed };
+                    }
+
+                    const changed = getChanged(
+                        guess.letters,
+                        guess.index === 0
+                            ? puzzle.startWord.split('')
+                            : difficultyGuesses[guess.index - 1].letters
+                    );
+
+                    return { ...guess, changed };
+                });
             }
 
-            if (guess.index === currentGuess + 1) {
-                const changed = getChanged(guess.letters, nextGuess.letters);
-
-                return { ...guess, changed };
-            }
-
-            const changed = getChanged(
-                guess.letters,
-                guess.index === 0
-                    ? puzzle.startWord.split('')
-                    : guesses[guess.index - 1].letters
-            );
-
-            return { ...guess, changed };
+            return difficultyGuesses;
         });
 
         setLastTyped(nextIndex);
@@ -148,45 +164,53 @@ export default function Game() {
     }
 
     function handleBackspace() {
-        if (gameOver) {
+        if (solved[difficulty]) {
             return;
         }
 
-        const currentIndex = guesses[currentGuess].letters.findLastIndex(
-            letter => letter !== ' '
-        );
+        const currentIndex = guesses[difficulty][
+            currentGuess
+        ].letters.findLastIndex(letter => letter !== ' ');
 
         if (currentIndex === -1 && currentGuess > 0) {
             setCurrentGuess(currentGuess - 1);
             setUseJump(currentGuess - 1);
         } else {
             const nextGuess = {
-                ...guesses[currentGuess],
-                letters: guesses[currentGuess].letters.map((letter, i) => {
-                    if (i === currentIndex) {
-                        return ' ';
-                    }
+                ...guesses[difficulty][currentGuess],
+                letters: guesses[difficulty][currentGuess].letters.map(
+                    (letter, i) => {
+                        if (i === currentIndex) {
+                            return ' ';
+                        }
 
-                    return letter;
-                }),
+                        return letter;
+                    }
+                ),
             };
 
             const changed = getChanged(
                 nextGuess.letters,
                 nextGuess.index === 0
                     ? puzzle.startWord.split('')
-                    : guesses[nextGuess.index - 1].letters
+                    : guesses[difficulty][nextGuess.index - 1].letters
             );
 
-            const nextGuesses = guesses.map(guess => {
-                if (guess.index === currentGuess) {
-                    return {
-                        ...nextGuess,
-                        changed,
-                    };
+            const nextGuesses = guesses.map((difficultyGuesses, index) => {
+                if (index === difficulty.valueOf()) {
+                    return difficultyGuesses.map(guess => {
+                        if (guess.index === currentGuess) {
+                            return {
+                                ...nextGuess,
+                                changed,
+                            };
+                        }
+
+                        return guess;
+                    });
                 }
 
-                return guess;
+                return difficultyGuesses;
             });
 
             setLastTyped(undefined);
@@ -199,21 +223,21 @@ export default function Game() {
             return;
         }
 
-        const guessesLength =
-            nextDifficulty === Difficulties.EASY
-                ? 4
-                : nextDifficulty === Difficulties.MEDIUM
-                  ? 5
-                  : 6;
-
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
-        setGuesses(emptyGuesses(guessesLength));
-        setGameOver(false);
+
+        const nextSolved = solved.map((difficultySolved, index) => {
+            if (index === difficulty.valueOf()) {
+                return true;
+            }
+
+            return difficultySolved;
+        });
+        setSolved(nextSolved);
     }
 
     function handleSubmit() {
-        if (gameOver) {
+        if (solved[difficulty]) {
             return;
         }
 
@@ -222,11 +246,19 @@ export default function Game() {
             clearTimeout(timeoutRef.current);
         }
 
-        const result = validateSolution(guesses, puzzle);
+        const result = validateSolution(guesses[difficulty], puzzle);
 
         if (result.valid) {
             setPopup({ show: true, message: 'Splendid!' });
-            setGameOver(true);
+
+            const nextSolved = solved.map((difficultySolved, index) => {
+                if (index === difficulty.valueOf()) {
+                    return true;
+                }
+
+                return difficultySolved;
+            });
+            setSolved(nextSolved);
         } else {
             setUseShake(result.index);
             setPopup({ show: true, message: result.message });
@@ -261,7 +293,7 @@ export default function Game() {
                             letters={puzzle.startWord.split('')}
                             type={WordTypes.FIXED}
                         />
-                        {guesses.map(guess => (
+                        {guesses[difficulty].map(guess => (
                             <Word
                                 key={`guess-${guess.index}`}
                                 index={guess.index}
