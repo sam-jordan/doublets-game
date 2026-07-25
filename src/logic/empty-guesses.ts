@@ -13,6 +13,7 @@ export function emptyGuesses(): Guess[][] {
                 letters: Array.from({ length: 5 }, _ => ' '),
                 type: WordTypes.GUESS.valueOf(),
                 changed: [],
+                gameWin: undefined,
             }))
             .toArray()
     );

@@ -1,7 +1,6 @@
-/* eslint-disable unicorn/no-computed-property-existence-check */
-
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
+import { DateTime } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
@@ -23,8 +22,8 @@ export default function Game() {
     const [difficulty, setDifficulty] = useState<Difficulties>(
         Difficulties.EASY
     );
-    const [solved, setSolved] = useState<boolean[]>(
-        Array.from({ length: 3 }, _ => false)
+    const [solved, setSolved] = useState<Array<number | undefined>>(
+        Array.from({ length: 3 }, _ => undefined)
     );
     const [showHelp, setShowHelp] = useState<boolean>(false);
 
@@ -38,10 +37,13 @@ export default function Game() {
 
     const puzzle = getPuzzle(difficulty);
 
-    // TODO - prevent this animation from running when switching difficulty
     useEffect(() => {
         const timers: number[] = [];
-        if (solved[difficulty]) {
+        if (
+            solved[difficulty] !== undefined &&
+            DateTime.now().toMillis() <
+                solved[difficulty] + (4500 + 750 * difficulty)
+        ) {
             // Animating the start word
             setGameWin(100);
 
@@ -145,7 +147,7 @@ export default function Game() {
     }
 
     function handleType(value: string) {
-        if (solved[difficulty]) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -209,7 +211,7 @@ export default function Game() {
     }
 
     function handleBackspace() {
-        if (solved[difficulty]) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -270,19 +272,10 @@ export default function Game() {
 
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
-
-        const nextSolved = solved.map((difficultySolved, index) => {
-            if (index === difficulty.valueOf()) {
-                return true;
-            }
-
-            return difficultySolved;
-        });
-        setSolved(nextSolved);
     }
 
     function handleSubmit() {
-        if (solved[difficulty]) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -298,7 +291,7 @@ export default function Game() {
 
             const nextSolved = solved.map((difficultySolved, index) => {
                 if (index === difficulty.valueOf()) {
-                    return true;
+                    return DateTime.now().toMillis();
                 }
 
                 return difficultySolved;
