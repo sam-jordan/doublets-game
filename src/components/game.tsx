@@ -32,10 +32,54 @@ export default function Game() {
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
     const [useShake, setUseShake] = useState<number | undefined>(undefined);
     const [useJump, setUseJump] = useState<number | undefined>(undefined);
+    const [gameWin, setGameWin] = useState<number | undefined>(undefined);
 
     const timeoutRef = useRef<number | undefined>(undefined);
 
     const puzzle = getPuzzle(difficulty);
+
+    useEffect(() => {
+        const timers: number[] = [];
+        if (solved[difficulty]) {
+            // Animating the start word
+            setGameWin(100);
+
+            // Animating the guesses
+            for (const guess of guesses[difficulty]) {
+                const timer = setTimeout(
+                    () => {
+                        setGameWin(guess.index);
+                    },
+                    750 * (guess.index + 1)
+                );
+
+                timers.push(timer);
+            }
+
+            // Animating the end word
+            const timer = setTimeout(
+                () => {
+                    setGameWin(101);
+                },
+                750 * (guesses[difficulty].length + 1)
+            );
+
+            const final = setTimeout(
+                () => {
+                    setGameWin(undefined);
+                },
+                750 * (guesses[difficulty].length + 2)
+            );
+
+            timers.push(timer, final);
+        }
+
+        return () => {
+            for (const timer of timers) {
+                clearTimeout(timer);
+            }
+        };
+    }, [solved[difficulty]]);
 
     useEffect(() => {
         function handleKeyboardEvent(event: KeyboardEvent) {
@@ -292,6 +336,7 @@ export default function Game() {
                             index={100}
                             letters={puzzle.startWord.split('')}
                             type={WordTypes.FIXED}
+                            gameWin={gameWin}
                         />
                         {guesses[difficulty].map(guess => (
                             <Word
@@ -306,6 +351,7 @@ export default function Game() {
                                 useShake={useShake}
                                 useJump={useJump}
                                 setUseJump={setUseJump}
+                                gameWin={gameWin}
                             />
                         ))}
                         <Word
@@ -313,6 +359,7 @@ export default function Game() {
                             index={101}
                             letters={puzzle.endWord.split('')}
                             type={WordTypes.FIXED}
+                            gameWin={gameWin}
                         />
                     </div>
                     <Keyboard handleKeyUp={handleKeyUp} />

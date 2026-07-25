@@ -1,11 +1,46 @@
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
 import { WordTypes, type RowProps } from '../logic/types';
 
 export default function Row(props: RowProps) {
+    const [letterJump, setLetterJump] = useState<number | undefined>(undefined);
+
     const useShake =
         props.type !== WordTypes.FIXED && props.useShake === props.index;
     const useJump =
         props.type !== WordTypes.FIXED && props.useJump === props.index;
+
+    useEffect(() => {
+        const timers: number[] = [];
+        if (props.gameWin === props.index) {
+            for (let i = 0; i < props.letters.length; i++) {
+                const timer = setTimeout(() => {
+                    setLetterJump(i);
+                }, 150 * i);
+
+                timers.push(timer);
+
+                if (i === props.letters.length - 1) {
+                    const final = setTimeout(
+                        () => {
+                            setLetterJump(undefined);
+                        },
+                        150 * (i + 1)
+                    );
+
+                    timers.push(final);
+                }
+            }
+        } else {
+            setLetterJump(undefined);
+        }
+
+        return () => {
+            for (const timer of timers) {
+                clearTimeout(timer);
+            }
+        };
+    }, [props.gameWin]);
 
     function handleClick() {
         if (props.type === WordTypes.FIXED) {
@@ -33,7 +68,8 @@ export default function Row(props: RowProps) {
                     className={buildCharacterStyling(
                         character,
                         charIndex,
-                        props
+                        props,
+                        letterJump
                     )}
                 >
                     <strong>{character}</strong>
@@ -46,7 +82,8 @@ export default function Row(props: RowProps) {
 function buildCharacterStyling(
     character: string,
     index: number,
-    props: RowProps
+    props: RowProps,
+    letterJump: number | undefined
 ): string {
     const isCurrentGuess =
         props.type === WordTypes.FIXED ? false : props.currentGuess;
@@ -55,9 +92,11 @@ function buildCharacterStyling(
         isCurrentGuess &&
         index === props.lastTyped &&
         character !== ' ';
+
     const base = clsx(
         'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2',
-        useThrob ? 'animate-throb' : ''
+        useThrob ? 'animate-throb' : '',
+        letterJump === index ? 'animate-jump-quick' : ''
     );
 
     if (props.type === WordTypes.FIXED) {

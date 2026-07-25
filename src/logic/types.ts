@@ -14,6 +14,7 @@ export type Puzzle = { startWord: string; endWord: string };
 type Word = {
     index: number;
     letters: string[];
+    gameWin: number | undefined;
 };
 
 export type Guess = Word & {
