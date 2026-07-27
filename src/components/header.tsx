@@ -15,6 +15,28 @@ export default function Header(props: {
                 DOUBLETS
             </h1>
             <div className='flex justify-between gap-x-2'>
+                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer'>
+                    <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 448 512'
+                    >
+                        <path
+                            fill='rgb(255, 255, 255)'
+                            d='M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z'
+                        />
+                    </svg>
+                </button>
+                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer'>
+                    <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 448 512'
+                    >
+                        <path
+                            fill='rgb(255, 255, 255)'
+                            d='M0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32z'
+                        />
+                    </svg>
+                </button>
                 <button
                     className={clsx(
                         'w-12 p-2 cursor-pointer',

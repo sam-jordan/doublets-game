@@ -323,7 +323,7 @@ export default function Game() {
                     setShowHelp={setShowHelp}
                 />
                 <Popup popup={popup} />
-                <div className='flex flex-col justify-center items-center grow gap-4'>
+                <div className='flex flex-col justify-center items-center grow gap-8'>
                     <div>
                         <Word
                             key={'start-word'}
