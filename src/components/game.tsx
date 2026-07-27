@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { DateTime } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
-import { emptyGuesses } from '../logic/empty-guesses';
+import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import { Difficulties, WordTypes, type Guess } from '../logic/types';
 import Popup from './popup';
@@ -42,6 +42,7 @@ export default function Game() {
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
+                // eslint-disable-next-line @stylistic/no-mixed-operators
                 solved[difficulty] + (4500 + 750 * difficulty)
         ) {
             // Animating the start word
@@ -308,6 +309,33 @@ export default function Game() {
         }, 2000);
     }
 
+    function addGuess() {
+        const nextGuesses = guesses.map((difficultyGuesses, index) => {
+            if (index === difficulty.valueOf()) {
+                return [
+                    ...guesses[difficulty],
+                    emptyGuess(guesses[difficulty].length + 1),
+                ];
+            }
+
+            return difficultyGuesses;
+        });
+
+        setGuesses(nextGuesses);
+    }
+
+    function removeGuess() {
+        const nextGuesses = guesses.map((difficultyGuesses, index) => {
+            if (index === difficulty.valueOf()) {
+                return guesses[difficulty].toSpliced(-1, 1);
+            }
+
+            return difficultyGuesses;
+        });
+
+        setGuesses(nextGuesses);
+    }
+
     return (
         <div>
             <Help showHelp={showHelp} setShowHelp={setShowHelp} />
@@ -321,6 +349,8 @@ export default function Game() {
                     handleDifficulty={handleDifficulty}
                     showHelp={showHelp}
                     setShowHelp={setShowHelp}
+                    addGuess={addGuess}
+                    removeGuess={removeGuess}
                 />
                 <Popup popup={popup} />
                 <div className='flex flex-col justify-center items-center grow gap-8'>

@@ -6,6 +6,8 @@ export default function Header(props: {
     handleDifficulty: (nextDifficulty: Difficulties) => void;
     showHelp: boolean;
     setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
+    addGuess: () => void;
+    removeGuess: () => void;
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
 
@@ -15,7 +17,10 @@ export default function Header(props: {
                 DOUBLETS
             </h1>
             <div className='flex justify-between gap-x-2'>
-                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer'>
+                <button
+                    className='w-12 p-2 hover:bg-grey-mid cursor-pointer'
+                    onClick={props.addGuess}
+                >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 448 512'
@@ -26,7 +31,10 @@ export default function Header(props: {
                         />
                     </svg>
                 </button>
-                <button className='w-12 p-2 hover:bg-grey-mid cursor-pointer'>
+                <button
+                    className='w-12 p-2 hover:bg-grey-mid cursor-pointer'
+                    onClick={props.removeGuess}
+                >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 448 512'
