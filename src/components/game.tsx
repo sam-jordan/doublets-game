@@ -43,7 +43,7 @@ export default function Game() {
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
                 // eslint-disable-next-line @stylistic/no-mixed-operators
-                solved[difficulty] + (4500 + 750 * difficulty)
+                solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
             setGameWin(100);

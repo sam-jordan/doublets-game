@@ -65,7 +65,7 @@ export default function Header(props: {
                     </svg>
                 </button>
                 {showDifficulties ? (
-                    <ul className='font-(family-name:--standard-fonts) absolute top-13'>
+                    <ul className='font-(family-name:--standard-fonts) absolute top-13.25 right-6'>
                         <li>
                             <button
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'

@@ -55,7 +55,8 @@ export default function Row(props: RowProps) {
         <button
             tabIndex={0}
             className={clsx(
-                'grid grid-cols-5 w-66 h-13',
+                'grid grid-cols-5 w-66',
+                props.index === 100 || props.index === 101 ? 'h-14' : 'h-13',
                 props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
                 useShake ? 'animate-shake' : '',
                 useJump ? 'animate-jump' : ''
@@ -94,7 +95,7 @@ function buildCharacterStyling(
         character !== ' ';
 
     const base = clsx(
-        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2 select-none',
+        'text-3xl h-12 w-12 flex justify-center items-center border-2 select-none justify-self-center self-center',
         useThrob ? 'animate-throb' : '',
         letterJump === index ? 'animate-jump-quick' : ''
     );
