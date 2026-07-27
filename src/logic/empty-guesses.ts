@@ -1,5 +1,15 @@
 import { Difficulties, WordTypes, type Guess } from './types';
 
+export function emptyGuess(index: number): Guess {
+    return {
+        index,
+        letters: Array.from({ length: 5 }, _ => ' '),
+        type: WordTypes.GUESS.valueOf(),
+        changed: [],
+        gameWin: undefined,
+    };
+}
+
 export function emptyGuesses(): Guess[][] {
     const difficulties = Object.keys(Difficulties)
         .filter(key => !Number.isNaN(Number(key)))
@@ -8,13 +18,7 @@ export function emptyGuesses(): Guess[][] {
     return difficulties.map(difficulty =>
         Array.from({ length: 4 + difficulty })
             .keys()
-            .map(item => ({
-                index: item,
-                letters: Array.from({ length: 5 }, _ => ' '),
-                type: WordTypes.GUESS.valueOf(),
-                changed: [],
-                gameWin: undefined,
-            }))
+            .map(item => emptyGuess(item))
             .toArray()
     );
 }
