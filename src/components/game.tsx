@@ -313,8 +313,8 @@ export default function Game() {
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
                 return [
-                    ...guesses[difficulty],
-                    emptyGuess(guesses[difficulty].length + 1),
+                    ...difficultyGuesses,
+                    emptyGuess(difficultyGuesses.length + 1),
                 ];
             }
 
@@ -327,7 +327,7 @@ export default function Game() {
     function removeGuess() {
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
-                return guesses[difficulty].toSpliced(-1, 1);
+                return difficultyGuesses.toSpliced(-1, 1);
             }
 
             return difficultyGuesses;
