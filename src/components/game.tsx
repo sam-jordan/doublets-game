@@ -310,11 +310,15 @@ export default function Game() {
     }
 
     function addGuess() {
+        if (solved[difficulty] !== undefined) {
+            return;
+        }
+
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
                 return [
                     ...difficultyGuesses,
-                    emptyGuess(difficultyGuesses.length + 1),
+                    emptyGuess(difficultyGuesses.length),
                 ];
             }
 
@@ -325,8 +329,18 @@ export default function Game() {
     }
 
     function removeGuess() {
+        if (solved[difficulty] !== undefined) {
+            return;
+        }
+
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
+                if (currentGuess === difficultyGuesses.length - 1) {
+                    setCurrentGuess(
+                        currentGuess === 0 ? currentGuess : currentGuess - 1
+                    );
+                }
+
                 return difficultyGuesses.toSpliced(-1, 1);
             }
 
@@ -365,7 +379,7 @@ export default function Game() {
                         <div
                             className={clsx(
                                 'scrollbar-none overflow-auto',
-                                guesses[difficulty].length > 4 ? 'h-52' : ''
+                                guesses[difficulty].length > 4 ? 'h-56' : ''
                             )}
                         >
                             {guesses[difficulty].map(guess => (
