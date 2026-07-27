@@ -94,7 +94,7 @@ function buildCharacterStyling(
         character !== ' ';
 
     const base = clsx(
-        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2',
+        'text-3xl max-h-12 max-w-12 flex justify-center items-center border-2 select-none',
         useThrob ? 'animate-throb' : '',
         letterJump === index ? 'animate-jump-quick' : ''
     );

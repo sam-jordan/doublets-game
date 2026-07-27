@@ -362,22 +362,29 @@ export default function Game() {
                             type={WordTypes.FIXED}
                             gameWin={gameWin}
                         />
-                        {guesses[difficulty].map(guess => (
-                            <Word
-                                key={`guess-${guess.index}`}
-                                index={guess.index}
-                                letters={guess.letters}
-                                type={guess.type}
-                                changed={guess.changed}
-                                currentGuess={guess.index === currentGuess}
-                                setCurrentGuess={setCurrentGuess}
-                                lastTyped={lastTyped}
-                                useShake={useShake}
-                                useJump={useJump}
-                                setUseJump={setUseJump}
-                                gameWin={gameWin}
-                            />
-                        ))}
+                        <div
+                            className={clsx(
+                                'scrollbar-none overflow-auto',
+                                guesses[difficulty].length > 4 ? 'h-52' : ''
+                            )}
+                        >
+                            {guesses[difficulty].map(guess => (
+                                <Word
+                                    key={`guess-${guess.index}`}
+                                    index={guess.index}
+                                    letters={guess.letters}
+                                    type={guess.type}
+                                    changed={guess.changed}
+                                    currentGuess={guess.index === currentGuess}
+                                    setCurrentGuess={setCurrentGuess}
+                                    lastTyped={lastTyped}
+                                    useShake={useShake}
+                                    useJump={useJump}
+                                    setUseJump={setUseJump}
+                                    gameWin={gameWin}
+                                />
+                            ))}
+                        </div>
                         <Word
                             key={'end-word'}
                             index={101}
