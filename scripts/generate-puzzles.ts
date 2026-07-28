@@ -12,7 +12,7 @@ function findLinkedWords(): Map<string, string[]> {
         const words = fs
             .readFileSync('./scripts/five-letter-words.txt', 'utf8')
             .split(EOL)
-            .map(word => word.toUpperCase().split(''))
+            .map(word => word.toUpperCase())
             .slice(0, 3500);
         const wordLinkMapping = new Map<string, string[]>();
 
@@ -21,19 +21,22 @@ function findLinkedWords(): Map<string, string[]> {
 
             for (let i = 0; i < word.length; i++) {
                 for (const letter of LETTERS) {
-                    const updatedWord = [...word];
-                    updatedWord[i] = letter;
+                    const updatedWord = word
+                        .split('')
+                        .map((char, index) => (index === i ? letter : char))
+                        .join('');
+
                     if (
                         words.includes(updatedWord) &&
-                        !linkedWords.includes(updatedWord.join('')) &&
+                        !linkedWords.includes(updatedWord) &&
                         updatedWord !== word
                     ) {
-                        linkedWords.push(updatedWord.join(''));
+                        linkedWords.push(updatedWord);
                     }
                 }
             }
 
-            wordLinkMapping.set(word.join(''), linkedWords);
+            wordLinkMapping.set(word, linkedWords);
             if (words.indexOf(word) % 100 === 0) {
                 console.log(
                     `Linking words... ${words.indexOf(word)}/${words.length}`

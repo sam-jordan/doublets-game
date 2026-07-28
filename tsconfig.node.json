@@ -2,18 +2,19 @@
     "compilerOptions": {
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
         "target": "ESNext",
-        "lib": ["ESNext"],
+        "lib": [
+            "ESNext"
+        ],
         "module": "ESNext",
-        "types": ["node"],
+        "types": [
+            "node"
+        ],
         "skipLibCheck": true,
         "rootDir": "scripts",
         "outDir": "dist",
-        /* Linting */
         "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "noUncheckedSideEffectImports": true
     },
-    "include": ["scripts"]
+    "include": [
+        "scripts"
+    ]
 }
