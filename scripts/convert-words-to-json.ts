@@ -1,6 +1,6 @@
 // Words sourced from: https://cs.stanford.edu/~knuth/sgb-words.txt
 
-import fs from 'node:fs';
+import * as fs from 'node:fs';
 import { EOL } from 'node:os';
 
 const words = fs

@@ -10,7 +10,11 @@ const xoConfig: FlatXoConfig = [
         languageOptions: {
             parserOptions: {
                 projectService: false,
-                project: ['./tsconfig.app.json', './tsconfig.node.json'],
+                project: [
+                    './tsconfig.app.json',
+                    './tsconfig.configs.json',
+                    './tsconfig.node.json',
+                ],
             },
         },
         rules: {
