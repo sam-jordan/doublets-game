@@ -56,7 +56,6 @@ function findLinkedWords(): Map<string, string[]> {
     }
 }
 
-// TODO - consider using an increasingly small subset of the words as difficulty increases
 function generateData(
     wordLinkMapping: Map<string, string[]>,
     chainLength: number
@@ -68,8 +67,10 @@ function generateData(
         )
     );
 
+    // TODO - consider using an increasingly small subset of the words as difficulty increases
+    const puzzleWords = wordLinkMapping.keys().toArray().slice(0, 1000);
     const validPuzzles = [];
-    for (const startWord of wordLinkMapping.keys()) {
+    for (const startWord of puzzleWords) {
         const endWords = new Map<string, number>();
 
         function findEndWords(word: string, index: number, chain: string[]) {
@@ -92,11 +93,11 @@ function generateData(
             .filter(([_key, value]) => value === chainLength)
             .map(([key, _value]) => ({ startWord, endWord: key }));
 
-        if (wordLinkMapping.keys().toArray().indexOf(startWord) % 100 === 0) {
+        if (puzzleWords.indexOf(startWord) % 100 === 0) {
             console.log(
                 styleText(
                     'yellow',
-                    `${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} puzzles generated: ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
+                    `${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} puzzles generated: ${puzzleWords.indexOf(startWord)}/${puzzleWords.length}`
                 )
             );
         }
@@ -110,7 +111,7 @@ function generateData(
             `${validPuzzles.length} ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} puzzles generated successfully!`
         )
     );
-    return validPuzzles;
+    return validPuzzles.toSorted((_a, _b) => 0.5 - Math.random());
 }
 
 const wordLinkMapping = findLinkedWords();
@@ -120,7 +121,7 @@ const medium = generateData(wordLinkMapping, 6);
 const hard = generateData(wordLinkMapping, 7);
 
 fs.writeFileSync(
-    '../static/puzzles.json',
+    './static/puzzles.json',
     JSON.stringify({ easy, medium, hard })
 );
-console.log('Puzzles written to static/puzzles.json!');
+console.log(styleText('magenta', 'Puzzles written to static/puzzles.json!'));
