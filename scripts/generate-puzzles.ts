@@ -2,6 +2,7 @@
 
 import * as fs from 'node:fs';
 import { EOL } from 'node:os';
+import { styleText } from 'node:util';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -16,6 +17,7 @@ function findLinkedWords(): Map<string, string[]> {
             .slice(0, 3500);
         const wordLinkMapping = new Map<string, string[]>();
 
+        console.log(styleText('cyan', 'Linking words...'));
         for (const word of words) {
             const linkedWords: string[] = [];
 
@@ -38,14 +40,19 @@ function findLinkedWords(): Map<string, string[]> {
 
             wordLinkMapping.set(word, linkedWords);
             if (words.indexOf(word) % 100 === 0) {
-                console.log('Linking words...');
+                console.log(
+                    styleText(
+                        'yellow',
+                        `Linked: ${words.indexOf(word)}/${words.length}`
+                    )
+                );
             }
         }
 
-        console.log('Linking words complete!');
+        console.log(styleText('green', 'Linking words complete!'));
         return wordLinkMapping;
     } catch {
-        throw new Error('Unable to read the file of words!');
+        throw new Error(styleText('red', 'Unable to read the file of words!'));
     }
 }
 
@@ -54,6 +61,13 @@ function generateData(
     wordLinkMapping: Map<string, string[]>,
     chainLength: number
 ) {
+    console.log(
+        styleText(
+            'cyan',
+            `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} puzzles...`
+        )
+    );
+
     const validPuzzles = [];
     for (const startWord of wordLinkMapping.keys()) {
         const endWords = new Map<string, number>();
@@ -80,7 +94,10 @@ function generateData(
 
         if (wordLinkMapping.keys().toArray().indexOf(startWord) % 100 === 0) {
             console.log(
-                `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} puzzles... ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
+                styleText(
+                    'yellow',
+                    `${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} puzzles generated: ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
+                )
             );
         }
 
@@ -88,7 +105,10 @@ function generateData(
     }
 
     console.log(
-        `${validPuzzles.length} ${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} puzzles generated successfully!`
+        styleText(
+            'green',
+            `${validPuzzles.length} ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} puzzles generated successfully!`
+        )
     );
     return validPuzzles;
 }
