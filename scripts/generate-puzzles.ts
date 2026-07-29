@@ -38,12 +38,11 @@ function findLinkedWords(): Map<string, string[]> {
 
             wordLinkMapping.set(word, linkedWords);
             if (words.indexOf(word) % 100 === 0) {
-                console.log(
-                    `Linking words... ${words.indexOf(word)}/${words.length}`
-                );
+                console.log('Linking words...');
             }
         }
 
+        console.log('Linking words complete!');
         return wordLinkMapping;
     } catch {
         throw new Error('Unable to read the file of words!');
@@ -81,7 +80,7 @@ function generateData(
 
         if (wordLinkMapping.keys().toArray().indexOf(startWord) % 100 === 0) {
             console.log(
-                `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} data... ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
+                `Generating ${chainLength < 6 ? 'easy' : chainLength < 7 ? 'medium' : 'hard'} puzzles... ${wordLinkMapping.keys().toArray().indexOf(startWord)}/${wordLinkMapping.size}`
             );
         }
 
@@ -89,7 +88,7 @@ function generateData(
     }
 
     console.log(
-        `${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} data generated successfully! Pairs generated: ${validPuzzles.length}`
+        `${validPuzzles.length} ${chainLength < 6 ? 'Easy' : chainLength < 7 ? 'Medium' : 'Hard'} puzzles generated successfully!`
     );
     return validPuzzles;
 }
@@ -101,7 +100,7 @@ const medium = generateData(wordLinkMapping, 6);
 const hard = generateData(wordLinkMapping, 7);
 
 fs.writeFileSync(
-    './scripts/puzzles.json',
+    '../static/puzzles.json',
     JSON.stringify({ easy, medium, hard })
 );
-console.log('Generated data written to puzzles.json!');
+console.log('Puzzles written to static/puzzles.json!');

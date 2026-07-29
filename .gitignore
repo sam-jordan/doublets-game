@@ -3,4 +3,3 @@ dist
 build
 
 scripts/five-letter-words.txt
-scripts/puzzles.json
