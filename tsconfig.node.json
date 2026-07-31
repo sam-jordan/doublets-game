@@ -10,11 +10,11 @@
             "node"
         ],
         "skipLibCheck": true,
-        "rootDir": "scripts",
         "outDir": "dist",
         "strict": true,
     },
     "include": [
+        "backend",
         "scripts"
     ]
 }

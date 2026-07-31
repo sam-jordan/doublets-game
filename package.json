@@ -16,8 +16,8 @@
     "scripts": {
         "build": "tsc -b && vite build",
         "dev": "vite",
-        "generate-puzzles": "npm run build && node dist/generate-puzzles.js",
-        "generate-words": "npm run build && node dist/convert-words-to-json.js",
+        "generate-puzzles": "npm run build && node dist/scripts/generate-puzzles.js",
+        "generate-words": "npm run build && node dist/scripts/convert-words-to-json.js",
         "lint": "prettier --check . && xo",
         "lint:fix": "prettier --write . && xo --fix",
         "prepare": "husky",
