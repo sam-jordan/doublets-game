@@ -14,6 +14,13 @@ export class Stack extends cdk.Stack {
             // EnforceSSL: true,
             removalPolicy: cdk.RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
+            blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+            cors: [
+                {
+                    allowedMethods: [s3.HttpMethods.GET],
+                    allowedOrigins: ['*'],
+                },
+            ],
         });
 
         new BucketDeployment(this, 'bucket-deployment-build', {
@@ -28,7 +35,8 @@ export class Stack extends cdk.Stack {
 
         new cf.Distribution(this, 'distribution', {
             defaultBehavior: {
-                origin: S3BucketOrigin.withBucketDefaults(bucket),
+                origin: S3BucketOrigin.withOriginAccessControl(bucket),
+                originRequestPolicy: cf.OriginRequestPolicy.CORS_S3_ORIGIN,
             },
             defaultRootObject: 'index.html',
         });
