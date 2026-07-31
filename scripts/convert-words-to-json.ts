@@ -6,8 +6,7 @@ import { EOL } from 'node:os';
 const words = fs
     .readFileSync('./scripts/five-letter-words.txt', 'utf8')
     .split(EOL)
-    .map(word => word.toUpperCase())
-    .slice(0, 3500);
+    .map(word => word.toUpperCase());
 
 fs.writeFileSync('./static/allowed-words.json', JSON.stringify({ words }));
 

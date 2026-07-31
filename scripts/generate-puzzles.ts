@@ -67,7 +67,7 @@ function generateData(
         )
     );
 
-    // TODO - consider using an increasingly small subset of the words as difficulty increases
+    // IDEA - use a larger subset of both puzzle words and chain words for higher difficulties
     const puzzleWords = wordLinkMapping.keys().toArray().slice(0, 1000);
     const validPuzzles = [];
     for (const startWord of puzzleWords) {
@@ -116,6 +116,7 @@ function generateData(
 
 const wordLinkMapping = findLinkedWords();
 
+// IDEA - probably want to take a small subset of the puzzles for upload
 const easy = generateData(wordLinkMapping, 5);
 const medium = generateData(wordLinkMapping, 6);
 const hard = generateData(wordLinkMapping, 7);
