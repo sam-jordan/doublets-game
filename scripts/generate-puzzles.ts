@@ -122,7 +122,7 @@ const medium = generateData(wordLinkMapping, 6);
 const hard = generateData(wordLinkMapping, 7);
 
 fs.writeFileSync(
-    './static/puzzles.json',
+    './frontend/static/puzzles.json',
     JSON.stringify({ easy, medium, hard })
 );
 console.log(styleText('magenta', 'Puzzles written to static/puzzles.json!'));

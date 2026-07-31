@@ -8,6 +8,9 @@ const words = fs
     .split(EOL)
     .map(word => word.toUpperCase());
 
-fs.writeFileSync('./static/allowed-words.json', JSON.stringify({ words }));
+fs.writeFileSync(
+    './frontend/static/allowed-words.json',
+    JSON.stringify({ words })
+);
 
 console.log('Words written to json!');
