@@ -15,6 +15,7 @@
     "type": "module",
     "scripts": {
         "build": "tsc -b && vite build",
+        "deploy": "npm run build && cdk deploy",
         "dev": "vite",
         "generate-puzzles": "npm run build && node dist/scripts/generate-puzzles.js",
         "generate-words": "npm run build && node dist/scripts/convert-words-to-json.js",
@@ -27,6 +28,7 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.3.3",
+        "aws-cdk-lib": "^2.262.2",
         "clsx": "^2.1.1",
         "luxon": "^3.7.2",
         "react": "^19.2.0",
@@ -44,6 +46,7 @@
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^5.1.1",
         "@vitest/coverage-v8": "^4.1.10",
+        "aws-cdk": "^2.1134.0",
         "eslint-plugin-jsx-a11y": "^6.10.2",
         "globals": "^16.5.0",
         "husky": "^9.1.7",

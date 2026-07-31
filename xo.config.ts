@@ -18,8 +18,10 @@ const xoConfig: FlatXoConfig = [
             },
         },
         rules: {
-            // Unavoidable part of declaring Zod schemas
-            'unicorn/max-nested-calls': 'warn',
+            // Needed for AWS CDK
+            'no-new': 'off',
+
+            // Annoying
             '@eslint-community/eslint-comments/require-description': 'off',
             '@typescript-eslint/naming-convention': 'off',
         },
