@@ -66,6 +66,21 @@ export function validateSolution(guesses: Guess[], puzzle: Puzzle): Validation {
                 index: guess.index,
             };
         }
+
+        if (guess.index === guesses.length - 1) {
+            const finalChanged = getChanged(
+                puzzle.endWord.split(''),
+                guess.letters
+            );
+
+            if (finalChanged.length !== 1) {
+                return {
+                    valid: false,
+                    message: `Guess ${guess.index + 1}: Does not connect to the end word!`,
+                    index: guess.index,
+                };
+            }
+        }
     }
 
     return { valid: true };
