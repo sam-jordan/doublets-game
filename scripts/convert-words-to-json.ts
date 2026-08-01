@@ -2,6 +2,7 @@
 
 import * as fs from 'node:fs';
 import { EOL } from 'node:os';
+import { styleText } from 'node:util';
 
 const words = fs
     .readFileSync('./scripts/five-letter-words.txt', 'utf8')
@@ -13,4 +14,4 @@ fs.writeFileSync(
     JSON.stringify({ words })
 );
 
-console.log('Words written to json!');
+console.log(styleText('green', 'Words written to json!'));

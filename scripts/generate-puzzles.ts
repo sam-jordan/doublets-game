@@ -67,8 +67,7 @@ function generateData(
         )
     );
 
-    // IDEA - use a larger subset of both puzzle words and chain words for higher difficulties
-    const puzzleWords = wordLinkMapping.keys().toArray().slice(0, 1000);
+    const puzzleWords = wordLinkMapping.keys().toArray();
     const validPuzzles = [];
     for (const startWord of puzzleWords) {
         const endWords = new Map<string, number>();
@@ -116,13 +115,15 @@ function generateData(
 
 const wordLinkMapping = findLinkedWords();
 
-// IDEA - probably want to take a small subset of the puzzles for upload
-const easy = generateData(wordLinkMapping, 5);
-const medium = generateData(wordLinkMapping, 6);
-const hard = generateData(wordLinkMapping, 7);
+// This script will generate 500k+ puzzles per difficulty - store only 1000 each
+const easy = generateData(wordLinkMapping, 5).slice(0, 1000);
+const medium = generateData(wordLinkMapping, 6).slice(0, 1000);
+const hard = generateData(wordLinkMapping, 7).slice(0, 1000);
 
 fs.writeFileSync(
     './frontend/static/puzzles.json',
     JSON.stringify({ easy, medium, hard })
 );
-console.log(styleText('magenta', 'Puzzles written to static/puzzles.json!'));
+console.log(
+    styleText('magenta', 'Puzzles written to frontend/static/puzzles.json!')
+);
