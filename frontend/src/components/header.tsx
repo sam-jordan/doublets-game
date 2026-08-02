@@ -8,14 +8,20 @@ export default function Header(props: {
     setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
     addGuess: () => void;
     removeGuess: () => void;
+    difficulty: Difficulties;
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
 
     return (
         <header className='flex justify-between border-b px-4'>
-            <h1 className='font-(family-name:--title-fonts) text-3xl text-pink-bright py-2 font-extrabold'>
-                DOUBLETS
-            </h1>
+            <div className='flex items-center gap-4'>
+                <h1 className='font-(family-name:--title-fonts) text-3xl text-pink-bright py-2 font-extrabold'>
+                    DOUBLETS
+                </h1>
+                <p className='font-(family-name:--standard-fonts)'>
+                    {`${Difficulties[props.difficulty].slice(0, 1)}${Difficulties[props.difficulty].slice(1).toLowerCase()}`}
+                </p>
+            </div>
             <div className='flex justify-between gap-x-2'>
                 <button
                     className='w-12 p-2 hover:bg-grey-mid cursor-pointer'

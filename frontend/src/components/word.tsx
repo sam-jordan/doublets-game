@@ -55,9 +55,7 @@ export default function Row(props: RowProps) {
         <button
             tabIndex={0}
             className={clsx(
-                'grid grid-cols-5 w-66',
-                // TODO - adjust heights based on other contents of guesses
-                props.index === 100 || props.index === 101 ? 'h-14' : 'h-13',
+                'grid grid-cols-5 w-66 h-13',
                 props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
                 useShake ? 'animate-shake' : '',
                 useJump ? 'animate-jump' : ''

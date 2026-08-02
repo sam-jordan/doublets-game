@@ -365,6 +365,7 @@ export default function Game() {
                     setShowHelp={setShowHelp}
                     addGuess={addGuess}
                     removeGuess={removeGuess}
+                    difficulty={difficulty}
                 />
                 <Popup popup={popup} />
                 <div className='flex flex-col justify-center items-center grow gap-8'>
