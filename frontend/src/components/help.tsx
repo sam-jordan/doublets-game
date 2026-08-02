@@ -3,8 +3,8 @@ export default function Help(props: {
     setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     return props.showHelp ? (
-        <div className='fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm'>
-            <div className='flex justify-between'>
+        <div className='help-box fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm'>
+            <div className='help-box flex justify-between'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     How to Play
                 </h2>

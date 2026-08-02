@@ -24,8 +24,15 @@ export default function Header(props: {
             </div>
             <div className='flex justify-between gap-x-2'>
                 <button
-                    className='w-12 p-2 hover:bg-grey-mid cursor-pointer'
-                    onClick={props.addGuess}
+                    className={clsx(
+                        'w-12 p-2',
+                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                    )}
+                    onClick={() => {
+                        if (!props.showHelp) {
+                            props.addGuess();
+                        }
+                    }}
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -38,8 +45,15 @@ export default function Header(props: {
                     </svg>
                 </button>
                 <button
-                    className='w-12 p-2 hover:bg-grey-mid cursor-pointer'
-                    onClick={props.removeGuess}
+                    className={clsx(
+                        'w-12 p-2',
+                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                    )}
+                    onClick={() => {
+                        if (!props.showHelp) {
+                            props.removeGuess();
+                        }
+                    }}
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -53,11 +67,13 @@ export default function Header(props: {
                 </button>
                 <button
                     className={clsx(
-                        'w-12 p-2 cursor-pointer',
-                        showDifficulties ? 'bg-grey-mid' : 'hover:bg-grey-mid'
+                        'w-12 p-2',
+                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
                     )}
                     onClick={() => {
-                        setShowDifficulties(!showDifficulties);
+                        if (!props.showHelp) {
+                            setShowDifficulties(!showDifficulties);
+                        }
                     }}
                 >
                     <svg
@@ -105,10 +121,11 @@ export default function Header(props: {
                     </ul>
                 ) : null}
                 <button
-                    className='w-12 p-2 hover:bg-grey-mid cursor-pointer'
-                    onClick={() => {
-                        props.setShowHelp(!props.showHelp);
-                    }}
+                    className={clsx(
+                        'w-12 p-2',
+                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                    )}
+                    id='help-button'
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'

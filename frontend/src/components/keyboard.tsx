@@ -1,5 +1,8 @@
+import clsx from 'clsx';
+
 export default function Keyboard(props: {
     handleKeyUp: (key: string) => void;
+    showHelp: boolean;
 }) {
     const keyboard = [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -17,7 +20,10 @@ export default function Keyboard(props: {
                     {row.map(key => (
                         <button
                             key={`keyboard-${key}`}
-                            className='bg-grey-light rounded-sm py-4 px-4 cursor-pointer select-none'
+                            className={clsx(
+                                'bg-grey-light rounded-sm py-4 px-4 select-none',
+                                props.showHelp ? '' : 'cursor-pointer'
+                            )}
                             onClick={() => {
                                 props.handleKeyUp(key);
                             }}
