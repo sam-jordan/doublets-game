@@ -5,11 +5,11 @@ export default function Help(props: {
     return props.showHelp ? (
         <div className='fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm'>
             <div className='flex justify-between'>
-                <h2 className='font-(family-name:--title-fonts) font-bold'>
+                <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     How to Play
                 </h2>
                 <button
-                    className='w-4 cursor-pointer -mt-2'
+                    className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
                         props.setShowHelp(!props.showHelp);
                     }}
@@ -25,26 +25,31 @@ export default function Help(props: {
                     </svg>
                 </button>
             </div>
-            <p className='font-(family-name:--title-fonts)'>
+            <p className='font-(family-name:--title-fonts) mb-2'>
                 Connect the start and end words using similar words.
             </p>
-            <ul className='font-(family-name:--standard-fonts)'>
+            <ul className='font-(family-name:--standard-fonts) pl-2'>
                 <li>
-                    &#8226; Change <strong>exactly one</strong> letter between
-                    each guess,
+                    &#8226; Change{' '}
+                    <span className='font-extrabold'>exactly one</span> letter
+                    between each guess,
                     <br />
                     indicated by the{' '}
                     <span className='text-pink-bright'>pink</span> tiles.
                 </li>
-                <li>&#8226; Each guess must be a valid word.</li>
+                <li>&#8226; Each guess must be a valid 5-letter word.</li>
                 <li>
                     &#8226; Guesses can be selected using the mouse, the arrow
                     keys or Enter/Backspace.
                 </li>
                 <li>
-                    &#8226; Press Enter on the final guess to submit! <br />
-                    Don't worry, you can keep trying if the submission isn't
-                    valid.
+                    &#8226; Use the + and - buttons at the top of the page to
+                    add and remove guesses.
+                </li>
+                <li>&#8226; Press Enter on the final guess to submit.</li>
+                <li>
+                    &#8226; Don't worry, you can keep trying if the submission
+                    isn't valid!
                 </li>
             </ul>
         </div>
