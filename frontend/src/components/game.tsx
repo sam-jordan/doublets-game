@@ -151,29 +151,6 @@ export default function Game() {
         }
     }
 
-    useEffect(() => {
-        function handleClick(event: Event) {
-            if (
-                (event.target instanceof HTMLElement ||
-                    event.target instanceof SVGElement) &&
-                ((!event.target
-                    .closest('div')
-                    ?.classList.contains('help-box') &&
-                    showHelp) ||
-                    (!showHelp &&
-                        event.target.closest('button')?.id === 'help-button'))
-            ) {
-                setShowHelp(!showHelp);
-            }
-        }
-
-        document.addEventListener('click', handleClick);
-
-        return () => {
-            document.removeEventListener('click', handleClick);
-        };
-    });
-
     function handleType(value: string) {
         if (solved[difficulty] !== undefined) {
             return;

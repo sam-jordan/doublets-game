@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Difficulties } from '../logic/types';
 
@@ -11,6 +11,43 @@ export default function Header(props: {
     difficulty: Difficulties;
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
+
+    useEffect(() => {
+        function handleClick(event: Event) {
+            if (!(
+                event.target instanceof HTMLElement ||
+                event.target instanceof SVGElement
+            )) {
+                return;
+            }
+
+            if (
+                (!event.target.closest('div')?.classList.contains('help-box') &&
+                    props.showHelp) ||
+                (!props.showHelp &&
+                    event.target.closest('button')?.id === 'help-button')
+            ) {
+                props.setShowHelp(!props.showHelp);
+            }
+
+            if (
+                !props.showHelp &&
+                ((showDifficulties &&
+                    event.target.id !== 'difficulties-dropdown') ||
+                    (!showDifficulties &&
+                        event.target.closest('button')?.id ===
+                            'difficulties-button'))
+            ) {
+                setShowDifficulties(!showDifficulties);
+            }
+        }
+
+        document.addEventListener('click', handleClick);
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    });
 
     return (
         <header className='flex justify-between border-b px-4'>
@@ -70,11 +107,7 @@ export default function Header(props: {
                         'w-12 p-2',
                         props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
                     )}
-                    onClick={() => {
-                        if (!props.showHelp) {
-                            setShowDifficulties(!showDifficulties);
-                        }
-                    }}
+                    id='difficulties-button'
                 >
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
@@ -87,7 +120,10 @@ export default function Header(props: {
                     </svg>
                 </button>
                 {showDifficulties ? (
-                    <ul className='font-(family-name:--standard-fonts) absolute top-13.25 right-6'>
+                    <ul
+                        className='font-(family-name:--standard-fonts) absolute top-13.25 right-6'
+                        id='difficulties-dropdown'
+                    >
                         <li>
                             <button
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
