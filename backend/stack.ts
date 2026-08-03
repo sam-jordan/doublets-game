@@ -11,6 +11,7 @@ export class Stack extends cdk.Stack {
         const bucket = new s3.Bucket(this, 'bucket', {
             bucketName: 'doublets-game-static-bucket',
             removalPolicy: cdk.RemovalPolicy.DESTROY,
+            autoDeleteObjects: true,
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
         });
 
