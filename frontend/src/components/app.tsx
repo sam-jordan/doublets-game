@@ -19,7 +19,7 @@ export default function App() {
                     <use xlinkHref='../../static/logo.svg' />
                 </svg>
                 <h2 className='text-5xl font-extrabold'>Doublets</h2>
-                <p className='text-2xl text-center'>
+                <p className='text-xl sm:text-2xl text-center'>
                     Get from the start word to the end <br /> by changing one
                     letter at a time.
                 </p>

@@ -21,7 +21,7 @@ export default function Keyboard(props: {
                         <button
                             key={`keyboard-${key}`}
                             className={clsx(
-                                'bg-grey-light rounded-sm py-4 px-4 select-none',
+                                'bg-grey-light rounded-sm py-2 px-2 select-none sm:py-4 sm:px-4',
                                 props.showHelp ? '' : 'cursor-pointer'
                             )}
                             onClick={() => {
