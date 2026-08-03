@@ -15,16 +15,26 @@ export class Stack extends cdk.Stack {
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
         });
 
-        new BucketDeployment(this, 'bucket-deployment-build', {
-            destinationBucket: bucket,
-            sources: [Source.asset('./frontend/build')],
-        });
+        const buildDeployment = new BucketDeployment(
+            this,
+            'bucket-deployment-build',
+            {
+                destinationBucket: bucket,
+                sources: [Source.asset('./frontend/build')],
+            }
+        );
 
-        new BucketDeployment(this, 'bucket-deployment-static', {
-            destinationBucket: bucket,
-            sources: [Source.asset('./frontend/static')],
-            destinationKeyPrefix: 'static',
-        });
+        const staticDeployment = new BucketDeployment(
+            this,
+            'bucket-deployment-static',
+            {
+                destinationBucket: bucket,
+                sources: [Source.asset('./frontend/static')],
+                destinationKeyPrefix: 'static',
+            }
+        );
+
+        staticDeployment.node.addDependency(buildDeployment);
 
         new cf.Distribution(this, 'distribution', {
             defaultBehavior: {
