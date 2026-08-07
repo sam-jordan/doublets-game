@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { DateTime } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
@@ -26,6 +26,7 @@ export default function Game() {
         Array.from({ length: 3 }, _ => undefined)
     );
     const [showHelp, setShowHelp] = useState<boolean>(false);
+    // const [timers, setTimers] = useState<Duration[]>(Array.from({ length: 3 }).map(() => Duration.fromMillis(0)));
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -33,7 +34,7 @@ export default function Game() {
     const [useJump, setUseJump] = useState<number | undefined>(undefined);
     const [gameWin, setGameWin] = useState<number | undefined>(undefined);
 
-    const timeoutRef = useRef<number | undefined>(undefined);
+    const popupTimeoutRef = useRef<number | undefined>(undefined);
 
     const puzzle = getPuzzle(difficulty);
 
@@ -94,8 +95,8 @@ export default function Game() {
         }
 
         setPopup({ ...popup, show: false });
-        if (typeof timeoutRef.current === 'number') {
-            clearTimeout(timeoutRef.current);
+        if (typeof popupTimeoutRef.current === 'number') {
+            clearTimeout(popupTimeoutRef.current);
         }
 
         const result = validateSolution(guesses[difficulty], puzzle);
@@ -116,7 +117,7 @@ export default function Game() {
             setPopup({ show: true, message: result.message });
         }
 
-        timeoutRef.current = setTimeout(() => {
+        popupTimeoutRef.current = setTimeout(() => {
             setUseShake(undefined);
             setPopup({ ...popup, show: false });
         }, 2000);
