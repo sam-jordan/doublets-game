@@ -1,6 +1,6 @@
 export default function Help(props: {
-    showHelp: boolean;
-    setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
+    readonly showHelp: boolean;
+    readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     return props.showHelp ? (
         <div className='help-box fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm'>

@@ -375,7 +375,7 @@ export default function Game() {
                 <div className='flex flex-col justify-center items-center grow gap-8'>
                     <div>
                         <Word
-                            key={'start-word'}
+                            key="start-word"
                             index={100}
                             letters={puzzle.startWord.split('')}
                             type={WordTypes.FIXED}
@@ -405,7 +405,7 @@ export default function Game() {
                             ))}
                         </div>
                         <Word
-                            key={'end-word'}
+                            key="end-word"
                             index={101}
                             letters={puzzle.endWord.split('')}
                             type={WordTypes.FIXED}

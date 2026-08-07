@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
 export default function Keyboard(props: {
-    handleKeyUp: (key: string) => void;
-    showHelp: boolean;
+    readonly handleKeyUp: (key: string) => void;
+    readonly showHelp: boolean;
 }) {
     const keyboard = [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],

@@ -3,12 +3,12 @@ import clsx from 'clsx';
 import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
-    handleDifficulty: (nextDifficulty: Difficulties) => void;
-    showHelp: boolean;
-    setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
-    addGuess: () => void;
-    removeGuess: () => void;
-    difficulty: Difficulties;
+    readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
+    readonly showHelp: boolean;
+    readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
+    readonly addGuess: () => void;
+    readonly removeGuess: () => void;
+    readonly difficulty: Difficulties;
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
 
