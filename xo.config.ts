@@ -24,10 +24,7 @@ const xoConfig: FlatXoConfig = [
             // Needed for AWS CDK
             'no-new': 'off',
 
-            // Annoying
-            '@eslint-community/eslint-comments/require-description': 'off',
-            '@typescript-eslint/naming-convention': 'off',
-            '@html-eslint/require-open-graph-protocol': 'off',
+            // Does not align with desired style
             'react/jsx-no-bind': 'off',
         },
     },
