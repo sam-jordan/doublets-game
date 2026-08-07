@@ -4,6 +4,7 @@ import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
     readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
+    // eslint-disable-next-line react/boolean-prop-naming -- too strict
     readonly showHelp: boolean;
     readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
     readonly addGuess: () => void;
@@ -61,6 +62,7 @@ export default function Header(props: {
             </div>
             <div className='flex justify-between gap-x-2'>
                 <button
+                    type='button'
                     className={clsx(
                         'w-12 p-2',
                         props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
@@ -82,6 +84,7 @@ export default function Header(props: {
                     </svg>
                 </button>
                 <button
+                    type='button'
                     className={clsx(
                         'w-12 p-2',
                         props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
@@ -103,6 +106,7 @@ export default function Header(props: {
                     </svg>
                 </button>
                 <button
+                    type='button'
                     className={clsx(
                         'w-12 p-2',
                         props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
@@ -126,6 +130,7 @@ export default function Header(props: {
                     >
                         <li>
                             <button
+                                type='button'
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.EASY);
@@ -136,6 +141,7 @@ export default function Header(props: {
                         </li>
                         <li>
                             <button
+                                type='button'
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.MEDIUM);
@@ -146,6 +152,7 @@ export default function Header(props: {
                         </li>
                         <li>
                             <button
+                                type='button'
                                 className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.HARD);
@@ -157,6 +164,7 @@ export default function Header(props: {
                     </ul>
                 ) : null}
                 <button
+                    type='button'
                     className={clsx(
                         'w-12 p-2',
                         props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'

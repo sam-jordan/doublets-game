@@ -1,4 +1,5 @@
 export default function Help(props: {
+    // eslint-disable-next-line react/boolean-prop-naming -- too strict
     readonly showHelp: boolean;
     readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -9,6 +10,7 @@ export default function Help(props: {
                     How to Play
                 </h2>
                 <button
+                    type='button'
                     className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
                         props.setShowHelp(!props.showHelp);
@@ -48,8 +50,8 @@ export default function Help(props: {
                 </li>
                 <li>&#8226; Press Enter on the final guess to submit.</li>
                 <li>
-                    &#8226; Don't worry, you can keep trying if the submission
-                    isn't valid!
+                    &#8226; Don&apos;t worry, you can keep trying if the
+                    submission isn&apos;t valid!
                 </li>
             </ul>
         </div>

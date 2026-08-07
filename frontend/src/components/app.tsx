@@ -24,6 +24,7 @@ export default function App() {
                     letter at a time.
                 </p>
                 <button
+                    type='button'
                     className='font-(family-name:--standard-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer'
                     onClick={() => {
                         setPage(Pages.GAME);

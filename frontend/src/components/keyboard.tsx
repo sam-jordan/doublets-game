@@ -2,6 +2,7 @@ import clsx from 'clsx';
 
 export default function Keyboard(props: {
     readonly handleKeyUp: (key: string) => void;
+    // eslint-disable-next-line react/boolean-prop-naming -- too strict
     readonly showHelp: boolean;
 }) {
     const keyboard = [
@@ -20,6 +21,7 @@ export default function Keyboard(props: {
                     {row.map(key => (
                         <button
                             key={`keyboard-${key}`}
+                            type='button'
                             className={clsx(
                                 'bg-grey-light rounded-sm p-2.75 select-none text-sm',
                                 'sm:p-4 sm:text-base',

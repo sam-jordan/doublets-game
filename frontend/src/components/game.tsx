@@ -42,11 +42,14 @@ export default function Game() {
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
-                // eslint-disable-next-line @stylistic/no-mixed-operators
+                // eslint-disable-next-line @stylistic/no-mixed-operators -- disagrees with Prettier
                 solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
-            setGameWin(100);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- best practise for React
+            () => {
+                setGameWin(100);
+            };
 
             // Animating the guesses
             for (const guess of guesses[difficulty]) {
@@ -83,20 +86,41 @@ export default function Game() {
                 clearTimeout(timer);
             }
         };
-    }, [solved]);
+    }, [solved, difficulty, guesses]);
 
-    useEffect(() => {
-        function handleKeyboardEvent(event: KeyboardEvent) {
-            event.preventDefault();
-            handleKeyUp(event.key);
+    function handleSubmit() {
+        if (solved[difficulty] !== undefined) {
+            return;
         }
 
-        document.body.addEventListener('keyup', handleKeyboardEvent);
+        setPopup({ ...popup, show: false });
+        if (typeof timeoutRef.current === 'number') {
+            clearTimeout(timeoutRef.current);
+        }
 
-        return () => {
-            document.body.removeEventListener('keyup', handleKeyboardEvent);
-        };
-    });
+        const result = validateSolution(guesses[difficulty], puzzle);
+
+        if (result.valid) {
+            setPopup({ show: true, message: 'Splendid!' });
+
+            const nextSolved = solved.map((difficultySolved, index) => {
+                if (index === difficulty.valueOf()) {
+                    return DateTime.now().toMillis();
+                }
+
+                return difficultySolved;
+            });
+            setSolved(nextSolved);
+        } else {
+            setUseShake(result.index);
+            setPopup({ show: true, message: result.message });
+        }
+
+        timeoutRef.current = setTimeout(() => {
+            setUseShake(undefined);
+            setPopup({ ...popup, show: false });
+        }, 2000);
+    }
 
     function handleKeyUp(key: string) {
         if (showHelp) {
@@ -270,6 +294,19 @@ export default function Game() {
         }
     }
 
+    useEffect(() => {
+        function handleKeyboardEvent(event: KeyboardEvent) {
+            event.preventDefault();
+            handleKeyUp(event.key);
+        }
+
+        document.body.addEventListener('keyup', handleKeyboardEvent);
+
+        return () => {
+            document.body.removeEventListener('keyup', handleKeyboardEvent);
+        };
+    });
+
     function handleDifficulty(nextDifficulty: Difficulties) {
         if (nextDifficulty === difficulty) {
             return;
@@ -277,40 +314,6 @@ export default function Game() {
 
         setDifficulty(nextDifficulty);
         setCurrentGuess(0);
-    }
-
-    function handleSubmit() {
-        if (solved[difficulty] !== undefined) {
-            return;
-        }
-
-        setPopup({ ...popup, show: false });
-        if (typeof timeoutRef.current === 'number') {
-            clearTimeout(timeoutRef.current);
-        }
-
-        const result = validateSolution(guesses[difficulty], puzzle);
-
-        if (result.valid) {
-            setPopup({ show: true, message: 'Splendid!' });
-
-            const nextSolved = solved.map((difficultySolved, index) => {
-                if (index === difficulty.valueOf()) {
-                    return DateTime.now().toMillis();
-                }
-
-                return difficultySolved;
-            });
-            setSolved(nextSolved);
-        } else {
-            setUseShake(result.index);
-            setPopup({ show: true, message: result.message });
-        }
-
-        timeoutRef.current = setTimeout(() => {
-            setUseShake(undefined);
-            setPopup({ ...popup, show: false });
-        }, 2000);
     }
 
     function addGuess() {
@@ -375,7 +378,7 @@ export default function Game() {
                 <div className='flex flex-col justify-center items-center grow gap-8'>
                     <div>
                         <Word
-                            key="start-word"
+                            key='start-word'
                             index={100}
                             letters={puzzle.startWord.split('')}
                             type={WordTypes.FIXED}
@@ -405,7 +408,7 @@ export default function Game() {
                             ))}
                         </div>
                         <Word
-                            key="end-word"
+                            key='end-word'
                             index={101}
                             letters={puzzle.endWord.split('')}
                             type={WordTypes.FIXED}

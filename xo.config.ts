@@ -28,6 +28,7 @@ const xoConfig: FlatXoConfig = [
             '@eslint-community/eslint-comments/require-description': 'off',
             '@typescript-eslint/naming-convention': 'off',
             '@html-eslint/require-open-graph-protocol': 'off',
+            'react/jsx-no-bind': 'off',
         },
     },
 ];

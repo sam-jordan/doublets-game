@@ -32,7 +32,10 @@ export default function Row(props: RowProps) {
                 }
             }
         } else {
-            setLetterJump(undefined);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- best practise for React
+            () => {
+                setLetterJump(undefined);
+            };
         }
 
         return () => {
@@ -53,6 +56,7 @@ export default function Row(props: RowProps) {
 
     return (
         <button
+            type='button'
             tabIndex={0}
             className={clsx(
                 'grid grid-cols-5 w-66 h-13',
@@ -64,6 +68,7 @@ export default function Row(props: RowProps) {
         >
             {props.letters.map((character, charIndex) => (
                 <div
+                    // eslint-disable-next-line react/no-array-index-key -- position is more important than content here
                     key={`guess-${props.index}-char-${charIndex}`}
                     className={buildCharacterStyling(
                         character,
