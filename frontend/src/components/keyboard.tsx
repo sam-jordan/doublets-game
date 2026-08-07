@@ -12,18 +12,23 @@ export default function Keyboard(props: {
     ];
 
     return (
-        <div className='flex flex-col items-center gap-y-1.5'>
+        <div
+            className={clsx(
+                'flex flex-col items-center gap-y-1',
+                'sm:gap-y-1.5'
+            )}
+        >
             {keyboard.map(row => (
                 <div
                     key={`keyboard-row-${keyboard.indexOf(row)}`}
-                    className='flex gap-x-1.5'
+                    className={clsx('flex gap-x-1', 'sm:gap-x-1.5')}
                 >
                     {row.map(key => (
                         <button
                             key={`keyboard-${key}`}
                             type='button'
                             className={clsx(
-                                'bg-grey-light rounded-sm p-2.75 select-none text-sm',
+                                'bg-grey-light rounded-sm p-3 select-none text-sm',
                                 'sm:p-4 sm:text-base',
                                 props.showHelp ? '' : 'cursor-pointer'
                             )}
