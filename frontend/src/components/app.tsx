@@ -16,7 +16,7 @@ export default function App() {
         <div className='font-(family-name:--title-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
                 <svg>
-                    <use xlinkHref='../../static/logo.svg' />
+                    <use xlinkHref='/logo.svg' />
                 </svg>
                 <h2 className='text-5xl font-extrabold'>Doublets</h2>
                 <p className='text-xl sm:text-2xl text-center'>
