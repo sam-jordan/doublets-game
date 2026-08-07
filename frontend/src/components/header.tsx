@@ -52,10 +52,14 @@ export default function Header(props: {
         };
     });
 
-    const minutes = Math.floor(
-        props.timers[props.difficulty].milliseconds / (60 * 1000)
+    const hours = Math.floor(
+        props.timers[props.difficulty].milliseconds / (60 * 60 * 1000)
     );
-    const seconds = props.timers[props.difficulty].milliseconds / 1000;
+    const minutes = Math.floor(
+        props.timers[props.difficulty].milliseconds / (60 * 1000) - hours * 60
+    );
+    const seconds =
+        props.timers[props.difficulty].milliseconds / 1000 - minutes * 60;
 
     return (
         <header className='flex justify-between border-b px-4'>
@@ -72,7 +76,7 @@ export default function Header(props: {
                     {`${Difficulties[props.difficulty].slice(0, 1)}${Difficulties[props.difficulty].slice(1).toLowerCase()}`}
                 </p>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
+                    {`${hours > 0 ? `${hours}:${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
                 </p>
             </div>
             <div className='flex justify-between gap-x-2'>
