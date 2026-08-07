@@ -4,7 +4,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 const xoConfig: FlatXoConfig = [
     jsxA11y.flatConfigs.recommended,
     {
-        files: '**/*.{js,ts,tsx}',
+        files: '**/*.{js,ts,tsx,html}',
         prettier: 'compat',
         languageOptions: {
             parserOptions: {
