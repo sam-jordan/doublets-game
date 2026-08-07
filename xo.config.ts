@@ -5,7 +5,6 @@ const xoConfig: FlatXoConfig = [
     jsxA11y.flatConfigs.recommended,
     {
         files: '**/*.{js,ts,tsx}',
-        space: 4,
         prettier: 'compat',
         languageOptions: {
             parserOptions: {
