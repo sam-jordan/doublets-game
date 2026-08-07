@@ -42,6 +42,10 @@ export default function Game() {
     const puzzle = getPuzzle(difficulty);
 
     useEffect(() => {
+        if (solved[difficulty] !== undefined) {
+            return;
+        }
+
         timerTimeoutRef.current = setTimeout(() => {
             setTimers(
                 timers.map(timer => {
@@ -64,7 +68,6 @@ export default function Game() {
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
-                // eslint-disable-next-line @stylistic/no-mixed-operators -- disagrees with Prettier
                 solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
@@ -396,6 +399,7 @@ export default function Game() {
                     removeGuess={removeGuess}
                     difficulty={difficulty}
                     timers={timers}
+                    solved={solved}
                 />
                 <Popup popup={popup} />
                 <div className='flex flex-col justify-center items-center grow gap-8'>
