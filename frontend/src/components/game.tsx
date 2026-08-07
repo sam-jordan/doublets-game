@@ -26,7 +26,9 @@ export default function Game() {
         Array.from({ length: 3 }, _ => undefined)
     );
     const [showHelp, setShowHelp] = useState<boolean>(false);
-    // const [timers, setTimers] = useState<Duration[]>(Array.from({ length: 3 }).map(() => Duration.fromMillis(0)));
+    const [timers, setTimers] = useState<Duration[]>(
+        Array.from({ length: 3 }, () => Duration.fromMillis(0))
+    );
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -35,11 +37,30 @@ export default function Game() {
     const [gameWin, setGameWin] = useState<number | undefined>(undefined);
 
     const popupTimeoutRef = useRef<number | undefined>(undefined);
+    const timerTimeoutRef = useRef<number | undefined>(undefined);
 
     const puzzle = getPuzzle(difficulty);
 
     useEffect(() => {
-        const timers: number[] = [];
+        timerTimeoutRef.current = setTimeout(() => {
+            setTimers(
+                timers.map(timer => {
+                    if (timers.indexOf(timer) === difficulty.valueOf()) {
+                        return timer.plus(Duration.fromMillis(1000));
+                    }
+
+                    return timer;
+                })
+            );
+        }, 1000);
+
+        return () => {
+            clearTimeout(timerTimeoutRef.current);
+        };
+    }, [timers, difficulty]);
+
+    useEffect(() => {
+        const animationTimers: number[] = [];
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
@@ -61,7 +82,7 @@ export default function Game() {
                     750 * (guess.index + 1)
                 );
 
-                timers.push(timer);
+                animationTimers.push(timer);
             }
 
             // Animating the end word
@@ -79,11 +100,11 @@ export default function Game() {
                 750 * (guesses[difficulty].length + 2)
             );
 
-            timers.push(timer, final);
+            animationTimers.push(timer, final);
         }
 
         return () => {
-            for (const timer of timers) {
+            for (const timer of animationTimers) {
                 clearTimeout(timer);
             }
         };
@@ -374,6 +395,7 @@ export default function Game() {
                     addGuess={addGuess}
                     removeGuess={removeGuess}
                     difficulty={difficulty}
+                    timers={timers}
                 />
                 <Popup popup={popup} />
                 <div className='flex flex-col justify-center items-center grow gap-8'>

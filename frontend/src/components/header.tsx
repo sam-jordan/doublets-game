@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import type { Duration } from 'luxon';
 import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
@@ -10,6 +11,7 @@ export default function Header(props: {
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
     readonly difficulty: Difficulties;
+    readonly timers: Duration[];
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
 
@@ -50,6 +52,11 @@ export default function Header(props: {
         };
     });
 
+    const minutes = Math.floor(
+        props.timers[props.difficulty].milliseconds / (60 * 1000)
+    );
+    const seconds = props.timers[props.difficulty].milliseconds / 1000;
+
     return (
         <header className='flex justify-between border-b px-4'>
             <div className='flex items-center gap-4'>
@@ -63,6 +70,9 @@ export default function Header(props: {
                 </h1>
                 <p className='font-(family-name:--standard-fonts)'>
                     {`${Difficulties[props.difficulty].slice(0, 1)}${Difficulties[props.difficulty].slice(1).toLowerCase()}`}
+                </p>
+                <p className='font-(family-name:--standard-fonts)'>
+                    {`${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
                 </p>
             </div>
             <div className='flex justify-between gap-x-2'>
