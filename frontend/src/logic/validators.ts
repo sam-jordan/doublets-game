@@ -1,4 +1,4 @@
-import allowed from '../../public/allowed-words.json' with { type: 'json' };
+import allowed from '../static/allowed-words.json' with { type: 'json' };
 import { type Guess, type Puzzle, type Validation } from './types';
 
 function validateWord(
