@@ -23,6 +23,7 @@ const xoConfig: FlatXoConfig = [
             // Annoying
             '@eslint-community/eslint-comments/require-description': 'off',
             '@typescript-eslint/naming-convention': 'off',
+            '@html-eslint/require-open-graph-protocol': 'off',
         },
     },
 ];

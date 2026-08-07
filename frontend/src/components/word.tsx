@@ -5,9 +5,9 @@ import { WordTypes, type RowProps } from '../logic/types';
 export default function Row(props: RowProps) {
     const [letterJump, setLetterJump] = useState<number | undefined>(undefined);
 
-    const useShake =
+    const shouldUseShake =
         props.type !== WordTypes.FIXED && props.useShake === props.index;
-    const useJump =
+    const shouldUseJump =
         props.type !== WordTypes.FIXED && props.useJump === props.index;
 
     useEffect(() => {
@@ -57,8 +57,8 @@ export default function Row(props: RowProps) {
             className={clsx(
                 'grid grid-cols-5 w-66 h-13',
                 props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
-                useShake ? 'animate-shake' : '',
-                useJump ? 'animate-jump' : ''
+                shouldUseShake ? 'animate-shake' : '',
+                shouldUseJump ? 'animate-jump' : ''
             )}
             onClick={handleClick}
         >
@@ -87,7 +87,7 @@ function buildCharacterStyling(
 ): string {
     const isCurrentGuess =
         props.type === WordTypes.FIXED ? false : props.currentGuess;
-    const useThrob =
+    const shouldUseThrob =
         props.type !== WordTypes.FIXED &&
         isCurrentGuess &&
         index === props.lastTyped &&
@@ -95,7 +95,7 @@ function buildCharacterStyling(
 
     const base = clsx(
         'text-3xl h-12 w-12 flex justify-center items-center border-2 select-none justify-self-center self-center',
-        useThrob ? 'animate-throb' : '',
+        shouldUseThrob ? 'animate-throb' : '',
         letterJump === index ? 'animate-jump-quick' : ''
     );
 
