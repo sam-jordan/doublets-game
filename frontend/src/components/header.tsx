@@ -53,7 +53,12 @@ export default function Header(props: {
     return (
         <header className='flex justify-between border-b px-4'>
             <div className='flex items-center gap-4'>
-                <h1 className='font-(family-name:--title-fonts) text-3xl text-pink-bright py-2 font-extrabold invisible sm:visible'>
+                <h1
+                    className={clsx(
+                        'font-(family-name:--title-fonts) text-3xl text-pink-bright py-2 font-extrabold hidden',
+                        'sm:block'
+                    )}
+                >
                     DOUBLETS
                 </h1>
                 <p className='font-(family-name:--standard-fonts)'>

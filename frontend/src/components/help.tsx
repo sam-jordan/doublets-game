@@ -1,10 +1,17 @@
+import clsx from 'clsx';
+
 export default function Help(props: {
     // eslint-disable-next-line react/boolean-prop-naming -- too strict
     readonly showHelp: boolean;
     readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     return props.showHelp ? (
-        <div className='help-box fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm'>
+        <div
+            className={clsx(
+                'help-box fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-sm w-[80vw]',
+                'sm:w-fit'
+            )}
+        >
             <div className='help-box flex justify-between'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     How to Play
