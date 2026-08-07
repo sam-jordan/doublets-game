@@ -1,7 +1,11 @@
 import { type FlatXoConfig } from 'xo';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
+import xoReact from 'eslint-config-xo-react';
+import { fixupConfigRules } from '@eslint/compat';
 
 const xoConfig: FlatXoConfig = [
+    // https://github.com/xojs/xo#react
+    ...fixupConfigRules(xoReact()),
     jsxA11y.flatConfigs.recommended,
     {
         files: '**/*.{js,ts,tsx,html}',
