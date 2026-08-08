@@ -4,3 +4,4 @@ build
 cdk.out
 
 scripts/five-letter-words.txt
+.env
