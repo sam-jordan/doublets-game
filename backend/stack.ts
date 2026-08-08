@@ -6,7 +6,11 @@ import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 
 export class Stack extends cdk.Stack {
-    constructor(scope: cdk.App, id: string, props: cdk.StackProps & { CERTIFICATE_ARN: string }) {
+    constructor(
+        scope: cdk.App,
+        id: string,
+        props: cdk.StackProps & { CERTIFICATE_ARN: string }
+    ) {
         super(scope, id, props);
 
         const bucket = new s3.Bucket(this, 'bucket', {
@@ -14,6 +18,7 @@ export class Stack extends cdk.Stack {
             removalPolicy: cdk.RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+            enforceSSL: true,
         });
 
         new BucketDeployment(this, 'bucket-deployment', {
@@ -27,7 +32,11 @@ export class Stack extends cdk.Stack {
             },
             domainNames: ['doublets.app'],
             defaultRootObject: 'index.html',
-            certificate: Certificate.fromCertificateArn(this, 'certificate', props.CERTIFICATE_ARN),
+            certificate: Certificate.fromCertificateArn(
+                this,
+                'certificate',
+                props.CERTIFICATE_ARN
+            ),
         });
     }
 }

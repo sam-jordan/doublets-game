@@ -29,6 +29,9 @@ const xoConfig: FlatXoConfig = [
 
             // Conflicts with Prettier, which has no config option for this
             '@stylistic/no-mixed-operators': 'off',
+
+            // Conflicts with external modules such as AWS CDK
+            '@typescript-eslint/naming-convention': 'off',
         },
     },
 ];
