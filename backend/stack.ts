@@ -30,7 +30,7 @@ export class Stack extends cdk.Stack {
             defaultBehavior: {
                 origin: S3BucketOrigin.withOriginAccessControl(bucket),
             },
-            domainNames: ['doublets.app'],
+            domainNames: ['www.doublets.app'],
             defaultRootObject: 'index.html',
             certificate: Certificate.fromCertificateArn(
                 this,
