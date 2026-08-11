@@ -33,7 +33,7 @@ describe('getPuzzle', () => {
         expect(() =>
             getPuzzle(Difficulties.EASY)
         ).toThrowErrorMatchingInlineSnapshot(
-            `[Error: Puzzle does not exist for this date.]`
+            `[DoubletsError: Puzzle does not exist for this date.]`
         );
     });
 });

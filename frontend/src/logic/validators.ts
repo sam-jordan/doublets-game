@@ -1,7 +1,7 @@
 import allowed from '../static/allowed-words.json' with { type: 'json' };
 import { type Guess, type Puzzle, type Validation } from './types';
 
-function validateWord(
+export function validateWord(
     word: string[],
     index: number,
     puzzle: Puzzle
