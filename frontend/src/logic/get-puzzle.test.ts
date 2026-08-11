@@ -27,4 +27,13 @@ describe('getPuzzle', () => {
             expect(getPuzzle(difficulty)).toStrictEqual(expected);
         }
     );
+
+    it('should throw an error for an invalid index', () => {
+        vi.useFakeTimers().setSystemTime('2029-08-01T00:00:00Z');
+        expect(() =>
+            getPuzzle(Difficulties.EASY)
+        ).toThrowErrorMatchingInlineSnapshot(
+            `[Error: Puzzle does not exist for this date.]`
+        );
+    });
 });

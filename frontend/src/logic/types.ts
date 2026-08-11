@@ -53,3 +53,10 @@ export enum Pages {
     START,
     GAME,
 }
+
+export class DoubletsError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'DoubletsError';
+    }
+}
