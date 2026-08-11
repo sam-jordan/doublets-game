@@ -68,6 +68,7 @@ export default function Game() {
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
+                // eslint-disable-next-line @stylistic/no-mixed-operators -- conflicts with Prettier
                 solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
@@ -387,7 +388,7 @@ export default function Game() {
             <Help showHelp={showHelp} setShowHelp={setShowHelp} />
             <div
                 className={clsx(
-                    'font-(family-name:--game-fonts) w-screen h-screen bg-grey-very-dark text-white flex flex-col',
+                    'font-(family-name:--game-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
                     showHelp ? 'brightness-50' : ''
                 )}
             >

@@ -27,9 +27,6 @@ const xoConfig: FlatXoConfig = [
             // Does not align with desired style
             'react/jsx-no-bind': 'off',
 
-            // Conflicts with Prettier, which has no config option for this
-            '@stylistic/no-mixed-operators': 'off',
-
             // Conflicts with external modules such as AWS CDK
             '@typescript-eslint/naming-convention': 'off',
         },

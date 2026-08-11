@@ -13,7 +13,7 @@ export default function App() {
     const date = DateTime.now();
 
     return (
-        <div className='font-(family-name:--title-fonts) w-screen h-screen bg-pink-bright text-white flex flex-col justify-center items-center'>
+        <div className='font-(family-name:--title-fonts) w-svw h-svh bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
                 <svg width='127' height='150'>
                     <use xlinkHref='/logo.svg' />
