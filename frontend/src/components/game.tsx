@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
@@ -26,9 +26,6 @@ export default function Game() {
         Array.from({ length: 3 }, _ => undefined)
     );
     const [showHelp, setShowHelp] = useState<boolean>(false);
-    const [timers, setTimers] = useState<Duration[]>(
-        Array.from({ length: 3 }, () => Duration.fromMillis(0))
-    );
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -37,31 +34,8 @@ export default function Game() {
     const [gameWin, setGameWin] = useState<number | undefined>(undefined);
 
     const popupTimeoutRef = useRef<number | undefined>(undefined);
-    const timerTimeoutRef = useRef<number | undefined>(undefined);
 
     const puzzle = getPuzzle(difficulty);
-
-    useEffect(() => {
-        if (solved[difficulty] !== undefined) {
-            return;
-        }
-
-        timerTimeoutRef.current = setTimeout(() => {
-            setTimers(
-                timers.map(timer => {
-                    if (timers.indexOf(timer) === difficulty.valueOf()) {
-                        return timer.plus(Duration.fromMillis(1000));
-                    }
-
-                    return timer;
-                })
-            );
-        }, 1000);
-
-        return () => {
-            clearTimeout(timerTimeoutRef.current);
-        };
-    }, [timers, difficulty]);
 
     useEffect(() => {
         const animationTimers: number[] = [];
@@ -399,7 +373,6 @@ export default function Game() {
                     addGuess={addGuess}
                     removeGuess={removeGuess}
                     difficulty={difficulty}
-                    timers={timers}
                     solved={solved}
                 />
                 <Popup popup={popup} />

@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable @stylistic/no-mixed-operators -- conflicts with Prettier */
+
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import type { Duration } from 'luxon';
+import { Duration } from 'luxon';
 import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
@@ -11,10 +13,36 @@ export default function Header(props: {
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
     readonly difficulty: Difficulties;
-    readonly timers: Duration[];
     readonly solved: Array<number | undefined>;
 }) {
     const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
+    const [timers, setTimers] = useState<Duration[]>(
+        Array.from({ length: 3 }, () => Duration.fromMillis(0))
+    );
+
+    const timerTimeoutRef = useRef<number | undefined>(undefined);
+
+    useEffect(() => {
+        if (props.solved[props.difficulty] !== undefined) {
+            return;
+        }
+
+        timerTimeoutRef.current = setTimeout(() => {
+            setTimers(
+                timers.map(timer => {
+                    if (timers.indexOf(timer) === props.difficulty.valueOf()) {
+                        return timer.plus(Duration.fromMillis(1000));
+                    }
+
+                    return timer;
+                })
+            );
+        }, 1000);
+
+        return () => {
+            clearTimeout(timerTimeoutRef.current);
+        };
+    }, [timers, props.difficulty]);
 
     useEffect(() => {
         function handleClick(event: Event) {
@@ -54,13 +82,12 @@ export default function Header(props: {
     });
 
     const hours = Math.floor(
-        props.timers[props.difficulty].milliseconds / (60 * 60 * 1000)
+        timers[props.difficulty].milliseconds / (60 * 60 * 1000)
     );
     const minutes = Math.floor(
-        props.timers[props.difficulty].milliseconds / (60 * 1000) - hours * 60
+        timers[props.difficulty].milliseconds / (60 * 1000) - hours * 60
     );
-    const seconds =
-        props.timers[props.difficulty].milliseconds / 1000 - minutes * 60;
+    const seconds = timers[props.difficulty].milliseconds / 1000 - minutes * 60;
 
     return (
         <header className='flex justify-between border-b px-4'>
