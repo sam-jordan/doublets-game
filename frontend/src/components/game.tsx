@@ -46,10 +46,8 @@ export default function Game() {
                 solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- best practise for React
-            () => {
-                setGameWin(100);
-            };
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setGameWin(100);
 
             // Animating the guesses
             for (const guess of guesses[difficulty]) {
