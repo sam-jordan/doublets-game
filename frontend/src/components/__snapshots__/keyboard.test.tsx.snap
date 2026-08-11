@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Keyboard > should render when shown 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col items-center gap-y-1 sm:gap-y-1.5"
+  >
+    <div
+      class="flex gap-x-1 sm:gap-x-1.5"
+    >
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        Q
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        W
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        E
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        R
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        T
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        Y
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        U
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        I
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        O
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        P
+      </button>
+    </div>
+    <div
+      class="flex gap-x-1 sm:gap-x-1.5"
+    >
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        A
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        S
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        D
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        F
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        G
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        H
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        J
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        K
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        L
+      </button>
+    </div>
+    <div
+      class="flex gap-x-1 sm:gap-x-1.5"
+    >
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        ENTER
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        Z
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        X
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        C
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        V
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        B
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        N
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        M
+      </button>
+      <button
+        class="bg-grey-light rounded-sm p-3 select-none text-sm font-bold sm:p-4 sm:text-base cursor-pointer"
+        type="button"
+      >
+        ⌫
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
