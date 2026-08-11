@@ -4,12 +4,13 @@ import * as cf from 'aws-cdk-lib/aws-cloudfront';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
+import { type Environment } from './environment.js';
 
 export class Stack extends cdk.Stack {
     constructor(
         scope: cdk.App,
         id: string,
-        props: cdk.StackProps & { CERTIFICATE_ARN: string }
+        props: cdk.StackProps & Environment
     ) {
         super(scope, id, props);
 
