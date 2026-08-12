@@ -386,7 +386,7 @@ export default function Game() {
                         <div
                             className={clsx(
                                 'scrollbar-none overflow-auto',
-                                guesses[difficulty].length > 4 ? 'h-56' : ''
+                                guesses[difficulty].length > 4 ? 'h-71' : ''
                             )}
                         >
                             {guesses[difficulty].map(guess => (
