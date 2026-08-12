@@ -12,25 +12,26 @@ export default function Keyboard(props: {
     ];
 
     return (
-        <div
-            className={clsx(
-                'flex flex-col items-center gap-y-1',
-                'sm:gap-y-1.5'
-            )}
-        >
+        <div className='flex flex-col items-center gap-y-1.5'>
             {keyboard.map(row => (
                 <div
                     key={`keyboard-row-${keyboard.indexOf(row)}`}
-                    className={clsx('flex gap-x-1', 'sm:gap-x-1.5')}
+                    className='flex gap-x-1.5'
                 >
                     {row.map(key => (
                         <button
                             key={`keyboard-${key}`}
                             type='button'
                             className={clsx(
-                                'bg-grey-light rounded-sm p-3 select-none text-sm font-bold',
-                                'sm:p-4 sm:text-base',
-                                props.showHelp ? '' : 'cursor-pointer'
+                                'h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center',
+                                key === 'Backspace' || key === 'Enter'
+                                    ? 'w-12 sm:w-17'
+                                    : 'w-8 sm:w-10.75',
+                                key === 'Enter'
+                                    ? 'text-xs sm:text-sm'
+                                    : 'text-lg sm:text-xl',
+                                props.showHelp ? '' : 'cursor-pointer',
+                                'hover:bg-grey-very-light active:bg-grey-very-light'
                             )}
                             onClick={() => {
                                 props.handleKeyUp(key);

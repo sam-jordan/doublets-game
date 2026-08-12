@@ -4,6 +4,7 @@
     --color-grey-very-dark: rgb(18, 18, 19);
     --color-grey-mid: rgb(58, 58, 60);
     --color-grey-light: rgb(129, 131, 132);
+    --color-grey-very-light: rgb(149, 151, 152);
     --color-pink-bright: rgb(219, 19, 122);
 }
 
@@ -24,6 +25,7 @@
     --animate-jump-quick: jump-quick 150ms ease-in-out;
 
     @keyframes throb {
+
         0%,
         100% {
             transform: scale(100%, 100%);
@@ -35,6 +37,7 @@
     }
 
     @keyframes shake {
+
         0%,
         100% {
             transform: translateX(0);
@@ -60,6 +63,7 @@
     }
 
     @keyframes jump {
+
         0%,
         100% {
             transform: translateY(0);
@@ -71,6 +75,7 @@
     }
 
     @keyframes jump-quick {
+
         0%,
         100% {
             transform: translateY(0);
