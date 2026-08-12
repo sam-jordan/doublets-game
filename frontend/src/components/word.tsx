@@ -99,7 +99,7 @@ function buildCharacterStyling(
         character !== ' ';
 
     const base = clsx(
-        'text-4xl h-15 w-15 flex justify-center items-center border-2 select-none justify-self-center self-center font-bold',
+        'text-4xl h-15 w-15 flex justify-center items-center border-2 select-none justify-self-center self-center font-medium',
         shouldUseThrob ? 'animate-throb' : '',
         letterJump === index ? 'animate-jump-quick' : ''
     );

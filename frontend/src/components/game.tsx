@@ -360,7 +360,7 @@ export default function Game() {
             <Help showHelp={showHelp} setShowHelp={setShowHelp} />
             <div
                 className={clsx(
-                    'font-(family-name:--game-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
+                    'font-(family-name:--standard-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
                     showHelp ? 'brightness-50' : ''
                 )}
             >

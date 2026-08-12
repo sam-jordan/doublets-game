@@ -10,11 +10,8 @@
 
 @theme {
     --standard-fonts:
-        'Franklin Gothic', 'ITC Franklin Gothic', Arial, sans-serif;
-    --title-fonts: 'Sanchez', 'Times New Roman', Times, serif;
-    --game-fonts:
-        'Franklin Gothic Medium', 'Franklin Gothic', 'ITC Franklin Gothic',
-        Arial, sans-serif;
+        'Libre Franklin', Arial, sans-serif;
+    --title-fonts: 'Sanchez', 'Times New Roman', serif;
 }
 
 @theme {
