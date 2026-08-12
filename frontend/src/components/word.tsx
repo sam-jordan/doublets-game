@@ -59,7 +59,7 @@ export default function Row(props: RowProps) {
             type='button'
             tabIndex={0}
             className={clsx(
-                'grid grid-cols-5 w-66 h-13',
+                'grid grid-cols-5 w-81 h-16',
                 props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
                 shouldUseShake ? 'animate-shake' : '',
                 shouldUseJump ? 'animate-jump' : ''
@@ -99,7 +99,7 @@ function buildCharacterStyling(
         character !== ' ';
 
     const base = clsx(
-        'text-3xl h-12 w-12 flex justify-center items-center border-2 select-none justify-self-center self-center font-bold',
+        'text-4xl h-15 w-15 flex justify-center items-center border-2 select-none justify-self-center self-center font-bold',
         shouldUseThrob ? 'animate-throb' : '',
         letterJump === index ? 'animate-jump-quick' : ''
     );
