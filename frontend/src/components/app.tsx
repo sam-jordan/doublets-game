@@ -15,9 +15,11 @@ export default function App() {
     return (
         <div className='font-(family-name:--title-fonts) w-svw h-svh bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
-                <svg viewBox='0 0 127 150' width='127' height='150'>
-                    <use xlinkHref='/logo.svg' />
-                </svg>
+                <img
+                    src='/logo.png'
+                    className='w-32 h-37.5'
+                    alt='Doublets logo'
+                />
                 <h2 className='text-5xl font-extrabold'>Doublets</h2>
                 <p className='text-xl sm:text-2xl text-center'>
                     Get from the start word to the end <br /> by changing one
