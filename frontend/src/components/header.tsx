@@ -192,7 +192,7 @@ export default function Header(props: {
                         <li>
                             <button
                                 type='button'
-                                className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.EASY);
                                 }}
@@ -203,7 +203,7 @@ export default function Header(props: {
                         <li>
                             <button
                                 type='button'
-                                className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.MEDIUM);
                                 }}
@@ -214,7 +214,7 @@ export default function Header(props: {
                         <li>
                             <button
                                 type='button'
-                                className='border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
                                 onClick={() => {
                                     props.handleDifficulty(Difficulties.HARD);
                                 }}
