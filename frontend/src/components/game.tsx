@@ -63,7 +63,7 @@ export default function Game() {
         return () => {
             clearTimeout(timerTimeoutRef.current);
         };
-    }, [timers, difficulty]);
+    }, [gameState]);
 
     useEffect(() => {
         const animationTimers: number[] = [];
@@ -112,7 +112,7 @@ export default function Game() {
                 clearTimeout(timer);
             }
         };
-    }, [solved, difficulty, guesses]);
+    }, [gameState]);
 
     function handleSubmit() {
         if (solved[difficulty] !== undefined) {
@@ -378,16 +378,12 @@ export default function Game() {
             return;
         }
 
+        let nextCurrentGuess = currentGuess;
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
                 if (currentGuess === difficultyGuesses.length - 1) {
-                    setGameState({
-                        ...gameState,
-                        currentGuess:
-                            currentGuess === 0
-                                ? currentGuess
-                                : currentGuess - 1,
-                    });
+                    nextCurrentGuess =
+                        currentGuess === 0 ? currentGuess : currentGuess - 1;
                 }
 
                 return difficultyGuesses.toSpliced(-1, 1);
@@ -396,7 +392,11 @@ export default function Game() {
             return difficultyGuesses;
         });
 
-        setGameState({ ...gameState, guesses: nextGuesses });
+        setGameState({
+            ...gameState,
+            guesses: nextGuesses,
+            currentGuess: nextCurrentGuess,
+        });
     }
 
     return (
