@@ -1,3 +1,5 @@
+import type { Duration } from 'luxon';
+
 export enum Difficulties {
     EASY,
     MEDIUM,
@@ -66,4 +68,5 @@ export type GameState = {
     currentGuess: number;
     difficulty: Difficulties;
     solved: Array<number | undefined>;
+    timers: Duration[];
 };

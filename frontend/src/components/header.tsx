@@ -1,8 +1,7 @@
 /* eslint-disable @stylistic/no-mixed-operators -- conflicts with Prettier */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import clsx from 'clsx';
-import { Duration } from 'luxon';
 import { Difficulties, type GameState } from '../logic/types';
 import Help from './overlays/help';
 import SelectDifficulty from './overlays/select-difficulty';
@@ -17,35 +16,7 @@ export default function Header(props: {
     readonly removeGuess: () => void;
     readonly gameState: GameState;
 }) {
-    const [timers, setTimers] = useState<Duration[]>(
-        Array.from({ length: 3 }, () => Duration.fromMillis(0))
-    );
-
-    const timerTimeoutRef = useRef<number | undefined>(undefined);
-
-    const { solved, difficulty } = props.gameState;
-
-    useEffect(() => {
-        if (solved[difficulty] !== undefined) {
-            return;
-        }
-
-        timerTimeoutRef.current = setTimeout(() => {
-            setTimers(
-                timers.map(timer => {
-                    if (timers.indexOf(timer) === difficulty.valueOf()) {
-                        return timer.plus(Duration.fromMillis(1000));
-                    }
-
-                    return timer;
-                })
-            );
-        }, 1000);
-
-        return () => {
-            clearTimeout(timerTimeoutRef.current);
-        };
-    }, [timers, difficulty]);
+    const { solved, difficulty, timers } = props.gameState;
 
     useEffect(() => {
         function handleClick(event: Event) {
