@@ -9,7 +9,7 @@ import Popup from './popup';
 import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
-import Help from './help';
+import Help from './overlays/help';
 import Overlay from './overlay';
 
 export default function Game() {

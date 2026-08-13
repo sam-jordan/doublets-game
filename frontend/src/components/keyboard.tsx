@@ -30,8 +30,9 @@ export default function Keyboard(props: {
                                 key === 'Enter'
                                     ? 'text-xs sm:text-sm'
                                     : 'text-lg sm:text-xl',
-                                props.showHelp ? '' : 'cursor-pointer',
-                                'hover:bg-grey-very-light active:bg-grey-very-light'
+                                props.showHelp
+                                    ? ''
+                                    : 'cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light'
                             )}
                             onClick={() => {
                                 props.handleKeyUp(key);
