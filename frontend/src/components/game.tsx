@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { Difficulties, WordTypes, type Guess } from '../logic/types';
+import { Difficulties, WordTypes, type GameState } from '../logic/types';
 import Popup from './popup';
 import Word from './word';
 import Keyboard from './keyboard';
@@ -12,19 +12,19 @@ import Header from './header';
 import Overlay from './overlay';
 
 export default function Game() {
-    // Game state
-    const [guesses, setGuesses] = useState<Guess[][]>(emptyGuesses());
-    const [currentGuess, setCurrentGuess] = useState<number>(0);
+    // Main state
+    const [gameState, setGameState] = useState<GameState>({
+        guesses: emptyGuesses(),
+        currentGuess: 0,
+        difficulty: Difficulties.EASY,
+        solved: Array.from({ length: 3 }, _ => undefined),
+    });
+
+    // Displays
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
         show: false,
         message: '',
     });
-    const [difficulty, setDifficulty] = useState<Difficulties>(
-        Difficulties.EASY
-    );
-    const [solved, setSolved] = useState<Array<number | undefined>>(
-        Array.from({ length: 3 }, _ => undefined)
-    );
     const [overlay, setOverlay] = useState<React.JSX.Element | undefined>(
         undefined
     );
@@ -37,7 +37,8 @@ export default function Game() {
 
     const popupTimeoutRef = useRef<number | undefined>(undefined);
 
-    const puzzle = getPuzzle(difficulty);
+    const { guesses, currentGuess, difficulty, solved } = gameState;
+    const puzzle = getPuzzle(gameState.difficulty);
 
     useEffect(() => {
         const animationTimers: number[] = [];
@@ -45,7 +46,7 @@ export default function Game() {
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
                 // eslint-disable-next-line @stylistic/no-mixed-operators -- conflicts with Prettier
-                solved[difficulty] + (4500 + 750 * difficulty) // May need adjusted to account for adding/removing guesses
+                solved[difficulty] + (4500 + 750 * gameState.difficulty) // May need adjusted to account for adding/removing guesses
         ) {
             // Animating the start word
             // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -110,7 +111,7 @@ export default function Game() {
 
                 return difficultySolved;
             });
-            setSolved(nextSolved);
+            setGameState({ ...gameState, solved: nextSolved });
         } else {
             setUseShake(result.index);
             setPopup({ show: true, message: result.message });
@@ -135,7 +136,10 @@ export default function Game() {
                     if (currentGuess === guesses[difficulty].length - 1) {
                         handleSubmit();
                     } else {
-                        setCurrentGuess(currentGuess + 1);
+                        setGameState({
+                            ...gameState,
+                            currentGuess: currentGuess + 1,
+                        });
                         setUseJump(currentGuess + 1);
                     }
 
@@ -150,7 +154,10 @@ export default function Game() {
 
                 case 'ArrowUp': {
                     if (currentGuess !== 0) {
-                        setCurrentGuess(currentGuess - 1);
+                        setGameState({
+                            ...gameState,
+                            currentGuess: currentGuess - 1,
+                        });
                         setUseJump(currentGuess - 1);
                     }
 
@@ -160,7 +167,10 @@ export default function Game() {
 
                 case 'ArrowDown': {
                     if (currentGuess < guesses[difficulty].length - 1) {
-                        setCurrentGuess(currentGuess + 1);
+                        setGameState({
+                            ...gameState,
+                            currentGuess: currentGuess + 1,
+                        });
                         setUseJump(currentGuess + 1);
                     }
 
@@ -236,7 +246,7 @@ export default function Game() {
         });
 
         setLastTyped(nextIndex);
-        setGuesses(nextGuesses);
+        setGameState({ ...gameState, guesses: nextGuesses });
     }
 
     function handleBackspace() {
@@ -249,7 +259,7 @@ export default function Game() {
         ].letters.findLastIndex(letter => letter !== ' ');
 
         if (currentIndex === -1 && currentGuess > 0) {
-            setCurrentGuess(currentGuess - 1);
+            setGameState({ ...gameState, currentGuess: currentGuess - 1 });
             setUseJump(currentGuess - 1);
         } else {
             const nextGuess = {
@@ -290,7 +300,7 @@ export default function Game() {
             });
 
             setLastTyped(undefined);
-            setGuesses(nextGuesses);
+            setGameState({ ...gameState, guesses: nextGuesses });
         }
     }
 
@@ -312,8 +322,11 @@ export default function Game() {
             return;
         }
 
-        setDifficulty(nextDifficulty);
-        setCurrentGuess(0);
+        setGameState({
+            ...gameState,
+            difficulty: nextDifficulty,
+            currentGuess: 0,
+        });
     }
 
     function addGuess() {
@@ -332,7 +345,7 @@ export default function Game() {
             return difficultyGuesses;
         });
 
-        setGuesses(nextGuesses);
+        setGameState({ ...gameState, guesses: nextGuesses });
     }
 
     function removeGuess() {
@@ -343,9 +356,13 @@ export default function Game() {
         const nextGuesses = guesses.map((difficultyGuesses, index) => {
             if (index === difficulty.valueOf()) {
                 if (currentGuess === difficultyGuesses.length - 1) {
-                    setCurrentGuess(
-                        currentGuess === 0 ? currentGuess : currentGuess - 1
-                    );
+                    setGameState({
+                        ...gameState,
+                        currentGuess:
+                            currentGuess === 0
+                                ? currentGuess
+                                : currentGuess - 1,
+                    });
                 }
 
                 return difficultyGuesses.toSpliced(-1, 1);
@@ -354,7 +371,7 @@ export default function Game() {
             return difficultyGuesses;
         });
 
-        setGuesses(nextGuesses);
+        setGameState({ ...gameState, guesses: nextGuesses });
     }
 
     return (
@@ -372,8 +389,7 @@ export default function Game() {
                     setOverlay={setOverlay}
                     addGuess={addGuess}
                     removeGuess={removeGuess}
-                    difficulty={difficulty}
-                    solved={solved}
+                    gameState={gameState}
                 />
                 <Popup popup={popup} />
                 <div className='flex flex-col justify-between items-center grow'>
@@ -398,8 +414,8 @@ export default function Game() {
                                     letters={guess.letters}
                                     type={guess.type}
                                     changed={guess.changed}
-                                    currentGuess={guess.index === currentGuess}
-                                    setCurrentGuess={setCurrentGuess}
+                                    gameState={gameState}
+                                    setGameState={setGameState}
                                     lastTyped={lastTyped}
                                     useShake={useShake}
                                     useJump={useJump}

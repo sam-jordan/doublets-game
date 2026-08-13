@@ -35,8 +35,8 @@ type Animations = {
 
 type GuessProps = Guess &
     Animations & {
-        currentGuess: boolean;
-        setCurrentGuess: React.Dispatch<React.SetStateAction<number>>;
+        gameState: GameState;
+        setGameState: React.Dispatch<React.SetStateAction<GameState>>;
     };
 
 export type RowProps = Fixed | GuessProps;
@@ -60,3 +60,10 @@ export class DoubletsError extends Error {
         this.name = 'DoubletsError';
     }
 }
+
+export type GameState = {
+    guesses: Guess[][];
+    currentGuess: number;
+    difficulty: Difficulties;
+    solved: Array<number | undefined>;
+};

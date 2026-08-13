@@ -50,7 +50,7 @@ export default function Row(props: RowProps) {
             return;
         }
 
-        props.setCurrentGuess(props.index);
+        props.setGameState({ ...props.gameState, currentGuess: props.index });
         props.setUseJump(props.index);
     }
 
@@ -91,7 +91,9 @@ function buildCharacterStyling(
     letterJump: number | undefined
 ): string {
     const isCurrentGuess =
-        props.type === WordTypes.FIXED ? false : props.currentGuess;
+        props.type === WordTypes.FIXED
+            ? false
+            : props.gameState.currentGuess === props.index;
     const shouldUseThrob =
         props.type !== WordTypes.FIXED &&
         isCurrentGuess &&

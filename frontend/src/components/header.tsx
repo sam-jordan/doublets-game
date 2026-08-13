@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Duration } from 'luxon';
-import { Difficulties } from '../logic/types';
+import { Difficulties, type GameState } from '../logic/types';
 import Help from './overlays/help';
 import SelectDifficulty from './overlays/select-difficulty';
 
@@ -15,8 +15,7 @@ export default function Header(props: {
     >;
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
-    readonly difficulty: Difficulties;
-    readonly solved: Array<number | undefined>;
+    readonly gameState: GameState;
 }) {
     const [timers, setTimers] = useState<Duration[]>(
         Array.from({ length: 3 }, () => Duration.fromMillis(0))
@@ -24,15 +23,17 @@ export default function Header(props: {
 
     const timerTimeoutRef = useRef<number | undefined>(undefined);
 
+    const { solved, difficulty } = props.gameState;
+
     useEffect(() => {
-        if (props.solved[props.difficulty] !== undefined) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
         timerTimeoutRef.current = setTimeout(() => {
             setTimers(
                 timers.map(timer => {
-                    if (timers.indexOf(timer) === props.difficulty.valueOf()) {
+                    if (timers.indexOf(timer) === difficulty.valueOf()) {
                         return timer.plus(Duration.fromMillis(1000));
                     }
 
@@ -44,7 +45,7 @@ export default function Header(props: {
         return () => {
             clearTimeout(timerTimeoutRef.current);
         };
-    }, [timers, props.difficulty]);
+    }, [timers, difficulty]);
 
     useEffect(() => {
         function handleClick(event: Event) {
@@ -98,12 +99,12 @@ export default function Header(props: {
     });
 
     const hours = Math.floor(
-        timers[props.difficulty].milliseconds / (60 * 60 * 1000)
+        timers[difficulty].milliseconds / (60 * 60 * 1000)
     );
     const minutes = Math.floor(
-        timers[props.difficulty].milliseconds / (60 * 1000) - hours * 60
+        timers[difficulty].milliseconds / (60 * 1000) - hours * 60
     );
-    const seconds = timers[props.difficulty].milliseconds / 1000 - minutes * 60;
+    const seconds = timers[difficulty].milliseconds / 1000 - minutes * 60;
 
     return (
         <header className='flex justify-between border-b px-4'>
@@ -117,12 +118,12 @@ export default function Header(props: {
                     DOUBLETS
                 </h1>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {`${Difficulties[props.difficulty].slice(0, 1)}${Difficulties[props.difficulty].slice(1).toLowerCase()}`}
+                    {`${Difficulties[difficulty].slice(0, 1)}${Difficulties[difficulty].slice(1).toLowerCase()}`}
                 </p>
                 <p className='font-(family-name:--standard-fonts)'>
                     {`${hours > 0 ? `${hours}:${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
                     <span className='inline-flex h-3'>
-                        {props.solved[props.difficulty] === undefined ? null : (
+                        {solved[difficulty] === undefined ? null : (
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 512 512'
