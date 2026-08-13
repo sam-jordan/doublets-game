@@ -1,4 +1,5 @@
-import type { Duration } from 'luxon';
+import { Duration } from 'luxon';
+import z from 'zod';
 
 export enum Difficulties {
     EASY,
@@ -16,13 +17,21 @@ export type Puzzle = { startWord: string; endWord: string };
 type Word = {
     index: number;
     letters: string[];
-    gameWin: number | undefined;
+    gameWin?: number | undefined;
 };
 
 export type Guess = Word & {
     type: WordTypes.GUESS;
     changed: number[];
 };
+
+const guessSchema = z.object({
+    index: z.number(),
+    letters: z.array(z.string()),
+    gameWin: z.number().optional(),
+    type: z.literal(WordTypes.GUESS),
+    changed: z.array(z.number()),
+});
 
 type Fixed = Word & {
     type: WordTypes.FIXED;
@@ -35,11 +44,7 @@ type Animations = {
     setUseJump: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
-type GuessProps = Guess &
-    Animations & {
-        gameState: GameState;
-        setGameState: React.Dispatch<React.SetStateAction<GameState>>;
-    };
+type GuessProps = Guess & Animations & UseGameState;
 
 export type RowProps = Fixed | GuessProps;
 
@@ -69,4 +74,22 @@ export type GameState = {
     difficulty: Difficulties;
     solved: Array<number | undefined>;
     timers: Duration[];
+};
+
+export const gameStateSchema = z.object({
+    guesses: z.array(z.array(guessSchema)),
+    currentGuess: z.number(),
+    difficulty: z.enum(Difficulties),
+    solved: z.array(
+        z
+            .number()
+            .nullable()
+            .transform(value => value ?? undefined)
+    ),
+    timers: z.array(z.string().transform(value => Duration.fromISO(value))),
+});
+
+export type UseGameState = {
+    gameState: GameState;
+    setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 };

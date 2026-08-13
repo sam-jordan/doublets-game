@@ -69,13 +69,10 @@ export default function Header(props: {
         };
     });
 
-    const hours = Math.floor(
-        timers[difficulty].milliseconds / (60 * 60 * 1000)
-    );
-    const minutes = Math.floor(
-        timers[difficulty].milliseconds / (60 * 1000) - hours * 60
-    );
-    const seconds = timers[difficulty].milliseconds / 1000 - minutes * 60;
+    const seconds =
+        timers[difficulty].seconds + timers[difficulty].milliseconds / 1000;
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
 
     return (
         <header className='flex justify-between border-b px-4'>
@@ -92,7 +89,7 @@ export default function Header(props: {
                     {`${Difficulties[difficulty].slice(0, 1)}${Difficulties[difficulty].slice(1).toLowerCase()}`}
                 </p>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {`${hours > 0 ? `${hours}:${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
+                    {`${hours > 0 ? `${hours}:${minutes - hours * 60}` : minutes}:${seconds - minutes * 60 < 10 ? `0${seconds - minutes * 60}` : seconds - minutes * 60}`}
                     <span className='inline-flex h-3'>
                         {solved[difficulty] === undefined ? null : (
                             <svg

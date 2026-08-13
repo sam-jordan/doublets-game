@@ -2,25 +2,20 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { DateTime, Duration } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
-import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
+import { emptyGuess } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { Difficulties, WordTypes, type GameState } from '../logic/types';
+import {
+    type Difficulties,
+    WordTypes,
+    type UseGameState,
+} from '../logic/types';
 import Popup from './popup';
 import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
 import Overlay from './overlay';
 
-export default function Game() {
-    // Main state
-    const [gameState, setGameState] = useState<GameState>({
-        guesses: emptyGuesses(),
-        currentGuess: 0,
-        difficulty: Difficulties.EASY,
-        solved: Array.from({ length: 3 }, _ => undefined),
-        timers: Array.from({ length: 3 }, () => Duration.fromMillis(0)),
-    });
-
+export default function Game(props: UseGameState) {
     // Displays
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
         show: false,
@@ -39,9 +34,21 @@ export default function Game() {
     const popupTimeoutRef = useRef<number | undefined>(undefined);
     const timerTimeoutRef = useRef<number | undefined>(undefined);
 
+    // Main state
+    const { gameState, setGameState } = props;
     const { guesses, currentGuess, difficulty, solved, timers } = gameState;
-    const puzzle = getPuzzle(gameState.difficulty);
 
+    const puzzle = getPuzzle(difficulty);
+
+    // Cache game state in browser
+    useEffect(() => {
+        localStorage.setItem(
+            DateTime.now().toLocaleString(DateTime.DATE_SHORT),
+            JSON.stringify(gameState)
+        );
+    }, [gameState]);
+
+    // Increment timer
     useEffect(() => {
         if (solved[difficulty] !== undefined) {
             return;
@@ -65,6 +72,7 @@ export default function Game() {
         };
     }, [gameState]);
 
+    // Show game win animation
     useEffect(() => {
         const animationTimers: number[] = [];
         if (

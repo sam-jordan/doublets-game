@@ -1,16 +1,36 @@
 import { useState } from 'react';
-import { DateTime } from 'luxon';
-import { Pages } from '../logic/types';
+import { DateTime, Duration } from 'luxon';
+import {
+    Difficulties,
+    gameStateSchema,
+    Pages,
+    type GameState,
+} from '../logic/types';
+import { emptyGuesses } from '../logic/empty-guesses';
 import Game from './game';
 
 export default function App() {
-    const [page, setPage] = useState<Pages>(Pages.START);
+    const date = DateTime.now();
+    const cached = getFromCache(date);
+
+    // Main state
+    const [gameState, setGameState] = useState<GameState>(
+        cached ?? {
+            guesses: emptyGuesses(),
+            currentGuess: 0,
+            difficulty: Difficulties.EASY,
+            solved: Array.from({ length: 3 }, _ => undefined),
+            timers: Array.from({ length: 3 }, () => Duration.fromMillis(0)),
+        }
+    );
+
+    const [page, setPage] = useState<Pages>(
+        cached === undefined ? Pages.START : Pages.GAME
+    );
 
     if (page === Pages.GAME) {
-        return <Game />;
+        return <Game gameState={gameState} setGameState={setGameState} />;
     }
-
-    const date = DateTime.now();
 
     return (
         <div className='font-(family-name:--title-fonts) w-svw h-svh bg-pink-bright text-white flex flex-col justify-center items-center'>
@@ -40,4 +60,18 @@ export default function App() {
             </div>
         </div>
     );
+}
+
+function getFromCache(date: DateTime): GameState | undefined {
+    const cached = localStorage.getItem(
+        date.toLocaleString(DateTime.DATE_SHORT)
+    );
+
+    if (cached === null) {
+        localStorage.clear();
+        return;
+    }
+
+    const parsed = gameStateSchema.parse(JSON.parse(cached));
+    return parsed;
 }
