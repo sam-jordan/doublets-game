@@ -23,6 +23,7 @@
         "lint:fix": "prettier --write . && xo --fix",
         "prepare": "husky",
         "preview": "vite preview",
+        "solve-puzzle": "npm run build && node dist/scripts/solve-puzzle.js",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage"
     },
