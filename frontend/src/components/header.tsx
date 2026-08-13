@@ -4,20 +4,20 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Duration } from 'luxon';
 import { Difficulties } from '../logic/types';
+import Help from './overlays/help';
+import SelectDifficulty from './overlays/select-difficulty';
 
 export default function Header(props: {
     readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
-
-    readonly overlay: string | undefined;
+    readonly overlay: React.JSX.Element | undefined;
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<string | undefined>
+        React.SetStateAction<React.JSX.Element | undefined>
     >;
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
     readonly difficulty: Difficulties;
     readonly solved: Array<number | undefined>;
 }) {
-    const [showDifficulties, setShowDifficulties] = useState<boolean>(false);
     const [timers, setTimers] = useState<Duration[]>(
         Array.from({ length: 3 }, () => Duration.fromMillis(0))
     );
@@ -56,23 +56,37 @@ export default function Header(props: {
             }
 
             if (
-                (!event.target.closest('div')?.classList.contains('overlay') &&
-                    props.overlay !== undefined) ||
-                (props.overlay === undefined &&
-                    event.target.closest('button')?.id === 'help-button')
+                !event.target.closest('div')?.classList.contains('overlay') &&
+                props.overlay !== undefined
             ) {
                 props.setOverlay(undefined);
-            }
+            } else if (props.overlay === undefined) {
+                switch (event.target.closest('button')?.id) {
+                    case 'help-button': {
+                        props.setOverlay(
+                            <Help setOverlay={props.setOverlay} />
+                        );
+                        break;
+                    }
 
-            if (
-                props.overlay === undefined &&
-                ((showDifficulties &&
-                    event.target.id !== 'difficulties-dropdown') ||
-                    (!showDifficulties &&
-                        event.target.closest('button')?.id ===
-                            'difficulties-button'))
-            ) {
-                setShowDifficulties(!showDifficulties);
+                    case 'difficulties-button': {
+                        props.setOverlay(
+                            <SelectDifficulty
+                                setOverlay={props.setOverlay}
+                                handleDifficulty={props.handleDifficulty}
+                            />
+                        );
+                        break;
+                    }
+
+                    case undefined: {
+                        break;
+                    }
+
+                    default: {
+                        break;
+                    }
+                }
             }
         }
 
@@ -192,46 +206,6 @@ export default function Header(props: {
                         />
                     </svg>
                 </button>
-                {showDifficulties ? (
-                    <ul
-                        className='font-(family-name:--standard-fonts) absolute top-13.25 right-6'
-                        id='difficulties-dropdown'
-                    >
-                        <li>
-                            <button
-                                type='button'
-                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
-                                onClick={() => {
-                                    props.handleDifficulty(Difficulties.EASY);
-                                }}
-                            >
-                                Easy
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                type='button'
-                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
-                                onClick={() => {
-                                    props.handleDifficulty(Difficulties.MEDIUM);
-                                }}
-                            >
-                                Medium
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                type='button'
-                                className='bg-grey-very-dark border border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid z-99'
-                                onClick={() => {
-                                    props.handleDifficulty(Difficulties.HARD);
-                                }}
-                            >
-                                Hard
-                            </button>
-                        </li>
-                    </ul>
-                ) : null}
                 <button
                     type='button'
                     className={clsx(

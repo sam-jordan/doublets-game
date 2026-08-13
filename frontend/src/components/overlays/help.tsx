@@ -1,6 +1,6 @@
 export default function Help(props: {
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<string | undefined>
+        React.SetStateAction<React.JSX.Element | undefined>
     >;
 }) {
     return (

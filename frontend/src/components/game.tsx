@@ -9,7 +9,6 @@ import Popup from './popup';
 import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
-import Help from './overlays/help';
 import Overlay from './overlay';
 
 export default function Game() {
@@ -26,7 +25,9 @@ export default function Game() {
     const [solved, setSolved] = useState<Array<number | undefined>>(
         Array.from({ length: 3 }, _ => undefined)
     );
-    const [overlay, setOverlay] = useState<string | undefined>(undefined);
+    const [overlay, setOverlay] = useState<React.JSX.Element | undefined>(
+        undefined
+    );
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -358,9 +359,7 @@ export default function Game() {
 
     return (
         <div>
-            <Overlay>
-                {overlay === 'help' ? <Help setOverlay={setOverlay} /> : null}
-            </Overlay>
+            <Overlay>{overlay}</Overlay>
             <div
                 className={clsx(
                     'font-(family-name:--standard-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',

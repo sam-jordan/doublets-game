@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 export default function Keyboard(props: {
     readonly handleKeyUp: (key: string) => void;
-    readonly overlay: string | undefined;
+    readonly overlay: React.JSX.Element | undefined;
 }) {
     const keyboard = [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
