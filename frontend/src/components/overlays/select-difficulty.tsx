@@ -8,7 +8,7 @@ export default function SelectDifficulty(props: {
 }) {
     return (
         <>
-            <div className='overlay flex justify-between'>
+            <div className='overlay flex justify-between min-w-lg'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     Select a difficulty
                 </h2>
@@ -30,30 +30,36 @@ export default function SelectDifficulty(props: {
                     </svg>
                 </button>
             </div>
-            <div className='overlay flex flex-col justify-between'>
+            <p className='font-(family-name:--title-fonts) mb-2'>
+                Easy has a &quot;par&quot; of 4 guesses, Medium 5, and Hard 6.
+            </p>
+            <div className='overlay flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8'>
                 <button
                     type='button'
-                    className='border-2 border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                    className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl'
                     onClick={() => {
                         props.handleDifficulty(Difficulties.EASY);
+                        props.setOverlay(undefined);
                     }}
                 >
                     Easy
                 </button>
                 <button
                     type='button'
-                    className='border-2 border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                    className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl'
                     onClick={() => {
                         props.handleDifficulty(Difficulties.MEDIUM);
+                        props.setOverlay(undefined);
                     }}
                 >
                     Medium
                 </button>
                 <button
                     type='button'
-                    className='border-2 border-white w-24 cursor-pointer p-y-1 hover:bg-grey-mid'
+                    className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl'
                     onClick={() => {
                         props.handleDifficulty(Difficulties.HARD);
+                        props.setOverlay(undefined);
                     }}
                 >
                     Hard
