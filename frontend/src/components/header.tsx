@@ -54,7 +54,7 @@ export default function Header(props: {
             }
 
             if (
-                (!event.target.closest('div')?.classList.contains('help-box') &&
+                (!event.target.closest('div')?.classList.contains('overlay') &&
                     props.showHelp) ||
                 (!props.showHelp &&
                     event.target.closest('button')?.id === 'help-button')

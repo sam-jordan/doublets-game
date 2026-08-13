@@ -10,6 +10,7 @@ import Word from './word';
 import Keyboard from './keyboard';
 import Header from './header';
 import Help from './help';
+import Overlay from './overlay';
 
 export default function Game() {
     // Game state
@@ -357,7 +358,11 @@ export default function Game() {
 
     return (
         <div>
-            <Help showHelp={showHelp} setShowHelp={setShowHelp} />
+            <Overlay>
+                {showHelp ? (
+                    <Help showHelp={showHelp} setShowHelp={setShowHelp} />
+                ) : null}
+            </Overlay>
             <div
                 className={clsx(
                     'font-(family-name:--standard-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
