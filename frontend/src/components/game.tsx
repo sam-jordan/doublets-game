@@ -362,7 +362,7 @@ export default function Game() {
             <Overlay>{overlay}</Overlay>
             <div
                 className={clsx(
-                    'font-(family-name:--standard-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
+                    'font-(family-name:--standard-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col',
                     overlay === undefined ? '' : 'brightness-50'
                 )}
             >
@@ -376,8 +376,8 @@ export default function Game() {
                     solved={solved}
                 />
                 <Popup popup={popup} />
-                <div className='flex flex-col justify-between items-center gap-3 grow'>
-                    <div className='flex flex-col justify-center grow'>
+                <div className='flex flex-col justify-between items-center grow'>
+                    <div className='flex flex-col justify-center grow mt-3 mb-1.5'>
                         <Word
                             key='start-word'
                             index={100}
