@@ -8,7 +8,7 @@ export default function SelectDifficulty(props: {
 }) {
     return (
         <>
-            <div className='overlay flex justify-between min-w-lg'>
+            <div className='overlay flex justify-between sm:min-w-lg'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     Select a difficulty
                 </h2>
