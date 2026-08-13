@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { getChanged, validateWord } from './validators';
+import { getChanged, validateSolution, validateWord } from './validators';
+import { WordTypes } from './types';
 
 describe('validateWord', () => {
     it('should invalidate a word with empty letters', () => {
@@ -69,5 +70,148 @@ describe('getChanged', () => {
         expect(
             getChanged(['M', 'O', 'U', 'N', 'T'], ['E', 'E', 'R', 'I', 'E'])
         ).toStrictEqual([0, 1, 2, 3, 4]);
+    });
+});
+
+describe('validateSolution', () => {
+    it('should highlight the index of the first invalid word', () => {
+        const puzzle = { startWord: 'DEATH', endWord: 'GRIPS' };
+        const guesses = [
+            {
+                index: 0,
+                letters: ['A', 'P', 'H', 'E', 'X'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 1,
+                letters: ['T', 'W', 'I', 'N', ' '],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+        ];
+
+        const validation = validateSolution(guesses, puzzle);
+
+        expect.assert(!validation.valid);
+        expect(validation.index).toBe(0);
+        expect(validation.message).toBe('Guess 1: Not in word list');
+    });
+
+    it('should invalidate when too many letters have been changed', () => {
+        const puzzle = { startWord: 'WHITE', endWord: 'SNAKE' };
+        const guesses = [
+            {
+                index: 0,
+                letters: ['T', 'I', 'T', 'L', 'E'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 1,
+                letters: ['F', 'I', 'G', 'H', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+        ];
+
+        const validation = validateSolution(guesses, puzzle);
+
+        expect.assert(!validation.valid);
+        expect(validation.index).toBe(0);
+        expect(validation.message).toBe(
+            'Guess 1: Change only one letter between guesses!'
+        );
+    });
+
+    it('should invalidate when a solution does not connect up', () => {
+        const puzzle = { startWord: 'FRANK', endWord: 'OCEAN' };
+        const guesses = [
+            {
+                index: 0,
+                letters: ['P', 'R', 'A', 'N', 'K'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+        ];
+
+        const validation = validateSolution(guesses, puzzle);
+
+        expect.assert(!validation.valid);
+        expect(validation.index).toBe(0);
+        expect(validation.message).toBe(
+            'Guess 1: Does not connect to the end word!'
+        );
+    });
+
+    it('should allow a valid solution', () => {
+        const puzzle = { startWord: 'BEACH', endWord: 'HOUSE' };
+        const guesses = [
+            {
+                index: 0,
+                letters: ['L', 'E', 'A', 'C', 'H'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 1,
+                letters: ['L', 'E', 'A', 'S', 'H'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 2,
+                letters: ['L', 'E', 'A', 'S', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 3,
+                letters: ['B', 'E', 'A', 'S', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 4,
+                letters: ['B', 'O', 'A', 'S', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 5,
+                letters: ['R', 'O', 'A', 'S', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 6,
+                letters: ['R', 'O', 'U', 'S', 'T'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+            {
+                index: 7,
+                letters: ['R', 'O', 'U', 'S', 'E'],
+                gameWin: undefined,
+                type: WordTypes.GUESS.valueOf(),
+                changed: [],
+            },
+        ];
+
+        const validation = validateSolution(guesses, puzzle);
+
+        expect(validation.valid);
     });
 });
