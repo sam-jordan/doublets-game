@@ -376,8 +376,8 @@ export default function Game() {
                     solved={solved}
                 />
                 <Popup popup={popup} />
-                <div className='flex flex-col justify-center items-center grow gap-8'>
-                    <div>
+                <div className='flex flex-col justify-between items-center gap-3 grow'>
+                    <div className='flex flex-col justify-center grow'>
                         <Word
                             key='start-word'
                             index={100}

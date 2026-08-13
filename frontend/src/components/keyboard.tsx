@@ -11,7 +11,7 @@ export default function Keyboard(props: {
     ];
 
     return (
-        <div className='flex flex-col items-center gap-y-1.5'>
+        <div className='flex flex-col items-center gap-y-1.5 p-1.5'>
             {keyboard.map(row => (
                 <div
                     key={`keyboard-row-${keyboard.indexOf(row)}`}
