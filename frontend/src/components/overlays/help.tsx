@@ -1,7 +1,7 @@
 export default function Help(props: {
-    // eslint-disable-next-line react/boolean-prop-naming -- too strict
-    readonly showHelp: boolean;
-    readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
+    readonly setOverlay: React.Dispatch<
+        React.SetStateAction<string | undefined>
+    >;
 }) {
     return (
         <>
@@ -13,7 +13,7 @@ export default function Help(props: {
                     type='button'
                     className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
-                        props.setShowHelp(!props.showHelp);
+                        props.setOverlay(undefined);
                     }}
                 >
                     <svg

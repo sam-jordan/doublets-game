@@ -26,7 +26,7 @@ export default function Game() {
     const [solved, setSolved] = useState<Array<number | undefined>>(
         Array.from({ length: 3 }, _ => undefined)
     );
-    const [showHelp, setShowHelp] = useState<boolean>(false);
+    const [overlay, setOverlay] = useState<string | undefined>(undefined);
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -122,7 +122,7 @@ export default function Game() {
     }
 
     function handleKeyUp(key: string) {
-        if (showHelp) {
+        if (overlay !== undefined) {
             return;
         }
 
@@ -359,20 +359,18 @@ export default function Game() {
     return (
         <div>
             <Overlay>
-                {showHelp ? (
-                    <Help showHelp={showHelp} setShowHelp={setShowHelp} />
-                ) : null}
+                {overlay === 'help' ? <Help setOverlay={setOverlay} /> : null}
             </Overlay>
             <div
                 className={clsx(
                     'font-(family-name:--standard-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col',
-                    showHelp ? 'brightness-50' : ''
+                    overlay === undefined ? '' : 'brightness-50'
                 )}
             >
                 <Header
                     handleDifficulty={handleDifficulty}
-                    showHelp={showHelp}
-                    setShowHelp={setShowHelp}
+                    overlay={overlay}
+                    setOverlay={setOverlay}
                     addGuess={addGuess}
                     removeGuess={removeGuess}
                     difficulty={difficulty}
@@ -419,7 +417,7 @@ export default function Game() {
                             gameWin={gameWin}
                         />
                     </div>
-                    <Keyboard handleKeyUp={handleKeyUp} showHelp={showHelp} />
+                    <Keyboard handleKeyUp={handleKeyUp} overlay={overlay} />
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ describe('Keyboard', () => {
 
     it('should render when shown', () => {
         const { asFragment } = render(
-            <Keyboard handleKeyUp={handleKeyUp} showHelp={false} />
+            <Keyboard handleKeyUp={handleKeyUp} overlay={undefined} />
         );
 
         expect(asFragment()).toMatchSnapshot();
@@ -22,7 +22,7 @@ describe('Keyboard', () => {
     it('should react to being clicked', async () => {
         const user = userEvent.setup();
         const keyboard = render(
-            <Keyboard handleKeyUp={handleKeyUp} showHelp={false} />
+            <Keyboard handleKeyUp={handleKeyUp} overlay={undefined} />
         );
 
         const keys = keyboard.getAllByRole('button');

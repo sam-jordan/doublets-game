@@ -7,9 +7,11 @@ import { Difficulties } from '../logic/types';
 
 export default function Header(props: {
     readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
-    // eslint-disable-next-line react/boolean-prop-naming -- too strict
-    readonly showHelp: boolean;
-    readonly setShowHelp: React.Dispatch<React.SetStateAction<boolean>>;
+
+    readonly overlay: string | undefined;
+    readonly setOverlay: React.Dispatch<
+        React.SetStateAction<string | undefined>
+    >;
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
     readonly difficulty: Difficulties;
@@ -55,15 +57,15 @@ export default function Header(props: {
 
             if (
                 (!event.target.closest('div')?.classList.contains('overlay') &&
-                    props.showHelp) ||
-                (!props.showHelp &&
+                    props.overlay !== undefined) ||
+                (props.overlay === undefined &&
                     event.target.closest('button')?.id === 'help-button')
             ) {
-                props.setShowHelp(!props.showHelp);
+                props.setOverlay(undefined);
             }
 
             if (
-                !props.showHelp &&
+                props.overlay === undefined &&
                 ((showDifficulties &&
                     event.target.id !== 'difficulties-dropdown') ||
                     (!showDifficulties &&
@@ -126,10 +128,12 @@ export default function Header(props: {
                     type='button'
                     className={clsx(
                         'w-12 p-2',
-                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                        props.overlay === undefined
+                            ? 'hover:bg-grey-mid cursor-pointer'
+                            : ''
                     )}
                     onClick={() => {
-                        if (!props.showHelp) {
+                        if (props.overlay === undefined) {
                             props.addGuess();
                         }
                     }}
@@ -148,10 +152,12 @@ export default function Header(props: {
                     type='button'
                     className={clsx(
                         'w-12 p-2',
-                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                        props.overlay === undefined
+                            ? 'hover:bg-grey-mid cursor-pointer'
+                            : ''
                     )}
                     onClick={() => {
-                        if (!props.showHelp) {
+                        if (props.overlay === undefined) {
                             props.removeGuess();
                         }
                     }}
@@ -170,7 +176,9 @@ export default function Header(props: {
                     type='button'
                     className={clsx(
                         'w-12 p-2',
-                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                        props.overlay === undefined
+                            ? 'hover:bg-grey-mid cursor-pointer'
+                            : ''
                     )}
                     id='difficulties-button'
                 >
@@ -228,7 +236,9 @@ export default function Header(props: {
                     type='button'
                     className={clsx(
                         'w-12 p-2',
-                        props.showHelp ? '' : 'hover:bg-grey-mid cursor-pointer'
+                        props.overlay === undefined
+                            ? 'hover:bg-grey-mid cursor-pointer'
+                            : ''
                     )}
                     id='help-button'
                 >

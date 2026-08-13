@@ -2,8 +2,7 @@ import clsx from 'clsx';
 
 export default function Keyboard(props: {
     readonly handleKeyUp: (key: string) => void;
-    // eslint-disable-next-line react/boolean-prop-naming -- too strict
-    readonly showHelp: boolean;
+    readonly overlay: string | undefined;
 }) {
     const keyboard = [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -30,9 +29,9 @@ export default function Keyboard(props: {
                                 key === 'Enter'
                                     ? 'text-xs sm:text-sm'
                                     : 'text-lg sm:text-xl',
-                                props.showHelp
-                                    ? ''
-                                    : 'cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light'
+                                props.overlay === undefined
+                                    ? 'cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light'
+                                    : ''
                             )}
                             onClick={() => {
                                 props.handleKeyUp(key);

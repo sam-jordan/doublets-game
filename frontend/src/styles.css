@@ -9,8 +9,7 @@
 }
 
 @theme {
-    --standard-fonts:
-        'Libre Franklin', Arial, sans-serif;
+    --standard-fonts: 'Libre Franklin', Arial, sans-serif;
     --title-fonts: 'Sanchez', 'Times New Roman', serif;
 }
 
@@ -22,7 +21,6 @@
     --animate-jump-quick: jump-quick 150ms ease-in-out;
 
     @keyframes throb {
-
         0%,
         100% {
             transform: scale(100%, 100%);
@@ -34,7 +32,6 @@
     }
 
     @keyframes shake {
-
         0%,
         100% {
             transform: translateX(0);
@@ -60,7 +57,6 @@
     }
 
     @keyframes jump {
-
         0%,
         100% {
             transform: translateY(0);
@@ -72,7 +68,6 @@
     }
 
     @keyframes jump-quick {
-
         0%,
         100% {
             transform: translateY(0);
