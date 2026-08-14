@@ -9,11 +9,11 @@ import {
     WordTypes,
     type UseGameState,
 } from '../logic/types';
-import Popup from './popup';
-import Word from './word';
-import Keyboard from './keyboard';
-import Header from './header';
-import Overlay from './overlay';
+import Popup from '../components/popup';
+import Word from '../components/word';
+import Keyboard from '../components/keyboard';
+import Header from '../components/header';
+import Overlay from '../components/overlay';
 
 export default function Game(props: UseGameState) {
     // Displays
