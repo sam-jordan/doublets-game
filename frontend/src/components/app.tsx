@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
 import Game from './game';
@@ -38,15 +40,28 @@ export default function App() {
                     Get from the start word to the end <br /> by changing one
                     letter at a time.
                 </p>
-                <button
-                    type='button'
-                    className='font-(family-name:--standard-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer font-bold'
-                    onClick={() => {
-                        setLaunched(true);
-                    }}
+                <div
+                    className={clsx(
+                        'font-(family-name:--standard-fonts) flex flex-col gap-2',
+                        'sm:flex-row sm:gap-4'
+                    )}
                 >
-                    Play
-                </button>
+                    <Link
+                        className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
+                        to='/login'
+                    >
+                        Log in
+                    </Link>
+                    <button
+                        type='button'
+                        className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
+                        onClick={() => {
+                            setLaunched(true);
+                        }}
+                    >
+                        Play
+                    </button>
+                </div>
                 <p className='font-(family-name:--standard-fonts)'>
                     {date.toLocaleString(DateTime.DATE_MED)}
                 </p>
