@@ -60,7 +60,12 @@ function getFromCache(date: DateTime): GameState | undefined {
         date.toLocaleString(DateTime.DATE_SHORT)
     );
 
-    if (cached === null) {
+    // Clear cache if no entry for current date or running in development mode
+    if (
+        cached === null ||
+        (globalThis.location.hostname === 'localhost' &&
+            globalThis.location.port === '5173')
+    ) {
         localStorage.clear();
         return;
     }
