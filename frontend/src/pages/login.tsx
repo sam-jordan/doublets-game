@@ -91,7 +91,7 @@ export default function Login() {
     }
 
     return (
-        <div className='font-(family-name:--title-fonts) w-svw h-svh bg-grey-very-dark text-white flex flex-col items-center'>
+        <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col items-center'>
             <h1 className='text-5xl font-extrabold text-pink-bright'>
                 DOUBLETS
             </h1>
