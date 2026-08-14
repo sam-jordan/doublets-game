@@ -56,11 +56,6 @@ export type Validation =
       }
     | { valid: true };
 
-export enum Pages {
-    START,
-    GAME,
-}
-
 export class DoubletsError extends Error {
     constructor(message: string) {
         super(message);

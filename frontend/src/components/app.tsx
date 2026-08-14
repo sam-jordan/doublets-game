@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
-import {
-    Difficulties,
-    gameStateSchema,
-    Pages,
-    type GameState,
-} from '../logic/types';
+import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
 import Game from './game';
 
@@ -24,11 +19,9 @@ export default function App() {
         }
     );
 
-    const [page, setPage] = useState<Pages>(
-        cached === undefined ? Pages.START : Pages.GAME
-    );
+    const [launched, setLaunched] = useState<boolean>(cached !== undefined);
 
-    if (page === Pages.GAME) {
+    if (launched) {
         return <Game gameState={gameState} setGameState={setGameState} />;
     }
 
@@ -49,7 +42,7 @@ export default function App() {
                     type='button'
                     className='font-(family-name:--standard-fonts) bg-grey-very-dark text-xl py-2 rounded-3xl w-32 cursor-pointer font-bold'
                     onClick={() => {
-                        setPage(Pages.GAME);
+                        setLaunched(true);
                     }}
                 >
                     Play
