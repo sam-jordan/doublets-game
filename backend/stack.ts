@@ -38,6 +38,13 @@ export class Stack extends cdk.Stack {
                 'certificate',
                 props.CERTIFICATE_ARN
             ),
+            errorResponses: [
+                {
+                    httpStatus: 403,
+                    responseHttpStatus: 200,
+                    responsePagePath: '/',
+                },
+            ],
         });
     }
 }
