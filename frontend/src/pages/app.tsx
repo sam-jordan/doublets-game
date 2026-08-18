@@ -7,7 +7,7 @@ import { emptyGuesses } from '../logic/empty-guesses';
 import Game from './game';
 
 export default function App() {
-    const date = DateTime.now();
+    const date = DateTime.now().toUTC();
     const cached = getFromCache(date);
 
     // Main state
