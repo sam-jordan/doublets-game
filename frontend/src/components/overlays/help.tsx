@@ -40,7 +40,13 @@ export default function Help(props: {
                     <span className='text-pink-bright'>pink</span> tiles.
                 </li>
                 <li>&#8226; Each guess must be a valid 5-letter word.</li>
-                <li>
+                {/* Mobile interaction */}
+                <li className='sm:hidden'>
+                    &#8226; Guesses can be selected by pressing on them or using
+                    Enter/Backspace on the keyboard.
+                </li>
+                {/* Keyboard and mouse interaction */}
+                <li className='hidden sm:list-item'>
                     &#8226; Guesses can be selected using the mouse, the arrow
                     keys or Enter/Backspace.
                 </li>
