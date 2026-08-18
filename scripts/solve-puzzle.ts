@@ -3,7 +3,7 @@
 import { styleText } from 'node:util';
 import process from 'node:process';
 import { input } from '@inquirer/prompts';
-import { findLinkedWords } from './generate-puzzles.js';
+import { findLinkedWords } from './find-linked-words.js';
 
 function solvePuzzle(puzzle: { startWord: string; endWord: string }) {
     const wordLinkMapping = findLinkedWords();
