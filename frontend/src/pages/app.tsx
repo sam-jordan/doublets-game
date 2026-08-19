@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
+import { getPuzzle } from '../logic/get-puzzle';
 import Game from './game';
 
 export default function App() {
@@ -26,6 +27,8 @@ export default function App() {
     if (launched) {
         return <Game gameState={gameState} setGameState={setGameState} />;
     }
+
+    const puzzle = getPuzzle(gameState.difficulty);
 
     return (
         <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-pink-bright text-white flex flex-col justify-center items-center'>
@@ -62,9 +65,14 @@ export default function App() {
                         Play
                     </button>
                 </div>
-                <p className='font-(family-name:--standard-fonts)'>
-                    {date.toLocaleString(DateTime.DATE_MED)}
-                </p>
+                <div className='flex flex-col justify-center items-center'>
+                    <p className='font-(family-name:--standard-fonts)'>
+                        {date.toLocaleString(DateTime.DATE_MED)}
+                    </p>
+                    <p className='font-(family-name:--standard-fonts)'>
+                        {`No. ${puzzle.index + 1}`}
+                    </p>
+                </div>
             </div>
         </div>
     );

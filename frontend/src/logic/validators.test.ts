@@ -6,6 +6,7 @@ describe('validateWord', () => {
     it('should invalidate a word with empty letters', () => {
         const word = ['B', 'R', 'A', 'T', ' '];
         const validation = validateWord(word, 0, {
+            index: 0,
             startWord: 'TRIBE',
             endWord: 'QUEST',
         });
@@ -17,6 +18,7 @@ describe('validateWord', () => {
     it('should invalidate a word that is part of the puzzle', () => {
         const word = ['M', 'I', 'L', 'E', 'S'];
         const validation = validateWord(word, 0, {
+            index: 0,
             startWord: 'MILES',
             endWord: 'DAVIS',
         });
@@ -28,6 +30,7 @@ describe('validateWord', () => {
     it('should invalidate nonexistant words', () => {
         const word = ['B', 'C', ',', 'N', 'R'];
         const validation = validateWord(word, 0, {
+            index: 0,
             startWord: 'SQUID',
             endWord: 'SHAME',
         });
@@ -39,6 +42,7 @@ describe('validateWord', () => {
     it('should allow valid words', () => {
         const word = ['Y', 'O', 'U', 'N', 'G'];
         const validation = validateWord(word, 0, {
+            index: 0,
             startWord: 'DYLAN',
             endWord: 'SIMON',
         });
@@ -75,7 +79,7 @@ describe('getChanged', () => {
 
 describe('validateSolution', () => {
     it('should highlight the index of the first invalid word', () => {
-        const puzzle = { startWord: 'DEATH', endWord: 'GRIPS' };
+        const puzzle = { index: 0, startWord: 'DEATH', endWord: 'GRIPS' };
         const guesses = [
             {
                 index: 0,
@@ -101,7 +105,7 @@ describe('validateSolution', () => {
     });
 
     it('should invalidate when too many letters have been changed', () => {
-        const puzzle = { startWord: 'WHITE', endWord: 'SNAKE' };
+        const puzzle = { index: 0, startWord: 'WHITE', endWord: 'SNAKE' };
         const guesses = [
             {
                 index: 0,
@@ -129,7 +133,7 @@ describe('validateSolution', () => {
     });
 
     it('should invalidate when a solution does not connect up', () => {
-        const puzzle = { startWord: 'FRANK', endWord: 'OCEAN' };
+        const puzzle = { index: 0, startWord: 'FRANK', endWord: 'OCEAN' };
         const guesses = [
             {
                 index: 0,
@@ -150,7 +154,7 @@ describe('validateSolution', () => {
     });
 
     it('should allow a valid solution', () => {
-        const puzzle = { startWord: 'BEACH', endWord: 'HOUSE' };
+        const puzzle = { index: 0, startWord: 'BEACH', endWord: 'HOUSE' };
         const guesses = [
             {
                 index: 0,

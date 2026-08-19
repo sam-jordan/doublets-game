@@ -10,15 +10,15 @@ describe('getPuzzle', () => {
     it.each([
         {
             difficulty: Difficulties.EASY,
-            expected: { startWord: 'TAPED', endWord: 'DOVES' },
+            expected: { index: 0, startWord: 'TAPED', endWord: 'DOVES' },
         },
         {
             difficulty: Difficulties.MEDIUM,
-            expected: { startWord: 'BEVEL', endWord: 'TOWED' },
+            expected: { index: 0, startWord: 'BEVEL', endWord: 'TOWED' },
         },
         {
             difficulty: Difficulties.HARD,
-            expected: { startWord: 'GODLY', endWord: 'FISTS' },
+            expected: { index: 0, startWord: 'GODLY', endWord: 'FISTS' },
         },
     ])(
         'Return the correct puzzle per difficulty',

@@ -12,7 +12,7 @@ export enum WordTypes {
     GUESS,
 }
 
-export type Puzzle = { startWord: string; endWord: string };
+export type Puzzle = { index: number; startWord: string; endWord: string };
 
 type Word = {
     index: number;
