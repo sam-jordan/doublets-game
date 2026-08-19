@@ -1,8 +1,10 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [type, setType] = useState<'empty' | 'signup' | 'login'>('empty');
+    const success = useNavigate();
 
     function getMainSection() {
         switch (type) {
@@ -129,7 +131,13 @@ export default function Login() {
                     </button>
                 </div>
                 <div className='font-(family-name:--standard-fonts) my-8 grow'>
-                    <form className='flex flex-col gap-4'>
+                    <form
+                        className='flex flex-col gap-4'
+                        onSubmit={() => {
+                            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                            success('/');
+                        }}
+                    >
                         {getMainSection()}
                     </form>
                 </div>
