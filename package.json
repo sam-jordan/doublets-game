@@ -17,6 +17,7 @@
         "build": "tsc -b && vite build",
         "deploy": "npm run build && cdk deploy",
         "dev": "vite",
+        "dev:cache": "vite --mode cache",
         "generate-puzzles": "npm run build && node dist/scripts/generate-puzzles.js",
         "generate-words": "npm run build && node dist/scripts/convert-words-to-json.js",
         "lint": "prettier --check . && xo",
