@@ -1,13 +1,6 @@
-name: Deploy
+name: Deploy to AWS (prod)
 
-on:
-    workflow_dispatch:
-        inputs:
-            environment:
-                description: 'Environment to deploy to'
-                required: true
-                type: environment
-                default: prod
+on: workflow_dispatch
 
 permissions:
     id-token: write
@@ -17,7 +10,7 @@ jobs:
     deploy:
         name: Deploy to AWS
         runs-on: ubuntu-latest
-        environment: ${{ inputs.environment }}
+        environment: prod
         steps:
             - uses: actions/checkout@v6
 
