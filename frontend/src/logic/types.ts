@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-restricted-types -- need nulls for JSON storage */
-
 import { Duration } from 'luxon';
 import z from 'zod';
 
@@ -69,7 +67,7 @@ export type GameState = {
     guesses: Guess[][];
     currentGuess: number;
     difficulty: Difficulties;
-    solved: Array<number | null>;
+    solved: Array<number | undefined>;
     timers: Duration[];
 };
 
@@ -77,7 +75,12 @@ export const gameStateSchema = z.object({
     guesses: z.array(z.array(guessSchema)),
     currentGuess: z.number(),
     difficulty: z.enum(Difficulties),
-    solved: z.array(z.number().nullable()),
+    solved: z.array(
+        z
+            .number()
+            .nullable()
+            .transform(value => value ?? undefined)
+    ),
     timers: z.array(z.string().transform(value => Duration.fromISO(value))),
 });
 

@@ -17,7 +17,7 @@ export default function App() {
             guesses: emptyGuesses(),
             currentGuess: 0,
             difficulty: Difficulties.EASY,
-            solved: Array.from({ length: 3 }, _ => null),
+            solved: Array.from({ length: 3 }, _ => undefined),
             timers: Array.from({ length: 3 }, () => Duration.fromMillis(0)),
         }
     );

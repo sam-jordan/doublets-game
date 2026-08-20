@@ -91,7 +91,7 @@ export default function Header(props: {
                 <p className='font-(family-name:--standard-fonts)'>
                     {`${hours > 0 ? `${hours}:${minutes - hours * 60}` : minutes}:${seconds - minutes * 60 < 10 ? `0${seconds - minutes * 60}` : seconds - minutes * 60}`}
                     <span className='inline-flex h-3'>
-                        {solved[difficulty] === null ? null : (
+                        {solved[difficulty] === undefined ? null : (
                             <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 viewBox='0 0 512 512'

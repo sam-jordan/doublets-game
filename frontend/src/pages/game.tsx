@@ -50,7 +50,7 @@ export default function Game(props: UseGameState) {
 
     // Increment timer
     useEffect(() => {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -76,7 +76,7 @@ export default function Game(props: UseGameState) {
     useEffect(() => {
         const animationTimers: number[] = [];
         if (
-            solved[difficulty] !== null &&
+            solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
                 // eslint-disable-next-line @stylistic/no-mixed-operators -- conflicts with Prettier
                 solved[difficulty] + (4500 + 750 * gameState.difficulty) // May need adjusted to account for adding/removing guesses
@@ -123,7 +123,7 @@ export default function Game(props: UseGameState) {
     }, [gameState]);
 
     function handleSubmit() {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -219,7 +219,7 @@ export default function Game(props: UseGameState) {
     }
 
     function handleType(value: string) {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -283,7 +283,7 @@ export default function Game(props: UseGameState) {
     }
 
     function handleBackspace() {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -363,7 +363,7 @@ export default function Game(props: UseGameState) {
     }
 
     function addGuess() {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
@@ -382,7 +382,7 @@ export default function Game(props: UseGameState) {
     }
 
     function removeGuess() {
-        if (solved[difficulty] !== null) {
+        if (solved[difficulty] !== undefined) {
             return;
         }
 
