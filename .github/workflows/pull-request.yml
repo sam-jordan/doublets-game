@@ -2,8 +2,9 @@ name: Check pull request
 
 on:
     pull_request:
-        - opened
-        - reopened
+        types:
+            - opened
+            - reopened
 
 permissions:
     contents: read
