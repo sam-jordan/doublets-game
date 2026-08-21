@@ -14,23 +14,27 @@ export class Stack extends cdk.Stack {
     ) {
         super(scope, id, props);
 
-        const bucket = new s3.Bucket(this, 'bucket', {
-            bucketName: 'doublets-game-static-bucket',
+        const bucket = new s3.Bucket(this, `${id}-bucket-${props.DEPLOY_ENV}`, {
+            bucketName: `${id}-bucket-${props.DEPLOY_ENV}`,
             removalPolicy: cdk.RemovalPolicy.DESTROY,
             autoDeleteObjects: true,
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
             enforceSSL: true,
         });
 
-        new BucketDeployment(this, 'bucket-deployment', {
-            destinationBucket: bucket,
-            sources: [Source.asset('./frontend/build')],
-        });
+        new BucketDeployment(
+            this,
+            `${id}-bucket-deployment-${props.DEPLOY_ENV}`,
+            {
+                destinationBucket: bucket,
+                sources: [Source.asset('./frontend/build')],
+            }
+        );
 
         // Only link to domain in prod environment
         const IS_DEV = props.DEPLOY_ENV === 'dev';
 
-        new cf.Distribution(this, 'distribution', {
+        new cf.Distribution(this, `${id}-distribution-${props.DEPLOY_ENV}`, {
             defaultBehavior: {
                 origin: S3BucketOrigin.withOriginAccessControl(bucket),
             },
