@@ -50,10 +50,10 @@ export type RowProps = Fixed | GuessProps;
 
 export type Validation =
     | {
-        valid: false;
-        message: string;
-        index: number;
-    }
+          valid: false;
+          message: string;
+          index: number;
+      }
     | { valid: true };
 
 export class DoubletsError extends Error {
@@ -96,4 +96,9 @@ export const loginSchema = z.object({
 
 export const signupSchema = loginSchema.extend({
     confirm: z.string(),
+});
+
+export const amplifyEnvironment = z.object({
+    VITE_USER_POOL_ID: z.string(),
+    VITE_USER_POOL_CLIENT_ID: z.string(),
 });

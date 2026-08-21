@@ -56,6 +56,7 @@ export class Stack extends cdk.Stack {
         const userPool = new cognito.UserPool(this, `${id}-user-pool`, {
             passwordPolicy: {
                 minLength: 8,
+                requireLowercase: true,
                 requireUppercase: true,
                 requireDigits: true,
                 requireSymbols: true,

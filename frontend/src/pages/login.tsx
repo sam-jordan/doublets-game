@@ -1,8 +1,12 @@
 import clsx from 'clsx';
 import { useState } from 'react';
-import { signIn, signUp } from 'aws-amplify/auth'
-import { loginSchema, signupSchema } from '../logic/types';
+import { signIn, signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
+import { loginSchema, signupSchema } from '../logic/types';
+import configureAmplify from '../logic/configure-amplify';
+
+// eslint-disable-next-line unicorn/no-top-level-side-effects
+configureAmplify();
 
 export default function Login() {
     const [type, setType] = useState<'empty' | 'signup' | 'login'>('empty');
@@ -173,6 +177,7 @@ export default function Login() {
                 <div className='font-(family-name:--standard-fonts) my-8 grow'>
                     <form
                         className='flex flex-col gap-4'
+                        // eslint-disable-next-line @typescript-eslint/strict-void-return
                         onSubmit={handleSubmit}
                     >
                         {getMainSection()}
