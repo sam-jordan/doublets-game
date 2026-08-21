@@ -96,8 +96,7 @@ export default function Login() {
             <div className='flex flex-col items-center'>
                 <div
                     className={clsx(
-                        'flex flex-col justify-between items-center gap-4 p-8',
-                        type === 'empty' ? '' : 'border-b-2 border-b-white'
+                        'flex flex-col justify-between items-center gap-4 p-8 border-b-2 border-b-white'
                     )}
                 >
                     <h2>Log in or create an account</h2>

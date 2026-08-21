@@ -15,6 +15,9 @@ export class Stack extends cdk.Stack {
     ) {
         super(scope, id, props);
 
+        // Only link to domain in prod environment
+        const IS_DEV = props.DEPLOY_ENV === 'dev';
+
         const bucket = new s3.Bucket(this, `${id}-bucket`, {
             bucketName: `${id}-bucket`,
             removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -27,9 +30,6 @@ export class Stack extends cdk.Stack {
             destinationBucket: bucket,
             sources: [Source.asset('./frontend/build')],
         });
-
-        // Only link to domain in prod environment
-        const IS_DEV = props.DEPLOY_ENV === 'dev';
 
         new cf.Distribution(this, `${id}-distribution`, {
             defaultBehavior: {
@@ -53,7 +53,22 @@ export class Stack extends cdk.Stack {
             ],
         });
 
-        const userPool = new cognito.UserPool(this, `${id}-user-pool`);
-        userPool.addClient(`${id}-client`, {});
+        const userPool = new cognito.UserPool(this, `${id}-user-pool`, {
+            passwordPolicy: {
+                minLength: 8,
+                requireUppercase: true,
+                requireDigits: true,
+                requireSymbols: true,
+            },
+            selfSignUpEnabled: true,
+            removalPolicy: IS_DEV
+                ? cdk.RemovalPolicy.DESTROY
+                : cdk.RemovalPolicy.RETAIN,
+        });
+        userPool.addClient(`${id}-client`, {
+            authFlows: {
+                userPassword: true,
+            },
+        });
     }
 }
