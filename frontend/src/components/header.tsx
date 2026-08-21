@@ -120,6 +120,7 @@ export default function Header(props: {
                     overlay={props.overlay}
                     onClick={props.removeGuess}
                 />
+                <HeaderButton id='stats-button' overlay={props.overlay} />
                 <HeaderButton
                     id='difficulties-button'
                     overlay={props.overlay}
