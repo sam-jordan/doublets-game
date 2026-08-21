@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
@@ -49,12 +49,12 @@ export default function App() {
                         'sm:flex-row sm:gap-4'
                     )}
                 >
-                    {/* <Link
+                    <Link
                         className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
                         to='/login'
                     >
                         Log in
-                    </Link> */}
+                    </Link>
                     <button
                         type='button'
                         className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
