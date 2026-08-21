@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cf from 'aws-cdk-lib/aws-cloudfront';
+import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
@@ -51,5 +52,8 @@ export class Stack extends cdk.Stack {
                 },
             ],
         });
+
+        const userPool = new cognito.UserPool(this, `${id}-user-pool`);
+        userPool.addClient(`${id}-client`, {});
     }
 }
