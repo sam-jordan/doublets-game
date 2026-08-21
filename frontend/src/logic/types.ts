@@ -50,10 +50,10 @@ export type RowProps = Fixed | GuessProps;
 
 export type Validation =
     | {
-          valid: false;
-          message: string;
-          index: number;
-      }
+        valid: false;
+        message: string;
+        index: number;
+    }
     | { valid: true };
 
 export class DoubletsError extends Error {
@@ -88,3 +88,12 @@ export type UseGameState = {
     gameState: GameState;
     setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 };
+
+export const loginSchema = z.object({
+    username: z.string(),
+    password: z.string(),
+});
+
+export const signupSchema = loginSchema.extend({
+    confirm: z.string(),
+});

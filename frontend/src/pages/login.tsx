@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { signIn, signUp } from 'aws-amplify/auth'
+import { loginSchema, signupSchema } from '../logic/types';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -22,6 +24,7 @@ export default function Login() {
                             <input
                                 className='bg-white text-black rounded-xl pl-2 py-1 focus:border-pink-bright'
                                 id='username'
+                                name='username'
                             />
                         </div>
                         <div>
@@ -31,6 +34,7 @@ export default function Login() {
                             <input
                                 className='bg-white text-black rounded-xl pl-2 py-1'
                                 id='password'
+                                name='password'
                                 type='password'
                             />
                         </div>
@@ -41,6 +45,7 @@ export default function Login() {
                             <input
                                 className='bg-white text-black rounded-xl pl-2 py-1'
                                 id='confirm'
+                                name='confirm'
                                 type='password'
                             />
                         </div>
@@ -64,6 +69,7 @@ export default function Login() {
                             <input
                                 className='bg-white text-black rounded-xl pl-2 py-1'
                                 id='username'
+                                name='username'
                             />
                         </div>
                         <div>
@@ -73,6 +79,7 @@ export default function Login() {
                             <input
                                 className='bg-white text-black rounded-xl pl-2 py-1'
                                 id='password'
+                                name='password'
                                 type='password'
                             />
                         </div>
@@ -84,6 +91,40 @@ export default function Login() {
                         </button>
                     </>
                 );
+            }
+        }
+    }
+
+    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const formData = new FormData(event?.currentTarget);
+
+        if (type === 'signup') {
+            const inputs = signupSchema.parse(Object.fromEntries(formData));
+            const { username, password, confirm } = inputs;
+
+            if (password === confirm) {
+                const response = await signUp({
+                    username,
+                    password,
+                });
+
+                if (response.nextStep.signUpStep === 'DONE') {
+                    await success('/');
+                }
+            }
+        } else if (type === 'login') {
+            const inputs = loginSchema.parse(Object.fromEntries(formData));
+            const { username, password } = inputs;
+
+            const response = await signIn({
+                username,
+                password,
+            });
+
+            if (response.nextStep.signInStep === 'DONE') {
+                await success('/');
             }
         }
     }
@@ -132,10 +173,7 @@ export default function Login() {
                 <div className='font-(family-name:--standard-fonts) my-8 grow'>
                     <form
                         className='flex flex-col gap-4'
-                        onSubmit={() => {
-                            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                            success('/');
-                        }}
+                        onSubmit={handleSubmit}
                     >
                         {getMainSection()}
                     </form>
