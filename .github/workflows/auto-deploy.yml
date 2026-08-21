@@ -39,4 +39,5 @@ jobs:
             - name: Deploy
               run: npm run deploy
               env:
-                  CERTIFICATE_ARN: ${{ secrets.CERTIFICATE_ARN }}
+                  CERTIFICATE_ARN: unused
+                  DEPLOY_ENV: dev

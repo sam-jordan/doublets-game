@@ -27,17 +27,22 @@ export class Stack extends cdk.Stack {
             sources: [Source.asset('./frontend/build')],
         });
 
+        // Only link to domain in prod environment
+        const IS_DEV = props.DEPLOY_ENV === 'dev';
+
         new cf.Distribution(this, 'distribution', {
             defaultBehavior: {
                 origin: S3BucketOrigin.withOriginAccessControl(bucket),
             },
-            domainNames: ['www.doublets.app'],
+            domainNames: IS_DEV ? undefined : ['www.doublets.app'],
             defaultRootObject: 'index.html',
-            certificate: Certificate.fromCertificateArn(
-                this,
-                'certificate',
-                props.CERTIFICATE_ARN
-            ),
+            certificate: IS_DEV
+                ? undefined
+                : Certificate.fromCertificateArn(
+                      this,
+                      'certificate',
+                      props.CERTIFICATE_ARN
+                  ),
             errorResponses: [
                 {
                     httpStatus: 403,
