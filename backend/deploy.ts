@@ -6,4 +6,4 @@ import { environment } from './environment.js';
 const env = environment.parse(process.env);
 
 const app = new cdk.App();
-new Stack(app, 'doublets-game', env);
+new Stack(app, `doublets-game-${env.DEPLOY_ENV}`, env);
