@@ -68,7 +68,7 @@ export class Stack extends cdk.Stack {
         });
         userPool.addClient(`${id}-client`, {
             authFlows: {
-                userPassword: true,
+                userSrp: true,
             },
         });
     }
