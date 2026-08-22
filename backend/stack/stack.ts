@@ -61,7 +61,7 @@ export class Stack extends cdk.Stack {
             {
                 functionName: `${id}-auto-confirm-lambda`,
                 runtime: Runtime.NODEJS_24_X,
-                entry: '../lambda/auto-confirm/index.ts',
+                entry: './backend/lambda/auto-confirm/index.ts',
             }
         );
 
