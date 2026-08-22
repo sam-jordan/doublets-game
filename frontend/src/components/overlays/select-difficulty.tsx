@@ -31,7 +31,7 @@ export default function SelectDifficulty(props: {
                 </button>
             </div>
             <p className='font-(family-name:--title-fonts) mb-2'>
-                Easy has a &quot;par&quot; of 4 guesses, Medium 5, and Hard 6.
+                Easy has a &quot;par&quot; of 4 words, Medium 5, and Hard 6.
             </p>
             <div className='overlay flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8'>
                 <button
