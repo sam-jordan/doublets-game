@@ -55,10 +55,15 @@ export class Stack extends cdk.Stack {
             ],
         });
 
-        new NodejsFunction(this, `${id}-auto-confirm-lambda`, {
-            functionName: `${id}-auto-confirm-lambda`,
-            runtime: Runtime.NODEJS_24_X,
-        });
+        const autoConfirmLambda = new NodejsFunction(
+            this,
+            `${id}-auto-confirm-lambda`,
+            {
+                functionName: `${id}-auto-confirm-lambda`,
+                runtime: Runtime.NODEJS_24_X,
+                entry: '../lambda/auto-confirm/index.js',
+            }
+        );
 
         const userPool = new cognito.UserPool(this, `${id}-user-pool`, {
             passwordPolicy: {
@@ -72,6 +77,9 @@ export class Stack extends cdk.Stack {
             removalPolicy: IS_DEV
                 ? cdk.RemovalPolicy.DESTROY
                 : cdk.RemovalPolicy.RETAIN,
+            lambdaTriggers: {
+                preSignUp: autoConfirmLambda,
+            },
         });
         userPool.addClient(`${id}-client`, {
             authFlows: {
