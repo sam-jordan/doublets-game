@@ -5,6 +5,8 @@ import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { type Environment } from './environment.js';
 
 export class Stack extends cdk.Stack {
@@ -51,6 +53,11 @@ export class Stack extends cdk.Stack {
                     responsePagePath: '/',
                 },
             ],
+        });
+
+        new NodejsFunction(this, `${id}-auto-confirm-lambda`, {
+            functionName: `${id}-auto-confirm-lambda`,
+            runtime: Runtime.NODEJS_24_X,
         });
 
         const userPool = new cognito.UserPool(this, `${id}-user-pool`, {
