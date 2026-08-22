@@ -89,16 +89,13 @@ export type UseGameState = {
     setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 };
 
-export const loginSchema = z.object({
-    username: z.string(),
-    password: z.string(),
-});
-
-export const signupSchema = loginSchema.extend({
-    confirm: z.string(),
-});
-
 export const amplifyEnvironment = z.object({
     VITE_USER_POOL_ID: z.string(),
     VITE_USER_POOL_CLIENT_ID: z.string(),
 });
+
+export type LoginDetails = {
+    username: string;
+    password: string;
+    confirm?: string;
+};

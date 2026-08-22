@@ -1,134 +1,56 @@
 import clsx from 'clsx';
-import { useState } from 'react';
-import { signIn, signUp } from 'aws-amplify/auth';
-import { useNavigate } from 'react-router-dom';
-import { loginSchema, signupSchema } from '../logic/types';
+import { useEffect, useState } from 'react';
+import { getCurrentUser } from 'aws-amplify/auth';
+import { useQuery } from '@tanstack/react-query';
 import configureAmplify from '../logic/configure-amplify';
-
-// eslint-disable-next-line unicorn/no-top-level-side-effects
-configureAmplify();
+import { type LoginDetails } from '../logic/types';
+import SignupForm from '../components/logins/signup-form';
+import LoginForm from '../components/logins/login-form';
 
 export default function Login() {
-    const [type, setType] = useState<'empty' | 'signup' | 'login'>('empty');
-    const success = useNavigate();
+    const [type, setType] = useState<'base' | 'signup' | 'login'>('base');
+    const [loginDetails, setLoginDetails] = useState<LoginDetails>({
+        username: '',
+        password: '',
+        confirm: '',
+    });
 
-    function getMainSection() {
+    const currentUser = useQuery({
+        queryKey: ['currentUser'],
+        queryFn: getCurrentUser,
+    });
+
+    useEffect(() => {
+        // Ran only on first render
+        configureAmplify();
+    }, []);
+
+    function getForm() {
         switch (type) {
-            case 'empty': {
-                return null;
+            case 'base': {
+                return (
+                    <div>
+                        <p>Select a user type to continue.</p>
+                    </div>
+                );
             }
 
             case 'signup': {
                 return (
-                    <>
-                        <div>
-                            <label htmlFor='username' className='block mb-1'>
-                                Username
-                            </label>
-                            <input
-                                className='bg-white text-black rounded-xl pl-2 py-1 focus:border-pink-bright'
-                                id='username'
-                                name='username'
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor='username' className='block mb-1'>
-                                Password
-                            </label>
-                            <input
-                                className='bg-white text-black rounded-xl pl-2 py-1'
-                                id='password'
-                                name='password'
-                                type='password'
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor='username' className='block mb-1'>
-                                Confirm password
-                            </label>
-                            <input
-                                className='bg-white text-black rounded-xl pl-2 py-1'
-                                id='confirm'
-                                name='confirm'
-                                type='password'
-                            />
-                        </div>
-                        <button
-                            className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
-                            type='submit'
-                        >
-                            Sign up
-                        </button>
-                    </>
+                    <SignupForm
+                        loginDetails={loginDetails}
+                        setLoginDetails={setLoginDetails}
+                    />
                 );
             }
 
             case 'login': {
                 return (
-                    <>
-                        <div>
-                            <label htmlFor='username' className='block mb-1'>
-                                Username
-                            </label>
-                            <input
-                                className='bg-white text-black rounded-xl pl-2 py-1'
-                                id='username'
-                                name='username'
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor='username' className='block mb-1'>
-                                Password
-                            </label>
-                            <input
-                                className='bg-white text-black rounded-xl pl-2 py-1'
-                                id='password'
-                                name='password'
-                                type='password'
-                            />
-                        </div>
-                        <button
-                            className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
-                            type='submit'
-                        >
-                            Log in
-                        </button>
-                    </>
+                    <LoginForm
+                        loginDetails={loginDetails}
+                        setLoginDetails={setLoginDetails}
+                    />
                 );
-            }
-        }
-    }
-
-    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        const formData = new FormData(event?.currentTarget);
-
-        if (type === 'signup') {
-            const inputs = signupSchema.parse(Object.fromEntries(formData));
-            const { username, password, confirm } = inputs;
-
-            if (password === confirm) {
-                const response = await signUp({
-                    username,
-                    password,
-                });
-
-                if (response.nextStep.signUpStep === 'DONE') {
-                    await success('/');
-                }
-            }
-        } else if (type === 'login') {
-            const inputs = loginSchema.parse(Object.fromEntries(formData));
-            const { username, password } = inputs;
-
-            const response = await signIn({
-                username,
-                password,
-            });
-
-            if (response.nextStep.signInStep === 'DONE') {
-                await success('/');
             }
         }
     }
@@ -155,6 +77,11 @@ export default function Login() {
                         type='button'
                         onClick={() => {
                             setType('login');
+                            setLoginDetails({
+                                username: '',
+                                password: '',
+                                confirm: '',
+                            });
                         }}
                     >
                         Existing user
@@ -169,19 +96,24 @@ export default function Login() {
                         type='button'
                         onClick={() => {
                             setType('signup');
+                            setLoginDetails({
+                                username: '',
+                                password: '',
+                                confirm: '',
+                            });
                         }}
                     >
                         New user
                     </button>
                 </div>
                 <div className='font-(family-name:--standard-fonts) my-8 grow'>
-                    <form
-                        className='flex flex-col gap-4'
-                        // eslint-disable-next-line @typescript-eslint/strict-void-return
-                        onSubmit={handleSubmit}
-                    >
-                        {getMainSection()}
-                    </form>
+                    {currentUser.isPending ? (
+                        <p>Loading...</p>
+                    ) : currentUser.isError ? (
+                        getForm()
+                    ) : (
+                        <p>{currentUser.data.username}</p>
+                    )}
                 </div>
             </div>
         </div>
