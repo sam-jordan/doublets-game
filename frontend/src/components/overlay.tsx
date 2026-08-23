@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 
-export default function Overlay(props: { readonly children: React.ReactNode }) {
+export default function Overlay(props: {
+    readonly children?: React.ReactNode;
+}) {
     return props.children === undefined ? null : (
         <div
             className={clsx(

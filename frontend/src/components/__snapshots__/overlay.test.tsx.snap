@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Overlay > should render 1`] = `
+<DocumentFragment>
+  <div
+    class="overlay fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-lg w-[80vw] sm:w-fit"
+  >
+    <p>
+      test
+    </p>
+  </div>
+</DocumentFragment>
+`;
