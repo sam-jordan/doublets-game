@@ -1,5 +1,5 @@
-import { afterAll, describe, expect, it, vi } from 'vitest';
-import { render } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Keyboard from './keyboard';
 
@@ -7,7 +7,8 @@ import Keyboard from './keyboard';
 const handleKeyUp = vi.fn(_key => void {});
 
 describe('Keyboard', () => {
-    afterAll(() => {
+    afterEach(() => {
+        cleanup();
         vi.resetAllMocks();
     });
 
@@ -30,5 +31,13 @@ describe('Keyboard', () => {
 
         await user.click(q);
         expect(handleKeyUp).toHaveBeenCalledExactlyOnceWith('q');
+    });
+
+    it('should render differently when overlay is defined', async () => {
+        const { asFragment } = render(
+            <Keyboard handleKeyUp={handleKeyUp} overlay={<p>test</p>} />
+        );
+
+        expect(asFragment()).toMatchSnapshot();
     });
 });
