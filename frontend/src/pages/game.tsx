@@ -43,7 +43,7 @@ export default function Game(props: UseGameState) {
     // Cache game state in browser
     useEffect(() => {
         localStorage.setItem(
-            `doublets:${DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT)}`,
+            `doublets:[${DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT)}]`,
             JSON.stringify(gameState)
         );
     }, [gameState]);

@@ -80,7 +80,7 @@ export default function App() {
 
 function getFromCache(date: DateTime): GameState | undefined {
     const cached = localStorage.getItem(
-        `doublets:${date.toLocaleString(DateTime.DATE_SHORT)}`
+        `doublets:[${date.toLocaleString(DateTime.DATE_SHORT)}]`
     );
 
     // Remove all cached games if no entry for current date or running in development mode
