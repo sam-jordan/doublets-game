@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { getCurrentUser, signOut } from 'aws-amplify/auth';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import configureAmplify from '../logic/configure-amplify';
 import { type LoginDetails } from '../logic/types';
 import SignupForm from '../components/logins/signup-form';
@@ -14,16 +15,24 @@ export default function Login() {
         password: '',
         confirm: '',
     });
-
-    const currentUser = useQuery({
-        queryKey: ['currentUser'],
-        queryFn: getCurrentUser,
-    });
+    const [loggedOut, setLoggedOut] = useState<boolean>(false);
 
     useEffect(() => {
         // Ran only on first render
         configureAmplify();
     }, []);
+
+    const currentUser = useQuery({
+        queryKey: ['currentUser'],
+        queryFn: getCurrentUser,
+    });
+    useQuery({
+        queryKey: ['logout'],
+        async queryFn() {
+            await signOut();
+        },
+        enabled: loggedOut,
+    });
 
     function getForm() {
         switch (type) {
@@ -55,6 +64,14 @@ export default function Login() {
         }
     }
 
+    function resetLoginDetails() {
+        setLoginDetails({
+            username: '',
+            password: '',
+            confirm: '',
+        });
+    }
+
     return (
         <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col items-center'>
             <h1 className='text-5xl font-extrabold text-pink-bright mt-8'>
@@ -77,11 +94,7 @@ export default function Login() {
                         type='button'
                         onClick={() => {
                             setType('login');
-                            setLoginDetails({
-                                username: '',
-                                password: '',
-                                confirm: '',
-                            });
+                            resetLoginDetails();
                         }}
                     >
                         Existing user
@@ -96,11 +109,7 @@ export default function Login() {
                         type='button'
                         onClick={() => {
                             setType('signup');
-                            setLoginDetails({
-                                username: '',
-                                password: '',
-                                confirm: '',
-                            });
+                            resetLoginDetails();
                         }}
                     >
                         New user
@@ -112,7 +121,28 @@ export default function Login() {
                     ) : currentUser.isError ? (
                         getForm()
                     ) : (
-                        <p>{currentUser.data.username}</p>
+                        <div className='flex flex-col justify-between items-center gap-4 p-8'>
+                            <p>
+                                {currentUser.data.username}, you are already
+                                logged in!
+                            </p>
+                            <Link
+                                className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
+                                to='/'
+                            >
+                                Play
+                            </Link>
+                            <button
+                                className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid'
+                                type='button'
+                                onClick={() => {
+                                    setLoggedOut(true);
+                                    resetLoginDetails();
+                                }}
+                            >
+                                Log out
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>
