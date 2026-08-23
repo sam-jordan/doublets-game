@@ -1,0 +1,52 @@
+<DocumentFragment>
+  <div
+    class="overlay flex justify-between sm:min-w-lg"
+  >
+    <h2
+      class="font-(family-name:--title-fonts) font-bold text-2xl"
+    >
+      Select a difficulty
+    </h2>
+    <button
+      class="w-4 cursor-pointer -mt-4"
+      type="button"
+    >
+      <svg
+        viewBox="0 0 640 640"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"
+          fill="rgb(255, 255, 255)"
+        />
+      </svg>
+    </button>
+  </div>
+  <p
+    class="font-(family-name:--title-fonts) mb-2"
+  >
+    Easy has a "par" of 4 words, Medium 5, and Hard 6.
+  </p>
+  <div
+    class="overlay flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8"
+  >
+    <button
+      class="border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl"
+      type="button"
+    >
+      Easy
+    </button>
+    <button
+      class="border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl"
+      type="button"
+    >
+      Medium
+    </button>
+    <button
+      class="border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl"
+      type="button"
+    >
+      Hard
+    </button>
+  </div>
+</DocumentFragment>

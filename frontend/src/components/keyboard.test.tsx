@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Keyboard from './keyboard';
 
 // eslint-disable-next-line no-void
-const handleKeyUp = vi.fn(_key => void {});
+const handleKeyUp = vi.fn(() => void {});
 
 describe('Keyboard', () => {
     afterEach(() => {

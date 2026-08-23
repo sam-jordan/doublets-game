@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import Help from './help';
 
 // eslint-disable-next-line no-void
-const setOverlay = vi.fn(_value => void {});
+const setOverlay = vi.fn(() => void {});
 
 describe('Help', () => {
     afterEach(() => {
