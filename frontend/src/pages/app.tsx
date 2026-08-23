@@ -80,16 +80,23 @@ export default function App() {
 
 function getFromCache(date: DateTime): GameState | undefined {
     const cached = localStorage.getItem(
-        date.toLocaleString(DateTime.DATE_SHORT)
+        `doublets:${date.toLocaleString(DateTime.DATE_SHORT)}`
     );
 
-    // Clear cache if no entry for current date or running in development mode
+    // Remove all cached games if no entry for current date or running in development mode
     if (
         cached === null ||
         (globalThis.location.hostname === 'localhost' &&
             globalThis.location.port === '5173')
     ) {
-        localStorage.clear();
+        const keys = Object.keys(localStorage).filter(key =>
+            key.startsWith('doublets:')
+        );
+
+        for (const key of keys) {
+            localStorage.removeItem(key);
+        }
+
         return;
     }
 
