@@ -486,7 +486,7 @@ exports[`Stack > synthesises correctly 1`] = `
           },
         ],
         "SourceObjectKeys": [
-          "f2968358ba6078247ee119531106dda50144534780c4579c2b3907f3d2b179a6.zip",
+          "033d9fa9db491c2b61f939d67544e9369453c295200c75db9153687c897fee96.zip",
         ],
         "WaitForDistributionInvalidation": true,
       },
@@ -547,6 +547,42 @@ exports[`Stack > synthesises correctly 1`] = `
         },
       },
       "Type": "AWS::CloudFront::OriginAccessControl",
+    },
+    "doubletsgamedevstatstableC7B4E555": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "username",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "date",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "username",
+            "KeyType": "HASH",
+          },
+          {
+            "AttributeName": "date",
+            "KeyType": "RANGE",
+          },
+        ],
+        "Replicas": [
+          {
+            "Region": {
+              "Ref": "AWS::Region",
+            },
+          },
+        ],
+        "TableName": "doublets-game-dev-stats-table",
+      },
+      "Type": "AWS::DynamoDB::GlobalTable",
+      "UpdateReplacePolicy": "Delete",
     },
     "doubletsgamedevuserpoolBA76519F": {
       "DeletionPolicy": "Delete",
