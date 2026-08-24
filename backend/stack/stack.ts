@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cf from 'aws-cdk-lib/aws-cloudfront';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
+import * as dynamo from 'aws-cdk-lib/aws-dynamodb';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
@@ -85,6 +86,18 @@ export class Stack extends cdk.Stack {
             authFlows: {
                 userSrp: true,
             },
+        });
+
+        new dynamo.TableV2(this, `${id}-stats-table`, {
+            tableName: `${id}-stats-table`,
+            partitionKey: {
+                name: 'username',
+                type: dynamo.AttributeType.STRING,
+            },
+            sortKey: { name: 'date', type: dynamo.AttributeType.STRING },
+            removalPolicy: IS_DEV
+                ? cdk.RemovalPolicy.DESTROY
+                : cdk.RemovalPolicy.RETAIN,
         });
     }
 }
