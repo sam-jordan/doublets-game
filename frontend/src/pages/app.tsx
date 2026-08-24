@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useQuery } from '@tanstack/react-query';
-import { getCurrentUser } from 'aws-amplify/auth';
 import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import Loading from '../components/loading';
-import configureAmplify from '../logic/configure-amplify';
+import { useCurrentUser } from '../logic/queries';
 import Game from './game';
 
 export default function App() {
@@ -28,16 +26,7 @@ export default function App() {
 
     const [launched, setLaunched] = useState<boolean>(cached !== undefined);
 
-    useEffect(() => {
-        // Ran only on first render
-        configureAmplify();
-    }, []);
-
-    const currentUser = useQuery({
-        queryKey: ['currentUser'],
-        queryFn: getCurrentUser,
-        retry: false,
-    });
+    const currentUser = useCurrentUser();
 
     if (launched) {
         return <Game gameState={gameState} setGameState={setGameState} />;
