@@ -54,8 +54,39 @@ export default function Signup() {
 
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
-
         setError(undefined);
+
+        if (loginDetails.password.length < 8) {
+            setError('Password must be at least 8 characters long.');
+            return;
+        }
+
+        if (!/\d+/v.test(loginDetails.password)) {
+            setError('Password must contain at least one number.');
+            return;
+        }
+
+        if (
+            !/[a-z]+/v.test(loginDetails.password) ||
+            !/[A-Z]+/v.test(loginDetails.password)
+        ) {
+            setError(
+                'Password must contain a mix of upper and lower-case letters.'
+            );
+            return;
+        }
+
+        // Special characters allowed by AWS Cognito
+        const SPECIALS = '^$*.[]{}()?"!@#%&/\\,><\':;|_~`=+-';
+        if (
+            loginDetails.password
+                .split('')
+                .every(char => !SPECIALS.split('').includes(char))
+        ) {
+            setError('Password must contain at least one special character.');
+            return;
+        }
+
         if (loginDetails.password === loginDetails.confirm) {
             setSubmitted(true);
         } else {
