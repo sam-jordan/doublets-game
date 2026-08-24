@@ -38,7 +38,7 @@ export default function Stats(props: {
             ) : currentUser.isError ? (
                 <Link
                     className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
-                    to='/login'
+                    to='/user/login'
                 >
                     Log in
                 </Link>

@@ -59,7 +59,7 @@ export default function App() {
                         {currentUser.isError ? (
                             <Link
                                 className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
-                                to='/login'
+                                to='/user/login'
                             >
                                 Log in
                             </Link>

@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './pages/app';
 import Login from './pages/login';
 import NotFound from './pages/not-found';
+import Signup from './pages/signup';
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,8 @@ createRoot(document.querySelector('#root')!).render(
                 <Routes>
                     <Route path='*' element={<NotFound />} />
                     <Route path='/' element={<App />} />
-                    <Route path='/login' element={<Login />} />
+                    <Route path='/user/login' element={<Login />} />
+                    <Route path='/user/signup' element={<Signup />} />
                 </Routes>
             </BrowserRouter>
         </QueryClientProvider>
