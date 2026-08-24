@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 import { type LoginDetails } from '../logic/types';
 import { useSignUp } from '../logic/queries';
 import Loading from './loading';
@@ -103,14 +104,20 @@ export default function Signup() {
             </h1>
             <h2 className='text-3xl font-extrabold mt-8'>Sign up</h2>
             <p>Please create an account to continue.</p>
-            <div className='font-(family-name:--standard-fonts) my-8 grow'>
-                <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+            <div className='font-(family-name:--standard-fonts) my-8 grow flex flex-col items-center gap-4'>
+                <form
+                    className='flex flex-col gap-4 items-center'
+                    onSubmit={handleSubmit}
+                >
                     <div>
                         <label htmlFor='username' className='block mb-1'>
                             Username
                         </label>
                         <input
-                            className='bg-white text-black rounded-xl pl-2 py-1 focus:border-pink-bright'
+                            className={clsx(
+                                'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                'sm:w-96'
+                            )}
                             id='username'
                             value={loginDetails.username}
                             onChange={event => {
@@ -126,7 +133,10 @@ export default function Signup() {
                             Password
                         </label>
                         <input
-                            className='bg-white text-black rounded-xl pl-2 py-1'
+                            className={clsx(
+                                'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                'sm:w-96'
+                            )}
                             id='password'
                             type='password'
                             value={loginDetails.password}
@@ -143,7 +153,10 @@ export default function Signup() {
                             Confirm password
                         </label>
                         <input
-                            className='bg-white text-black rounded-xl pl-2 py-1'
+                            className={clsx(
+                                'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                'sm:w-96'
+                            )}
                             id='confirm'
                             type='password'
                             value={loginDetails.confirm}
@@ -156,10 +169,13 @@ export default function Signup() {
                         />
                     </div>
                     {error === undefined ? null : (
-                        <p className='text-pink-bright'>{error}</p>
+                        <p className='text-pink-bright -mb-4'>{error}</p>
                     )}
                     <button
-                        className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
+                        className={clsx(
+                            'border-2 border-white w-64 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4',
+                            'sm:w-96'
+                        )}
                         type='submit'
                     >
                         Sign up

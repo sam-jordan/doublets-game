@@ -120,7 +120,7 @@ export default function Login() {
                         />
                     </div>
                     {error === undefined ? null : (
-                        <p className='text-pink-bright'>{error}</p>
+                        <p className='text-pink-bright -mb-4'>{error}</p>
                     )}
                     <button
                         className={clsx(
