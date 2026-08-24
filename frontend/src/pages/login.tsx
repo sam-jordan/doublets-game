@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { type LoginDetails } from '../logic/types';
 import { useSignIn } from '../logic/queries';
 
@@ -87,6 +87,15 @@ export default function Login() {
                         Log in
                     </button>
                 </form>
+                <p>
+                    Don&apos;t have an account?{' '}
+                    <Link
+                        to='/user/signup'
+                        className='font-bold text-pink-bright'
+                    >
+                        Sign up
+                    </Link>
+                </p>
             </div>
         </div>
     );
