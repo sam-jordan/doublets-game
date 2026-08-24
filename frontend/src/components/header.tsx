@@ -6,6 +6,7 @@ import { Difficulties, type GameState } from '../logic/types';
 import Help from './overlays/help';
 import SelectDifficulty from './overlays/select-difficulty';
 import HeaderButton from './header-button';
+import Stats from './overlays/stats';
 
 export default function Header(props: {
     readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
@@ -48,6 +49,13 @@ export default function Header(props: {
                                 setOverlay={props.setOverlay}
                                 handleDifficulty={props.handleDifficulty}
                             />
+                        );
+                        break;
+                    }
+
+                    case 'stats-button': {
+                        props.setOverlay(
+                            <Stats setOverlay={props.setOverlay} />
                         );
                         break;
                     }
