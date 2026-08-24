@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { type LoginDetails } from '../logic/types';
 import { useSignUp } from '../logic/queries';
+import Loading from './loading';
 
 export default function Signup() {
     const [loginDetails, setLoginDetails] = useState<LoginDetails>({
@@ -10,6 +11,7 @@ export default function Signup() {
         confirm: '',
     });
     const [submitted, setSubmitted] = useState<boolean>(false);
+    const [error, setError] = useState<string>();
 
     const success = useNavigate();
 
@@ -22,10 +24,26 @@ export default function Signup() {
     useEffect(() => {
         async function handleSubmitResponse() {
             if (query.isPending) {
-                console.log('Waiting...');
-            } else if (query.isError) {
-                console.log('Error!');
+                return;
+            }
+
+            if (query.isError) {
+                setSubmitted(false);
+                switch (query.error.name) {
+                    case 'UsernameExistsException': {
+                        setError(
+                            'This username is already taken. Please choose another.'
+                        );
+                        break;
+                    }
+
+                    default: {
+                        console.log(query.error);
+                        break;
+                    }
+                }
             } else if (query.data.nextStep.signUpStep === 'DONE') {
+                setSubmitted(false);
                 await success('/');
             }
         }
@@ -37,12 +55,17 @@ export default function Signup() {
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        setError(undefined);
         if (loginDetails.password === loginDetails.confirm) {
             setSubmitted(true);
+        } else {
+            setError('Passwords do not match');
         }
     }
 
-    return (
+    return submitted && query.isPending ? (
+        <Loading size='6rem' />
+    ) : (
         <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col items-center'>
             <h1 className='text-5xl font-extrabold text-pink-bright mt-8'>
                 DOUBLETS
@@ -101,6 +124,9 @@ export default function Signup() {
                             }}
                         />
                     </div>
+                    {error === undefined ? null : (
+                        <p className='text-pink-bright'>{error}</p>
+                    )}
                     <button
                         className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
                         type='submit'

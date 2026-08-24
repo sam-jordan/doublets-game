@@ -27,6 +27,7 @@ export default function Login() {
             }
 
             if (query.isError) {
+                setSubmitted(false);
                 switch (query.error.name) {
                     // User is already logged in
                     case 'UserAlreadyAuthenticatedException': {
@@ -60,6 +61,7 @@ export default function Login() {
 
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
+        setError(undefined);
         setSubmitted(true);
     }
 
