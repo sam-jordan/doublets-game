@@ -10,6 +10,7 @@ export default function Login() {
         password: '',
     });
     const [submitted, setSubmitted] = useState<boolean>(false);
+    const [error, setError] = useState<string>();
 
     const success = useNavigate();
 
@@ -22,9 +23,31 @@ export default function Login() {
     useEffect(() => {
         async function handleSubmitResponse() {
             if (query.isPending) {
-                console.log('Waiting...');
-            } else if (query.isError) {
-                console.log('Error!');
+                return;
+            }
+
+            if (query.isError) {
+                switch (query.error.name) {
+                    // User is already logged in
+                    case 'UserAlreadyAuthenticatedException': {
+                        setSubmitted(false);
+                        await success('/');
+                        break;
+                    }
+
+                    // Incorrect username/password
+                    case 'NotAuthorizedException': {
+                        setError(
+                            'The username or password you entered is incorrect. Please try again.'
+                        );
+                        break;
+                    }
+
+                    default: {
+                        console.log(query.error);
+                        break;
+                    }
+                }
             } else if (query.data.nextStep.signInStep === 'DONE') {
                 setSubmitted(false);
                 await success('/');
@@ -87,6 +110,9 @@ export default function Login() {
                             }}
                         />
                     </div>
+                    {error === undefined ? null : (
+                        <p className='text-pink-bright'>{error}</p>
+                    )}
                     <button
                         className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
                         type='submit'
