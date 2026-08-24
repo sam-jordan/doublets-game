@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { type LoginDetails } from '../logic/types';
 import { useSignIn } from '../logic/queries';
+import Loading from './loading';
 
 export default function Login() {
     const [loginDetails, setLoginDetails] = useState<LoginDetails>({
@@ -25,6 +26,7 @@ export default function Login() {
             } else if (query.isError) {
                 console.log('Error!');
             } else if (query.data.nextStep.signInStep === 'DONE') {
+                setSubmitted(false);
                 await success('/');
             }
         }
@@ -38,15 +40,20 @@ export default function Login() {
         setSubmitted(true);
     }
 
-    return (
-        <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col items-center'>
+    return submitted && query.isPending ? (
+        <Loading size='6rem' />
+    ) : (
+        <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col items-center justify-center'>
             <h1 className='text-5xl font-extrabold text-pink-bright mt-8'>
                 DOUBLETS
             </h1>
             <h2 className='text-3xl font-extrabold mt-8'>Log in</h2>
             <p>Please log in to continue.</p>
             <div className='font-(family-name:--standard-fonts) my-8 grow'>
-                <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                <form
+                    className='flex flex-col gap-4 items-center'
+                    onSubmit={handleSubmit}
+                >
                     <div>
                         <label htmlFor='username' className='block mb-1'>
                             Username

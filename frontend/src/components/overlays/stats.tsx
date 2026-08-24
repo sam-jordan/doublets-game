@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../logic/queries';
-import Loading from '../loading';
 
 export default function Stats(props: {
     readonly setOverlay: React.Dispatch<
@@ -34,7 +33,7 @@ export default function Stats(props: {
                 </button>
             </div>
             {currentUser.isPending ? (
-                <Loading />
+                <p>Loading...</p>
             ) : currentUser.isError ? (
                 <Link
                     className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
