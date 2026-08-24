@@ -7,6 +7,7 @@ export default defineConfig(env => ({
     plugins: [react(), tailwindcss()],
     test: {
         environment: 'jsdom',
+        include: ['**/*.test.{tsx,ts}'],
     },
     root: env.mode === 'test' ? '.' : 'frontend',
     build: {

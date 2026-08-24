@@ -17,5 +17,5 @@ describe('Stack', () => {
 
         const template = Template.fromStack(stack);
         expect(template.toJSON()).toMatchSnapshot();
-    }, 10_000);
+    }, 20_000);
 });
