@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { getCurrentUser, signIn } from 'aws-amplify/auth';
 import configureAmplify from './configure-amplify';
+import type { SignInOptions } from './types';
 
 export function useCurrentUser() {
     configureAmplify();
@@ -9,5 +10,20 @@ export function useCurrentUser() {
         queryKey: ['currentUser'],
         queryFn: getCurrentUser,
         retry: false,
+    });
+}
+
+export function useSignIn(options: SignInOptions) {
+    configureAmplify();
+    const { username, password, submitted } = options;
+
+    return useQuery({
+        queryKey: [username],
+        queryFn: async () =>
+            signIn({
+                username,
+                password,
+            }),
+        enabled: submitted,
     });
 }

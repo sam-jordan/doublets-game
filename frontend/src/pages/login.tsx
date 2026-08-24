@@ -1,75 +1,41 @@
-import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { getCurrentUser, signOut } from 'aws-amplify/auth';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
-import configureAmplify from '../logic/configure-amplify';
+import { useNavigate } from 'react-router-dom';
 import { type LoginDetails } from '../logic/types';
-import SignupForm from '../components/logins/signup-form';
-import LoginForm from '../components/logins/login-form';
+import { useSignIn } from '../logic/queries';
 
 export default function Login() {
-    const [type, setType] = useState<'base' | 'signup' | 'login'>('base');
     const [loginDetails, setLoginDetails] = useState<LoginDetails>({
         username: '',
         password: '',
-        confirm: '',
     });
-    const [loggedOut, setLoggedOut] = useState<boolean>(false);
+    const [submitted, setSubmitted] = useState<boolean>(false);
+
+    const success = useNavigate();
+
+    const query = useSignIn({
+        username: loginDetails.username,
+        password: loginDetails.password,
+        submitted,
+    });
 
     useEffect(() => {
-        // Ran only on first render
-        configureAmplify();
-    }, []);
-
-    const currentUser = useQuery({
-        queryKey: ['currentUser'],
-        queryFn: getCurrentUser,
-    });
-    useQuery({
-        queryKey: ['logout'],
-        async queryFn() {
-            await signOut();
-        },
-        enabled: loggedOut,
-    });
-
-    function getForm() {
-        switch (type) {
-            case 'base': {
-                return (
-                    <div>
-                        <p>Select a user type to continue.</p>
-                    </div>
-                );
-            }
-
-            case 'signup': {
-                return (
-                    <SignupForm
-                        loginDetails={loginDetails}
-                        setLoginDetails={setLoginDetails}
-                    />
-                );
-            }
-
-            case 'login': {
-                return (
-                    <LoginForm
-                        loginDetails={loginDetails}
-                        setLoginDetails={setLoginDetails}
-                    />
-                );
+        async function handleSubmitResponse() {
+            if (query.isPending) {
+                console.log('Waiting...');
+            } else if (query.isError) {
+                console.log('Error!');
+            } else if (query.data.nextStep.signInStep === 'DONE') {
+                await success('/');
             }
         }
-    }
 
-    function resetLoginDetails() {
-        setLoginDetails({
-            username: '',
-            password: '',
-            confirm: '',
-        });
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        handleSubmitResponse();
+    }, [query]);
+
+    function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+        event.preventDefault();
+        setSubmitted(true);
     }
 
     return (
@@ -77,74 +43,50 @@ export default function Login() {
             <h1 className='text-5xl font-extrabold text-pink-bright mt-8'>
                 DOUBLETS
             </h1>
-            <div className='flex flex-col items-center'>
-                <div
-                    className={clsx(
-                        'flex flex-col justify-between items-center gap-4 p-8 border-b-2 border-b-white'
-                    )}
-                >
-                    <h2>Log in or create an account</h2>
+            <h2 className='text-3xl font-extrabold mt-8'>Log in</h2>
+            <p>Please log in to continue.</p>
+            <div className='font-(family-name:--standard-fonts) my-8 grow'>
+                <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor='username' className='block mb-1'>
+                            Username
+                        </label>
+                        <input
+                            className='bg-white text-black rounded-xl pl-2 py-1 focus:border-pink-bright'
+                            id='username'
+                            value={loginDetails.username}
+                            onChange={event => {
+                                setLoginDetails({
+                                    ...loginDetails,
+                                    username: event.target.value,
+                                });
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor='username' className='block mb-1'>
+                            Password
+                        </label>
+                        <input
+                            className='bg-white text-black rounded-xl pl-2 py-1'
+                            id='password'
+                            type='password'
+                            value={loginDetails.password}
+                            onChange={event => {
+                                setLoginDetails({
+                                    ...loginDetails,
+                                    password: event.target.value,
+                                });
+                            }}
+                        />
+                    </div>
                     <button
-                        className={clsx(
-                            'font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl',
-                            type === 'login'
-                                ? 'bg-pink-bright'
-                                : 'hover:bg-grey-mid active:bg-grey-mid'
-                        )}
-                        type='button'
-                        onClick={() => {
-                            setType('login');
-                            resetLoginDetails();
-                        }}
+                        className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl mt-4'
+                        type='submit'
                     >
-                        Existing user
+                        Log in
                     </button>
-                    <button
-                        className={clsx(
-                            'font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl',
-                            type === 'signup'
-                                ? 'bg-pink-bright'
-                                : 'hover:bg-grey-mid active:bg-grey-mid'
-                        )}
-                        type='button'
-                        onClick={() => {
-                            setType('signup');
-                            resetLoginDetails();
-                        }}
-                    >
-                        New user
-                    </button>
-                </div>
-                <div className='font-(family-name:--standard-fonts) my-8 grow'>
-                    {currentUser.isPending ? (
-                        <p>Loading...</p>
-                    ) : currentUser.isError ? (
-                        getForm()
-                    ) : (
-                        <div className='flex flex-col justify-between items-center gap-4 p-8'>
-                            <p>
-                                {currentUser.data.username}, you are already
-                                logged in!
-                            </p>
-                            <Link
-                                className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
-                                to='/'
-                            >
-                                Play
-                            </Link>
-                            <button
-                                className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid'
-                                type='button'
-                                onClick={() => {
-                                    setLoggedOut(true);
-                                    resetLoginDetails();
-                                }}
-                            >
-                                Log out
-                            </button>
-                        </div>
-                    )}
-                </div>
+                </form>
             </div>
         </div>
     );

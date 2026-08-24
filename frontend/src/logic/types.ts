@@ -99,3 +99,9 @@ export type LoginDetails = {
     password: string;
     confirm?: string;
 };
+
+export type SignInOptions = {
+    username: string;
+    password: string;
+    submitted: boolean;
+};
