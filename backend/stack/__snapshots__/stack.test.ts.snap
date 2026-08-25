@@ -548,6 +548,151 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::CloudFront::OriginAccessControl",
     },
+    "doubletsgamedevstatsapi138D48EF": {
+      "Properties": {
+        "Name": "doublets-game-dev-stats-api",
+        "ProtocolType": "HTTP",
+      },
+      "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "doubletsgamedevstatsapiDefaultStageB5472E4F": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AutoDeploy": true,
+        "StageName": "$default",
+      },
+      "Type": "AWS::ApiGatewayV2::Stage",
+    },
+    "doubletsgamedevstatsapiGETA32CB744": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "NONE",
+        "RouteKey": "GET /",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiGETdoubletsgamedevstatsapilambdaintegration578A75AE",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiGETdoubletsgamedevstatsapilambdaintegration578A75AE": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "PayloadFormatVersion": "2.0",
+      },
+      "Type": "AWS::ApiGatewayV2::Integration",
+    },
+    "doubletsgamedevstatsapiGETdoubletsgamedevstatsapilambdaintegrationPermission9F79B1E5": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapilambda8DE1952B": {
+      "DependsOn": [
+        "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "51fe5faf642678a727d245254f0df77e899ab5464abdd381083b215401c5158b.zip",
+        },
+        "FunctionName": "doublets-game-dev-stats-api-lambda",
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "doubletsgamedevstatsapilambdaServiceRole95A2C9DA": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "doubletsgamedevstatstableC7B4E555": {
       "DeletionPolicy": "Delete",
       "Properties": {
