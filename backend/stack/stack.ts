@@ -3,11 +3,13 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cf from 'aws-cdk-lib/aws-cloudfront';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import * as dynamo from 'aws-cdk-lib/aws-dynamodb';
+import * as apigwv2 from 'aws-cdk-lib/aws-apigatewayv2';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
 import { type Environment } from './environment.js';
 
 export class Stack extends cdk.Stack {
@@ -98,6 +100,27 @@ export class Stack extends cdk.Stack {
             removalPolicy: IS_DEV
                 ? cdk.RemovalPolicy.DESTROY
                 : cdk.RemovalPolicy.RETAIN,
+        });
+
+        const statsApiLambda = new NodejsFunction(
+            this,
+            `${id}-stats-api-lambda`,
+            {
+                functionName: `${id}-stats-api-lambda`,
+                runtime: Runtime.NODEJS_24_X,
+                entry: './backend/lambda/stats-api/index.ts',
+            }
+        );
+
+        const httpApi = new apigwv2.HttpApi(this, `${id}-stats-api`);
+
+        httpApi.addRoutes({
+            path: '/',
+            methods: [apigwv2.HttpMethod.GET],
+            integration: new HttpLambdaIntegration(
+                `${id}-stats-api-lambda-integration`,
+                statsApiLambda
+            ),
         });
     }
 }
