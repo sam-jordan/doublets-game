@@ -112,15 +112,31 @@ export class Stack extends cdk.Stack {
             }
         );
 
-        const httpApi = new apigwv2.HttpApi(this, `${id}-stats-api`);
+        const httpApi = new apigwv2.HttpApi(this, `${id}-stats-api`, {
+            apiName: `${id}-stats-api`,
+            corsPreflight: {
+                allowMethods: [
+                    apigwv2.CorsHttpMethod.POST,
+                    apigwv2.CorsHttpMethod.PUT,
+                ],
+                allowOrigins: ['www.doublets.app'],
+            },
+        });
+
+        const integration = new HttpLambdaIntegration(
+            `${id}-stats-api-lambda-integration`,
+            statsApiLambda
+        );
 
         httpApi.addRoutes({
-            path: '/',
-            methods: [apigwv2.HttpMethod.GET],
-            integration: new HttpLambdaIntegration(
-                `${id}-stats-api-lambda-integration`,
-                statsApiLambda
-            ),
+            path: '/game/attempted',
+            methods: [apigwv2.HttpMethod.POST, apigwv2.HttpMethod.PUT],
+            integration,
+        });
+        httpApi.addRoutes({
+            path: '/game/solved',
+            methods: [apigwv2.HttpMethod.PUT],
+            integration,
         });
     }
 }
