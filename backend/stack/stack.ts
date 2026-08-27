@@ -116,6 +116,7 @@ export class Stack extends cdk.Stack {
             apiName: `${id}-stats-api`,
             corsPreflight: {
                 allowMethods: [
+                    apigwv2.CorsHttpMethod.GET,
                     apigwv2.CorsHttpMethod.POST,
                     apigwv2.CorsHttpMethod.PUT,
                 ],
