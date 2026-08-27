@@ -1,32 +1,39 @@
 import { Link } from 'react-router-dom';
 import { Duration } from 'luxon';
+import { useState } from 'react';
+import clsx from 'clsx';
 import { useCurrentUser } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
+import { Difficulties } from '../../logic/types';
 
 export default function Stats(props: {
     readonly setOverlay: React.Dispatch<
         React.SetStateAction<React.JSX.Element | undefined>
     >;
 }) {
+    const [difficulty, setDifficulty] = useState<Difficulties>(
+        Difficulties.EASY
+    );
+
     const currentUser = useCurrentUser();
 
     // Temporary object for developing frontend
     const stats = {
-        0: {
+        easy: {
             puzzlesAttempted: 12,
             puzzlesSolved: 10,
             wordsUsed: 43,
             averageTime: Duration.fromMillis(3 * 60 * 1000),
             averageGuesses: 4,
         },
-        1: {
+        medium: {
             puzzlesAttempted: 9,
             puzzlesSolved: 5,
             wordsUsed: 28,
             averageTime: Duration.fromMillis(5.2 * 60 * 1000),
             averageGuesses: 5.3,
         },
-        2: {
+        hard: {
             puzzlesAttempted: 8,
             puzzlesSolved: 4,
             wordsUsed: 22,
@@ -35,9 +42,11 @@ export default function Stats(props: {
         },
     };
 
-    return (
+    return currentUser.isPending ? (
+        <LoadingSpinner size='4rem' />
+    ) : (
         <>
-            <div className='overlay flex justify-between'>
+            <div className='overlay flex justify-between mb-2'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     Statistics
                 </h2>
@@ -59,9 +68,7 @@ export default function Stats(props: {
                     </svg>
                 </button>
             </div>
-            {currentUser.isPending ? (
-                <LoadingSpinner size='4rem' />
-            ) : currentUser.isError ? (
+            {currentUser.isError ? (
                 <Link
                     className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
                     to='/user/login'
@@ -69,7 +76,72 @@ export default function Stats(props: {
                     Log in
                 </Link>
             ) : (
-                <p>Logged in.</p>
+                <>
+                    <div className='overlay flex gap-4 font-bold mb-4'>
+                        <button
+                            className={clsx(
+                                'rounded-lg p-2 w-32',
+                                difficulty === Difficulties.EASY
+                                    ? 'bg-grey-mid'
+                                    : 'bg-grey-very-dark'
+                            )}
+                            type='button'
+                            onClick={() => {
+                                setDifficulty(Difficulties.EASY);
+                            }}
+                        >
+                            Easy
+                        </button>
+                        <button
+                            className={clsx(
+                                'rounded-lg p-2 w-32',
+                                difficulty === Difficulties.MEDIUM
+                                    ? 'bg-grey-mid'
+                                    : 'bg-grey-very-dark'
+                            )}
+                            type='button'
+                            onClick={() => {
+                                setDifficulty(Difficulties.MEDIUM);
+                            }}
+                        >
+                            Medium
+                        </button>
+                        <button
+                            className={clsx(
+                                'rounded-lg p-2 w-32',
+                                difficulty === Difficulties.HARD
+                                    ? 'bg-grey-mid'
+                                    : 'bg-grey-very-dark'
+                            )}
+                            type='button'
+                            onClick={() => {
+                                setDifficulty(Difficulties.HARD);
+                            }}
+                        >
+                            Hard
+                        </button>
+                    </div>
+                    <div className='overlay border-y-2 border-y-white flex justify-between p-4'>
+                        <div className='overlay'>
+                            <p>Puzzles attempted:</p>
+                            <p>{stats.easy.puzzlesAttempted}</p>
+                        </div>
+                        <div className='overlay'>
+                            <p>Puzzles solved:</p>
+                            <p>{stats.easy.puzzlesSolved}</p>
+                        </div>
+                        <div className='overlay'>
+                            <p>Success rate:</p>
+                            <p>
+                                {(
+                                    (stats.easy.puzzlesSolved /
+                                        stats.easy.puzzlesAttempted) *
+                                    100
+                                ).toFixed(2)}
+                            </p>
+                        </div>
+                    </div>
+                </>
             )}
         </>
     );
