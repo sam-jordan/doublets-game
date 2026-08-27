@@ -1,13 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { emptyGuess, emptyGuesses } from './empty-guesses';
-import { WordTypes } from './types';
 
 describe('emptyGuess', () => {
     it('should return an empty guess object', () => {
         expect(emptyGuess(1)).toStrictEqual({
             index: 1,
             letters: [' ', ' ', ' ', ' ', ' '],
-            type: WordTypes.GUESS,
+            type: 'guess',
             changed: [],
             gameWin: undefined,
         });
@@ -33,7 +32,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -46,7 +45,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -59,7 +58,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -72,7 +71,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
             ],
             [
@@ -87,7 +86,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -100,7 +99,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -113,7 +112,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -126,7 +125,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -139,7 +138,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
             ],
             [
@@ -154,7 +153,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -167,7 +166,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -180,7 +179,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -193,7 +192,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -206,7 +205,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
               {
                 "changed": [],
@@ -219,7 +218,7 @@ describe('emptyGuesses', () => {
                   " ",
                   " ",
                 ],
-                "type": 1,
+                "type": "guess",
               },
             ],
           ]

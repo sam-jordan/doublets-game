@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getChanged, validateSolution, validateWord } from './validators';
-import { WordTypes } from './types';
+import { type Guess } from './types';
 
 describe('validateWord', () => {
     it('should invalidate a word with empty letters', () => {
@@ -80,19 +80,19 @@ describe('getChanged', () => {
 describe('validateSolution', () => {
     it('should highlight the index of the first invalid word', () => {
         const puzzle = { index: 0, startWord: 'DEATH', endWord: 'GRIPS' };
-        const guesses = [
+        const guesses: Guess[] = [
             {
                 index: 0,
                 letters: ['A', 'P', 'H', 'E', 'X'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 1,
                 letters: ['T', 'W', 'I', 'N', ' '],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
         ];
@@ -106,19 +106,19 @@ describe('validateSolution', () => {
 
     it('should invalidate when too many letters have been changed', () => {
         const puzzle = { index: 0, startWord: 'WHITE', endWord: 'SNAKE' };
-        const guesses = [
+        const guesses: Guess[] = [
             {
                 index: 0,
                 letters: ['T', 'I', 'T', 'L', 'E'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 1,
                 letters: ['F', 'I', 'G', 'H', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
         ];
@@ -134,12 +134,12 @@ describe('validateSolution', () => {
 
     it('should invalidate when a solution does not connect up', () => {
         const puzzle = { index: 0, startWord: 'FRANK', endWord: 'OCEAN' };
-        const guesses = [
+        const guesses: Guess[] = [
             {
                 index: 0,
                 letters: ['P', 'R', 'A', 'N', 'K'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
         ];
@@ -155,61 +155,61 @@ describe('validateSolution', () => {
 
     it('should allow a valid solution', () => {
         const puzzle = { index: 0, startWord: 'BEACH', endWord: 'HOUSE' };
-        const guesses = [
+        const guesses: Guess[] = [
             {
                 index: 0,
                 letters: ['L', 'E', 'A', 'C', 'H'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 1,
                 letters: ['L', 'E', 'A', 'S', 'H'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 2,
                 letters: ['L', 'E', 'A', 'S', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 3,
                 letters: ['B', 'E', 'A', 'S', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 4,
                 letters: ['B', 'O', 'A', 'S', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 5,
                 letters: ['R', 'O', 'A', 'S', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 6,
                 letters: ['R', 'O', 'U', 'S', 'T'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
             {
                 index: 7,
                 letters: ['R', 'O', 'U', 'S', 'E'],
                 gameWin: undefined,
-                type: WordTypes.GUESS.valueOf(),
+                type: 'guess',
                 changed: [],
             },
         ];

@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { WordTypes, type RowProps } from '../logic/types';
+import { type RowProps } from '../logic/types';
 
 export default function Row(props: RowProps) {
     const [letterJump, setLetterJump] = useState<number | undefined>(undefined);
 
     const shouldUseShake =
-        props.type !== WordTypes.FIXED && props.useShake === props.index;
+        props.type !== 'fixed' && props.useShake === props.index;
     const shouldUseJump =
-        props.type !== WordTypes.FIXED && props.useJump === props.index;
+        props.type !== 'fixed' && props.useJump === props.index;
 
     useEffect(() => {
         const timers: number[] = [];
@@ -46,7 +46,7 @@ export default function Row(props: RowProps) {
     }, [props.gameWin]);
 
     function handleClick() {
-        if (props.type === WordTypes.FIXED) {
+        if (props.type === 'fixed') {
             return;
         }
 
@@ -60,7 +60,7 @@ export default function Row(props: RowProps) {
             tabIndex={0}
             className={clsx(
                 'grid grid-cols-5 w-81 h-16',
-                props.type === WordTypes.FIXED ? '' : 'cursor-pointer',
+                props.type === 'fixed' ? '' : 'cursor-pointer',
                 shouldUseShake ? 'animate-shake' : '',
                 shouldUseJump ? 'animate-jump' : ''
             )}
@@ -91,11 +91,11 @@ function buildCharacterStyling(
     letterJump: number | undefined
 ): string {
     const isCurrentGuess =
-        props.type === WordTypes.FIXED
+        props.type === 'fixed'
             ? false
             : props.gameState.currentGuess === props.index;
     const shouldUseThrob =
-        props.type !== WordTypes.FIXED &&
+        props.type !== 'fixed' &&
         isCurrentGuess &&
         index === props.lastTyped &&
         character !== ' ';
@@ -106,7 +106,7 @@ function buildCharacterStyling(
         letterJump === index ? 'animate-jump-quick' : ''
     );
 
-    if (props.type === WordTypes.FIXED) {
+    if (props.type === 'fixed') {
         return clsx(base, 'bg-white text-grey-very-dark border-white');
     }
 

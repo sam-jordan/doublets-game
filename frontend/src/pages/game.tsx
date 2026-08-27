@@ -4,11 +4,7 @@ import { DateTime, Duration } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import {
-    type Difficulties,
-    WordTypes,
-    type UseGameState,
-} from '../logic/types';
+import { type Difficulties, type UseGameState } from '../logic/types';
 import Popup from '../components/popup';
 import Word from '../components/word';
 import Keyboard from '../components/keyboard';
@@ -431,7 +427,7 @@ export default function Game(props: UseGameState) {
                             key='start-word'
                             index={100}
                             letters={puzzle.startWord.split('')}
-                            type={WordTypes.FIXED}
+                            type='fixed'
                             gameWin={gameWin}
                         />
                         <div
@@ -461,7 +457,7 @@ export default function Game(props: UseGameState) {
                             key='end-word'
                             index={101}
                             letters={puzzle.endWord.split('')}
-                            type={WordTypes.FIXED}
+                            type='fixed'
                             gameWin={gameWin}
                         />
                     </div>

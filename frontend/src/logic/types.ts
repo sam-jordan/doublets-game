@@ -7,10 +7,7 @@ export enum Difficulties {
     HARD,
 }
 
-export enum WordTypes {
-    FIXED,
-    GUESS,
-}
+export type WordTypes = 'fixed' | 'guess';
 
 export type Puzzle = { index: number; startWord: string; endWord: string };
 
@@ -21,7 +18,7 @@ type Word = {
 };
 
 export type Guess = Word & {
-    type: WordTypes.GUESS;
+    type: 'guess';
     changed: number[];
 };
 
@@ -29,12 +26,12 @@ const guessSchema = z.object({
     index: z.number(),
     letters: z.array(z.string()),
     gameWin: z.number().optional(),
-    type: z.literal(WordTypes.GUESS),
+    type: z.literal('guess'),
     changed: z.array(z.number()),
 });
 
 type Fixed = Word & {
-    type: WordTypes.FIXED;
+    type: 'fixed';
 };
 
 type Animations = {

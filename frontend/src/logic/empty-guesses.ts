@@ -1,10 +1,10 @@
-import { Difficulties, WordTypes, type Guess } from './types';
+import { Difficulties, type Guess } from './types';
 
 export function emptyGuess(index: number): Guess {
     return {
         index,
         letters: Array.from({ length: 5 }, _ => ' '),
-        type: WordTypes.GUESS.valueOf(),
+        type: 'guess',
         changed: [],
         gameWin: undefined,
     };
