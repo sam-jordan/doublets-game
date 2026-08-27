@@ -97,21 +97,38 @@ export default function Stats(props: {
                     <div className='overlay border-y-2 border-y-white flex justify-between p-4'>
                         <div className='overlay'>
                             <p>Puzzles attempted:</p>
-                            <p>{stats.easy.puzzlesAttempted}</p>
+                            <p>{stats[difficulty].puzzlesAttempted}</p>
                         </div>
                         <div className='overlay'>
                             <p>Puzzles solved:</p>
-                            <p>{stats.easy.puzzlesSolved}</p>
+                            <p>{stats[difficulty].puzzlesSolved}</p>
                         </div>
                         <div className='overlay'>
                             <p>Success rate:</p>
                             <p>
                                 {(
-                                    (stats.easy.puzzlesSolved /
-                                        stats.easy.puzzlesAttempted) *
+                                    (stats[difficulty].puzzlesSolved /
+                                        stats[difficulty].puzzlesAttempted) *
                                     100
                                 ).toFixed(2)}
                             </p>
+                        </div>
+                    </div>
+                    <div className='overlay border-b-2 border-y-white flex justify-between p-4'>
+                        <div className='overlay'>
+                            <p>Average guesses:</p>
+                            <p>{stats[difficulty].averageGuesses}</p>
+                        </div>
+                        <div className='overlay'>
+                            <p>Average time:</p>
+                            <p>
+                                {stats[difficulty].averageTime.milliseconds /
+                                    1000}
+                            </p>
+                        </div>
+                        <div className='overlay'>
+                            <p>Words used:</p>
+                            <p>{stats[difficulty].wordsUsed}</p>
                         </div>
                     </div>
                 </>
