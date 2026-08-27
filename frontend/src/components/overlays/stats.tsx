@@ -4,7 +4,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { useCurrentUser } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
-import { type Difficulties } from '../../logic/types';
+import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 
 export default function Stats(props: {
     readonly setOverlay: React.Dispatch<
@@ -76,48 +76,23 @@ export default function Stats(props: {
             ) : (
                 <>
                     <div className='overlay flex gap-4 font-bold mb-4'>
-                        <button
-                            className={clsx(
-                                'rounded-lg p-2 w-32',
-                                difficulty === 'easy'
-                                    ? 'bg-grey-mid'
-                                    : 'bg-grey-very-dark'
-                            )}
-                            type='button'
-                            onClick={() => {
-                                setDifficulty('easy');
-                            }}
-                        >
-                            Easy
-                        </button>
-                        <button
-                            className={clsx(
-                                'rounded-lg p-2 w-32',
-                                difficulty === 'medium'
-                                    ? 'bg-grey-mid'
-                                    : 'bg-grey-very-dark'
-                            )}
-                            type='button'
-                            onClick={() => {
-                                setDifficulty('medium');
-                            }}
-                        >
-                            Medium
-                        </button>
-                        <button
-                            className={clsx(
-                                'rounded-lg p-2 w-32',
-                                difficulty === 'hard'
-                                    ? 'bg-grey-mid'
-                                    : 'bg-grey-very-dark'
-                            )}
-                            type='button'
-                            onClick={() => {
-                                setDifficulty('hard');
-                            }}
-                        >
-                            Hard
-                        </button>
+                        {DIFFICULTIES.map(d => (
+                            <button
+                                key={`${d}-tab`}
+                                className={clsx(
+                                    'rounded-lg p-2 w-32',
+                                    difficulty === d
+                                        ? 'bg-grey-mid'
+                                        : 'bg-grey-very-dark'
+                                )}
+                                type='button'
+                                onClick={() => {
+                                    setDifficulty(d);
+                                }}
+                            >
+                                {`${d.slice(0, 1).toUpperCase()}${d.slice(1)}`}
+                            </button>
+                        ))}
                     </div>
                     <div className='overlay border-y-2 border-y-white flex justify-between p-4'>
                         <div className='overlay'>
