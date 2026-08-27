@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { Duration } from 'luxon';
 import { useCurrentUser } from '../../logic/queries';
+import LoadingSpinner from '../loading-spinner';
 
 export default function Stats(props: {
     readonly setOverlay: React.Dispatch<
@@ -7,6 +9,31 @@ export default function Stats(props: {
     >;
 }) {
     const currentUser = useCurrentUser();
+
+    // Temporary object for developing frontend
+    const stats = {
+        0: {
+            puzzlesAttempted: 12,
+            puzzlesSolved: 10,
+            wordsUsed: 43,
+            averageTime: Duration.fromMillis(3 * 60 * 1000),
+            averageGuesses: 4,
+        },
+        1: {
+            puzzlesAttempted: 9,
+            puzzlesSolved: 5,
+            wordsUsed: 28,
+            averageTime: Duration.fromMillis(5.2 * 60 * 1000),
+            averageGuesses: 5.3,
+        },
+        2: {
+            puzzlesAttempted: 8,
+            puzzlesSolved: 4,
+            wordsUsed: 22,
+            averageTime: Duration.fromMillis(7.1 * 60 * 1000),
+            averageGuesses: 7.5,
+        },
+    };
 
     return (
         <>
@@ -33,7 +60,7 @@ export default function Stats(props: {
                 </button>
             </div>
             {currentUser.isPending ? (
-                <p>Loading...</p>
+                <LoadingSpinner size='4rem' />
             ) : currentUser.isError ? (
                 <Link
                     className='font-(family-name:--standard-fonts) border-2 border-white w-48 cursor-pointer py-2 rounded-3xl hover:bg-grey-mid active:bg-grey-mid text-center'
