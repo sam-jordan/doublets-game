@@ -356,10 +356,10 @@ export default function Game(props: UseGameState) {
             ...gameState,
             guesses: {
                 ...guesses,
-                [difficulty]: {
+                [difficulty]: [
                     ...guesses[difficulty],
-                    [difficulty]: emptyGuess(guesses[difficulty].length),
-                },
+                    emptyGuess(guesses[difficulty].length),
+                ],
             },
         });
     }
