@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import puzzles from '../static/puzzles.json' with { type: 'json' };
-import { Difficulties, DoubletsError, type Puzzle } from './types';
+import { type Difficulties, DoubletsError, type Puzzle } from './types';
 
 // Get the daily puzzle based on the number of days since 1st August 2026
 export function getPuzzle(difficulty: Difficulties): Puzzle {
@@ -13,17 +13,5 @@ export function getPuzzle(difficulty: Difficulties): Puzzle {
         throw new DoubletsError('Puzzle does not exist for this date.');
     }
 
-    switch (difficulty) {
-        case Difficulties.EASY: {
-            return { index, ...puzzles.easy[index] };
-        }
-
-        case Difficulties.MEDIUM: {
-            return { index, ...puzzles.medium[index] };
-        }
-
-        case Difficulties.HARD: {
-            return { index, ...puzzles.hard[index] };
-        }
-    }
+    return { index, ...puzzles[difficulty][index] };
 }

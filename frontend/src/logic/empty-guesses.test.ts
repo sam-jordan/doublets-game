@@ -17,10 +17,10 @@ describe('emptyGuesses', () => {
     it('should return an array of empty guesses for each difficulty', () => {
         const empties = emptyGuesses();
 
-        expect(empties.length).toBe(3);
+        expect(Object.keys(empties).length).toBe(3);
         expect(empties).toMatchInlineSnapshot(`
-          [
-            [
+          {
+            "easy": [
               {
                 "changed": [],
                 "gameWin": undefined,
@@ -74,74 +74,7 @@ describe('emptyGuesses', () => {
                 "type": "guess",
               },
             ],
-            [
-              {
-                "changed": [],
-                "gameWin": undefined,
-                "index": 0,
-                "letters": [
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                ],
-                "type": "guess",
-              },
-              {
-                "changed": [],
-                "gameWin": undefined,
-                "index": 1,
-                "letters": [
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                ],
-                "type": "guess",
-              },
-              {
-                "changed": [],
-                "gameWin": undefined,
-                "index": 2,
-                "letters": [
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                ],
-                "type": "guess",
-              },
-              {
-                "changed": [],
-                "gameWin": undefined,
-                "index": 3,
-                "letters": [
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                ],
-                "type": "guess",
-              },
-              {
-                "changed": [],
-                "gameWin": undefined,
-                "index": 4,
-                "letters": [
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                  " ",
-                ],
-                "type": "guess",
-              },
-            ],
-            [
+            "hard": [
               {
                 "changed": [],
                 "gameWin": undefined,
@@ -221,7 +154,74 @@ describe('emptyGuesses', () => {
                 "type": "guess",
               },
             ],
-          ]
+            "medium": [
+              {
+                "changed": [],
+                "gameWin": undefined,
+                "index": 0,
+                "letters": [
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                ],
+                "type": "guess",
+              },
+              {
+                "changed": [],
+                "gameWin": undefined,
+                "index": 1,
+                "letters": [
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                ],
+                "type": "guess",
+              },
+              {
+                "changed": [],
+                "gameWin": undefined,
+                "index": 2,
+                "letters": [
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                ],
+                "type": "guess",
+              },
+              {
+                "changed": [],
+                "gameWin": undefined,
+                "index": 3,
+                "letters": [
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                ],
+                "type": "guess",
+              },
+              {
+                "changed": [],
+                "gameWin": undefined,
+                "index": 4,
+                "letters": [
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                  " ",
+                ],
+                "type": "guess",
+              },
+            ],
+          }
         `);
     });
 });

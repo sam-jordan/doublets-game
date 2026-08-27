@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { Difficulties, gameStateSchema, type GameState } from '../logic/types';
+import {
+    DIFFICULTIES,
+    gameStateSchema,
+    type Difficulties,
+    type GameState,
+} from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import { useCurrentUser } from '../logic/queries';
@@ -18,9 +23,16 @@ export default function App() {
         cached ?? {
             guesses: emptyGuesses(),
             currentGuess: 0,
-            difficulty: Difficulties.EASY,
-            solved: Array.from({ length: 3 }, _ => undefined),
-            timers: Array.from({ length: 3 }, () => Duration.fromMillis(0)),
+            difficulty: 'easy',
+            solved: Object.fromEntries(
+                DIFFICULTIES.map(difficulty => [difficulty, undefined])
+            ) as Record<Difficulties, number | undefined>,
+            timers: Object.fromEntries(
+                DIFFICULTIES.map(difficulty => [
+                    difficulty,
+                    Duration.fromMillis(0),
+                ])
+            ) as Record<Difficulties, Duration>,
         }
     );
 

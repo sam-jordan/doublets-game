@@ -1,11 +1,8 @@
 import { Duration } from 'luxon';
 import z from 'zod';
 
-export enum Difficulties {
-    EASY,
-    MEDIUM,
-    HARD,
-}
+export const DIFFICULTIES = ['easy', 'medium', 'hard'] as const;
+export type Difficulties = (typeof DIFFICULTIES)[number];
 
 export type WordTypes = 'fixed' | 'guess';
 
@@ -61,24 +58,28 @@ export class DoubletsError extends Error {
 }
 
 export type GameState = {
-    guesses: Guess[][];
+    guesses: Record<Difficulties, Guess[]>;
     currentGuess: number;
     difficulty: Difficulties;
-    solved: Array<number | undefined>;
-    timers: Duration[];
+    solved: Record<Difficulties, number | undefined>;
+    timers: Record<Difficulties, Duration>;
 };
 
 export const gameStateSchema = z.object({
-    guesses: z.array(z.array(guessSchema)),
+    guesses: z.record(z.enum(DIFFICULTIES), z.array(guessSchema)),
     currentGuess: z.number(),
-    difficulty: z.enum(Difficulties),
-    solved: z.array(
+    difficulty: z.enum(DIFFICULTIES),
+    solved: z.record(
+        z.enum(DIFFICULTIES),
         z
             .number()
             .nullable()
             .transform(value => value ?? undefined)
     ),
-    timers: z.array(z.string().transform(value => Duration.fromISO(value))),
+    timers: z.record(
+        z.enum(DIFFICULTIES),
+        z.string().transform(value => Duration.fromISO(value))
+    ),
 });
 
 export type UseGameState = {

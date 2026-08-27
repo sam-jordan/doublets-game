@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import clsx from 'clsx';
-import { Difficulties, type GameState } from '../logic/types';
+import { type Difficulties, type GameState } from '../logic/types';
 import Help from './overlays/help';
 import SelectDifficulty from './overlays/select-difficulty';
 import HeaderButton from './header-button';
@@ -95,7 +95,7 @@ export default function Header(props: {
                     DOUBLETS
                 </h1>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {`${Difficulties[difficulty].slice(0, 1)}${Difficulties[difficulty].slice(1).toLowerCase()}`}
+                    {`${difficulty.slice(0, 1).toUpperCase()}${difficulty.slice(1)}`}
                 </p>
                 <p className='font-(family-name:--standard-fonts)'>
                     {`${hours > 0 ? `${hours}:${minutes - hours * 60}` : minutes}:${seconds - minutes * 60 < 10 ? `0${seconds - minutes * 60}` : seconds - minutes * 60}`}

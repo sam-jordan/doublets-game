@@ -3,7 +3,6 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { Difficulties } from '../../logic/types';
 import SelectDifficulty from './select-difficulty';
 
 const handleDifficulty = vi.fn(() => void {});
@@ -44,9 +43,9 @@ describe('SelectDifficulty', () => {
     });
 
     it.each([
-        ['Easy', Difficulties.EASY],
-        ['Medium', Difficulties.MEDIUM],
-        ['Hard', Difficulties.HARD],
+        ['Easy', 'easy'],
+        ['Medium', 'medium'],
+        ['Hard', 'hard'],
     ])(
         'should allow the difficulty to be set to %s',
         async (name, difficulty) => {

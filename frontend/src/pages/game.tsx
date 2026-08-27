@@ -53,13 +53,12 @@ export default function Game(props: UseGameState) {
         timerTimeoutRef.current = setTimeout(() => {
             setGameState({
                 ...gameState,
-                timers: timers.map(timer => {
-                    if (timers.indexOf(timer) === difficulty.valueOf()) {
-                        return timer.plus(Duration.fromMillis(1000));
-                    }
-
-                    return timer;
-                }),
+                timers: {
+                    ...timers,
+                    [difficulty]: timers[difficulty].plus(
+                        Duration.fromMillis(1000)
+                    ),
+                },
             });
         }, 1000);
 
@@ -73,9 +72,7 @@ export default function Game(props: UseGameState) {
         const animationTimers: number[] = [];
         if (
             solved[difficulty] !== undefined &&
-            DateTime.now().toMillis() <
-                // eslint-disable-next-line @stylistic/no-mixed-operators -- conflicts with Prettier
-                solved[difficulty] + (4500 + 750 * gameState.difficulty) // May need adjusted to account for adding/removing guesses
+            DateTime.now().toMillis() < solved[difficulty] + 6500
         ) {
             // Animating the start word
             // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -132,15 +129,13 @@ export default function Game(props: UseGameState) {
 
         if (result.valid) {
             setPopup({ show: true, message: 'Splendid!' });
-
-            const nextSolved = solved.map((difficultySolved, index) => {
-                if (index === difficulty.valueOf()) {
-                    return DateTime.now().toMillis();
-                }
-
-                return difficultySolved;
+            setGameState({
+                ...gameState,
+                solved: {
+                    ...solved,
+                    [difficulty]: DateTime.now().toMillis(),
+                },
             });
-            setGameState({ ...gameState, solved: nextSolved });
         } else {
             setUseShake(result.index);
             setPopup({ show: true, message: result.message });
@@ -234,45 +229,42 @@ export default function Game(props: UseGameState) {
             ),
         };
 
-        const nextGuesses = guesses.map((difficultyGuesses, index) => {
-            if (index === difficulty.valueOf()) {
-                return difficultyGuesses.map(guess => {
-                    if (guess.index === currentGuess) {
-                        const changed = getChanged(
-                            nextGuess.letters,
-                            nextGuess.index === 0
-                                ? puzzle.startWord.split('')
-                                : difficultyGuesses[nextGuess.index - 1].letters
-                        );
+        const nextGuesses = {
+            ...guesses,
+            [difficulty]: guesses[difficulty].map(guess => {
+                if (guess.index === currentGuess) {
+                    const changed = getChanged(
+                        nextGuess.letters,
+                        nextGuess.index === 0
+                            ? puzzle.startWord.split('')
+                            : guesses[difficulty][nextGuess.index - 1].letters
+                    );
 
-                        return {
-                            ...nextGuess,
-                            changed,
-                        };
-                    }
+                    return {
+                        ...nextGuess,
+                        changed,
+                    };
+                }
 
-                    if (guess.index === currentGuess + 1) {
-                        const changed = getChanged(
-                            guess.letters,
-                            nextGuess.letters
-                        );
-
-                        return { ...guess, changed };
-                    }
-
+                if (guess.index === currentGuess + 1) {
                     const changed = getChanged(
                         guess.letters,
-                        guess.index === 0
-                            ? puzzle.startWord.split('')
-                            : difficultyGuesses[guess.index - 1].letters
+                        nextGuess.letters
                     );
 
                     return { ...guess, changed };
-                });
-            }
+                }
 
-            return difficultyGuesses;
-        });
+                const changed = getChanged(
+                    guess.letters,
+                    guess.index === 0
+                        ? puzzle.startWord.split('')
+                        : guesses[difficulty][guess.index - 1].letters
+                );
+
+                return { ...guess, changed };
+            }),
+        };
 
         setLastTyped(nextIndex);
         setGameState({ ...gameState, guesses: nextGuesses });
@@ -311,22 +303,19 @@ export default function Game(props: UseGameState) {
                     : guesses[difficulty][nextGuess.index - 1].letters
             );
 
-            const nextGuesses = guesses.map((difficultyGuesses, index) => {
-                if (index === difficulty.valueOf()) {
-                    return difficultyGuesses.map(guess => {
-                        if (guess.index === currentGuess) {
-                            return {
-                                ...nextGuess,
-                                changed,
-                            };
-                        }
+            const nextGuesses = {
+                ...guesses,
+                [difficulty]: guesses[difficulty].map(guess => {
+                    if (guess.index === currentGuess) {
+                        return {
+                            ...nextGuess,
+                            changed,
+                        };
+                    }
 
-                        return guess;
-                    });
-                }
-
-                return difficultyGuesses;
-            });
+                    return guess;
+                }),
+            };
 
             setLastTyped(undefined);
             setGameState({ ...gameState, guesses: nextGuesses });
@@ -363,18 +352,16 @@ export default function Game(props: UseGameState) {
             return;
         }
 
-        const nextGuesses = guesses.map((difficultyGuesses, index) => {
-            if (index === difficulty.valueOf()) {
-                return [
-                    ...difficultyGuesses,
-                    emptyGuess(difficultyGuesses.length),
-                ];
-            }
-
-            return difficultyGuesses;
+        setGameState({
+            ...gameState,
+            guesses: {
+                ...guesses,
+                [difficulty]: {
+                    ...guesses[difficulty],
+                    [difficulty]: emptyGuess(guesses[difficulty].length),
+                },
+            },
         });
-
-        setGameState({ ...gameState, guesses: nextGuesses });
     }
 
     function removeGuess() {
@@ -383,22 +370,17 @@ export default function Game(props: UseGameState) {
         }
 
         let nextCurrentGuess = currentGuess;
-        const nextGuesses = guesses.map((difficultyGuesses, index) => {
-            if (index === difficulty.valueOf()) {
-                if (currentGuess === difficultyGuesses.length - 1) {
-                    nextCurrentGuess =
-                        currentGuess === 0 ? currentGuess : currentGuess - 1;
-                }
-
-                return difficultyGuesses.toSpliced(-1, 1);
-            }
-
-            return difficultyGuesses;
-        });
+        if (currentGuess === guesses[difficulty].length - 1) {
+            nextCurrentGuess =
+                currentGuess === 0 ? currentGuess : currentGuess - 1;
+        }
 
         setGameState({
             ...gameState,
-            guesses: nextGuesses,
+            guesses: {
+                ...guesses,
+                [difficulty]: guesses[difficulty].toSpliced(-1, 1),
+            },
             currentGuess: nextCurrentGuess,
         });
     }

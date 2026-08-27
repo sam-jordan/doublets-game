@@ -486,7 +486,7 @@ exports[`Stack > synthesises correctly 1`] = `
           },
         ],
         "SourceObjectKeys": [
-          "74c3ff5b1e1847ab31cbc3c2c16b16ec9c096258019f8cafd4cdc27ef0d81f20.zip",
+          "5641a56650a71db4494bfedc8567f681cada7681f30be81ee26784609aa5056c.zip",
         ],
         "WaitForDistributionInvalidation": true,
       },

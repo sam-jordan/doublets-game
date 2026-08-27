@@ -1,4 +1,4 @@
-import { Difficulties, type Guess } from './types';
+import { DIFFICULTIES, type Difficulties, type Guess } from './types';
 
 export function emptyGuess(index: number): Guess {
     return {
@@ -10,15 +10,14 @@ export function emptyGuess(index: number): Guess {
     };
 }
 
-export function emptyGuesses(): Guess[][] {
-    const difficulties = Object.keys(Difficulties)
-        .filter(key => !Number.isNaN(Number(key)))
-        .map(Number);
-
-    return difficulties.map(difficulty =>
-        Array.from({ length: 4 + difficulty })
-            .keys()
-            .map(item => emptyGuess(item))
-            .toArray()
-    );
+export function emptyGuesses(): Record<Difficulties, Guess[]> {
+    return Object.fromEntries(
+        DIFFICULTIES.map((difficulty, index) => [
+            difficulty,
+            Array.from({ length: 4 + index })
+                .keys()
+                .map(item => emptyGuess(item))
+                .toArray(),
+        ])
+    ) as Record<Difficulties, Guess[]>;
 }

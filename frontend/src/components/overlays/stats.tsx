@@ -4,16 +4,14 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { useCurrentUser } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
-import { Difficulties } from '../../logic/types';
+import { type Difficulties } from '../../logic/types';
 
 export default function Stats(props: {
     readonly setOverlay: React.Dispatch<
         React.SetStateAction<React.JSX.Element | undefined>
     >;
 }) {
-    const [difficulty, setDifficulty] = useState<Difficulties>(
-        Difficulties.EASY
-    );
+    const [difficulty, setDifficulty] = useState<Difficulties>('easy');
 
     const currentUser = useCurrentUser();
 
@@ -81,13 +79,13 @@ export default function Stats(props: {
                         <button
                             className={clsx(
                                 'rounded-lg p-2 w-32',
-                                difficulty === Difficulties.EASY
+                                difficulty === 'easy'
                                     ? 'bg-grey-mid'
                                     : 'bg-grey-very-dark'
                             )}
                             type='button'
                             onClick={() => {
-                                setDifficulty(Difficulties.EASY);
+                                setDifficulty('easy');
                             }}
                         >
                             Easy
@@ -95,13 +93,13 @@ export default function Stats(props: {
                         <button
                             className={clsx(
                                 'rounded-lg p-2 w-32',
-                                difficulty === Difficulties.MEDIUM
+                                difficulty === 'medium'
                                     ? 'bg-grey-mid'
                                     : 'bg-grey-very-dark'
                             )}
                             type='button'
                             onClick={() => {
-                                setDifficulty(Difficulties.MEDIUM);
+                                setDifficulty('medium');
                             }}
                         >
                             Medium
@@ -109,13 +107,13 @@ export default function Stats(props: {
                         <button
                             className={clsx(
                                 'rounded-lg p-2 w-32',
-                                difficulty === Difficulties.HARD
+                                difficulty === 'hard'
                                     ? 'bg-grey-mid'
                                     : 'bg-grey-very-dark'
                             )}
                             type='button'
                             onClick={() => {
-                                setDifficulty(Difficulties.HARD);
+                                setDifficulty('hard');
                             }}
                         >
                             Hard
