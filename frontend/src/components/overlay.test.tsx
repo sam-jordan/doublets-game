@@ -9,7 +9,7 @@ describe('Overlay', () => {
 
     it('should render', () => {
         const { asFragment } = render(
-            <Overlay>
+            <Overlay overlay='help'>
                 <p>test</p>
             </Overlay>
         );
@@ -17,8 +17,10 @@ describe('Overlay', () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it('should return nothing when called without children', () => {
-        const { asFragment } = render(<Overlay />);
+    it('should return nothing when overlay prop is set to undefined', () => {
+        const { asFragment } = render(
+            <Overlay overlay={undefined}>{undefined}</Overlay>
+        );
 
         expect(asFragment()).toMatchInlineSnapshot('<DocumentFragment />');
     });

@@ -35,7 +35,7 @@ describe('Keyboard', () => {
 
     it('should render differently when overlay is defined', async () => {
         const { asFragment } = render(
-            <Keyboard handleKeyUp={handleKeyUp} overlay={<p>test</p>} />
+            <Keyboard handleKeyUp={handleKeyUp} overlay='help' />
         );
 
         expect(asFragment()).toMatchSnapshot();
