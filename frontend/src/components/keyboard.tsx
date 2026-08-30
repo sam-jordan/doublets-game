@@ -1,9 +1,11 @@
 import clsx from 'clsx';
 
-export default function Keyboard(props: {
+type KeyboardProps = {
     readonly handleKeyUp: (key: string) => void;
     readonly overlay: 'help' | 'select-difficulty' | 'stats' | undefined;
-}) {
+};
+
+export default function Keyboard({ handleKeyUp, overlay }: KeyboardProps) {
     const keyboard = [
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
@@ -29,12 +31,12 @@ export default function Keyboard(props: {
                                 key === 'Enter'
                                     ? 'text-xs sm:text-sm'
                                     : 'text-lg sm:text-xl',
-                                props.overlay === undefined
+                                overlay === undefined
                                     ? 'cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light'
                                     : ''
                             )}
                             onClick={() => {
-                                props.handleKeyUp(key);
+                                handleKeyUp(key);
                             }}
                         >
                             {key === 'Backspace' ? (

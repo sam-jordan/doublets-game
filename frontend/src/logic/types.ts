@@ -103,3 +103,7 @@ export type SignInOptions = {
     password: string;
     submitted: boolean;
 };
+
+export type LoadingProps = {
+    size: string;
+};
