@@ -10,6 +10,9 @@ import Word from '../components/word';
 import Keyboard from '../components/keyboard';
 import Header from '../components/header';
 import Overlay from '../components/overlay';
+import Stats from '../components/overlays/stats';
+import Help from '../components/overlays/help';
+import SelectDifficulty from '../components/overlays/select-difficulty';
 
 export default function Game(props: UseGameState) {
     // Displays
@@ -17,9 +20,9 @@ export default function Game(props: UseGameState) {
         show: false,
         message: '',
     });
-    const [overlay, setOverlay] = useState<React.JSX.Element | undefined>(
-        undefined
-    );
+    const [overlay, setOverlay] = useState<
+        'help' | 'select-difficulty' | 'stats' | undefined
+    >(undefined);
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -385,17 +388,55 @@ export default function Game(props: UseGameState) {
         });
     }
 
+    function getOverlay() {
+        switch (overlay) {
+            case 'help': {
+                return <Help setOverlay={setOverlay} />;
+            }
+
+            case 'select-difficulty': {
+                return (
+                    <SelectDifficulty
+                        setOverlay={setOverlay}
+                        handleDifficulty={handleDifficulty}
+                    />
+                );
+            }
+
+            case 'stats': {
+                return <Stats setOverlay={setOverlay} />;
+            }
+
+            case undefined: {
+                return undefined;
+            }
+        }
+    }
+
+    function handleClick(event: React.MouseEvent) {
+        if (!(
+            event.target instanceof HTMLElement ||
+            event.target instanceof SVGElement
+        )) {
+            return;
+        }
+
+        if (!event.target.closest('button')?.id.endsWith('overlay-button')) {
+            setOverlay(undefined);
+        }
+    }
+
     return (
         <div>
-            <Overlay>{overlay}</Overlay>
+            <Overlay overlay={overlay}>{getOverlay()}</Overlay>
             <div
                 className={clsx(
                     'font-(family-name:--standard-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col',
                     overlay === undefined ? '' : 'brightness-50'
                 )}
+                onClick={handleClick}
             >
                 <Header
-                    handleDifficulty={handleDifficulty}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     addGuess={addGuess}

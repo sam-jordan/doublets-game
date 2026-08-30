@@ -1,11 +1,13 @@
-export default function Help(props: {
+type HelpProps = {
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<React.JSX.Element | undefined>
+        React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
-}) {
+};
+
+export default function Help({ setOverlay }: HelpProps) {
     return (
         <>
-            <div className='overlay flex justify-between'>
+            <div className='flex justify-between'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     How to Play
                 </h2>
@@ -13,7 +15,7 @@ export default function Help(props: {
                     type='button'
                     className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
-                        props.setOverlay(undefined);
+                        setOverlay(undefined);
                     }}
                 >
                     <svg

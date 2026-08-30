@@ -1,16 +1,27 @@
 import clsx from 'clsx';
+import { createPortal } from 'react-dom';
 
-export default function Overlay(props: {
-    readonly children?: React.ReactNode;
-}) {
-    return props.children === undefined ? null : (
-        <div
+type OverlayProps = {
+    readonly children: React.ReactNode;
+    readonly overlay: 'help' | 'select-difficulty' | 'stats' | undefined;
+};
+
+export default function Overlay({ children, overlay }: OverlayProps) {
+    if (overlay === undefined) {
+        return null;
+    }
+
+    return createPortal(
+        <dialog
+            open
             className={clsx(
-                'overlay fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 z-99 text-white rounded-lg w-[80vw]',
+                'fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 text-white rounded-lg w-[80vw]',
                 'sm:w-fit'
             )}
+            closedby='any'
         >
-            {props.children}
-        </div>
+            {children}
+        </dialog>,
+        document.querySelector('#root')!
     );
 }

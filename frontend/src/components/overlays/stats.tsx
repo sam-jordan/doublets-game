@@ -6,11 +6,13 @@ import { useCurrentUser } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 
-export default function Stats(props: {
+type StatsProps = {
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<React.JSX.Element | undefined>
+        React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
-}) {
+};
+
+export default function Stats({ setOverlay }: StatsProps) {
     const [difficulty, setDifficulty] = useState<Difficulties>('easy');
 
     const currentUser = useCurrentUser();
@@ -44,7 +46,7 @@ export default function Stats(props: {
         <LoadingSpinner size='4rem' />
     ) : (
         <>
-            <div className='overlay flex justify-between mb-2'>
+            <div className='flex justify-between mb-2'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     Statistics
                 </h2>
@@ -52,7 +54,7 @@ export default function Stats(props: {
                     type='button'
                     className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
-                        props.setOverlay(undefined);
+                        setOverlay(undefined);
                     }}
                 >
                     <svg
@@ -75,7 +77,7 @@ export default function Stats(props: {
                 </Link>
             ) : (
                 <>
-                    <div className='overlay flex gap-4 font-bold mb-4'>
+                    <div className='flex gap-4 font-bold mb-4'>
                         {DIFFICULTIES.map(d => (
                             <button
                                 key={`${d}-tab`}
@@ -94,16 +96,16 @@ export default function Stats(props: {
                             </button>
                         ))}
                     </div>
-                    <div className='overlay border-y-2 border-y-white flex justify-between p-4'>
-                        <div className='overlay'>
+                    <div className='border-y-2 border-y-white flex justify-between p-4'>
+                        <div>
                             <p>Puzzles attempted:</p>
                             <p>{stats[difficulty].puzzlesAttempted}</p>
                         </div>
-                        <div className='overlay'>
+                        <div>
                             <p>Puzzles solved:</p>
                             <p>{stats[difficulty].puzzlesSolved}</p>
                         </div>
-                        <div className='overlay'>
+                        <div>
                             <p>Success rate:</p>
                             <p>
                                 {(
@@ -114,19 +116,19 @@ export default function Stats(props: {
                             </p>
                         </div>
                     </div>
-                    <div className='overlay border-b-2 border-y-white flex justify-between p-4'>
-                        <div className='overlay'>
+                    <div className='border-b-2 border-y-white flex justify-between p-4'>
+                        <div>
                             <p>Average guesses:</p>
                             <p>{stats[difficulty].averageGuesses}</p>
                         </div>
-                        <div className='overlay'>
+                        <div>
                             <p>Average time:</p>
                             <p>
                                 {stats[difficulty].averageTime.milliseconds /
                                     1000}
                             </p>
                         </div>
-                        <div className='overlay'>
+                        <div>
                             <p>Words used:</p>
                             <p>{stats[difficulty].wordsUsed}</p>
                         </div>

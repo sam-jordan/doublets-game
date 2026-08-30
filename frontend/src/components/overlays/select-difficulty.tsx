@@ -1,14 +1,19 @@
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 
-export default function SelectDifficulty(props: {
+type SelectDifficultyProps = {
     readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<React.JSX.Element | undefined>
+        React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
-}) {
+};
+
+export default function SelectDifficulty({
+    handleDifficulty,
+    setOverlay,
+}: SelectDifficultyProps) {
     return (
         <>
-            <div className='overlay flex justify-between sm:min-w-lg'>
+            <div className='flex justify-between sm:min-w-lg'>
                 <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                     Select a difficulty
                 </h2>
@@ -16,7 +21,7 @@ export default function SelectDifficulty(props: {
                     type='button'
                     className='w-4 cursor-pointer -mt-4'
                     onClick={() => {
-                        props.setOverlay(undefined);
+                        setOverlay(undefined);
                     }}
                 >
                     <svg
@@ -33,15 +38,15 @@ export default function SelectDifficulty(props: {
             <p className='font-(family-name:--title-fonts) mb-2'>
                 Easy has a &quot;par&quot; of 4 words, Medium 5, and Hard 6.
             </p>
-            <div className='overlay flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8'>
+            <div className='flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8'>
                 {DIFFICULTIES.map(difficulty => (
                     <button
                         key={`${difficulty}-button`}
                         type='button'
                         className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl'
                         onClick={() => {
-                            props.handleDifficulty(difficulty);
-                            props.setOverlay(undefined);
+                            handleDifficulty(difficulty);
+                            setOverlay(undefined);
                         }}
                     >
                         {`${difficulty.slice(0, 1).toUpperCase()}${difficulty.slice(1)}`}

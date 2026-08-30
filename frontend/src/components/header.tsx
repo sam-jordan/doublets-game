@@ -1,82 +1,27 @@
 /* eslint-disable @stylistic/no-mixed-operators -- conflicts with Prettier */
 
-import { useEffect } from 'react';
 import clsx from 'clsx';
-import { type Difficulties, type GameState } from '../logic/types';
-import Help from './overlays/help';
-import SelectDifficulty from './overlays/select-difficulty';
+import { type GameState } from '../logic/types';
 import HeaderButton from './header-button';
-import Stats from './overlays/stats';
 
-export default function Header(props: {
-    readonly handleDifficulty: (nextDifficulty: Difficulties) => void;
-    readonly overlay: React.JSX.Element | undefined;
+type HeaderProps = {
+    readonly overlay: 'help' | 'select-difficulty' | 'stats' | undefined;
     readonly setOverlay: React.Dispatch<
-        React.SetStateAction<React.JSX.Element | undefined>
+        React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
     readonly addGuess: () => void;
     readonly removeGuess: () => void;
     readonly gameState: GameState;
-}) {
-    const { solved, difficulty, timers } = props.gameState;
+};
 
-    useEffect(() => {
-        function handleClick(event: Event) {
-            if (!(
-                event.target instanceof HTMLElement ||
-                event.target instanceof SVGElement
-            )) {
-                return;
-            }
-
-            if (
-                !event.target.closest('div')?.classList.contains('overlay') &&
-                props.overlay !== undefined
-            ) {
-                props.setOverlay(undefined);
-            } else if (props.overlay === undefined) {
-                switch (event.target.closest('button')?.id) {
-                    case 'help-button': {
-                        props.setOverlay(
-                            <Help setOverlay={props.setOverlay} />
-                        );
-                        break;
-                    }
-
-                    case 'difficulties-button': {
-                        props.setOverlay(
-                            <SelectDifficulty
-                                setOverlay={props.setOverlay}
-                                handleDifficulty={props.handleDifficulty}
-                            />
-                        );
-                        break;
-                    }
-
-                    case 'stats-button': {
-                        props.setOverlay(
-                            <Stats setOverlay={props.setOverlay} />
-                        );
-                        break;
-                    }
-
-                    case undefined: {
-                        break;
-                    }
-
-                    default: {
-                        break;
-                    }
-                }
-            }
-        }
-
-        document.addEventListener('click', handleClick);
-
-        return () => {
-            document.removeEventListener('click', handleClick);
-        };
-    });
+export default function Header({
+    overlay,
+    setOverlay,
+    addGuess,
+    removeGuess,
+    gameState,
+}: HeaderProps) {
+    const { solved, difficulty, timers } = gameState;
 
     const seconds =
         timers[difficulty].seconds + timers[difficulty].milliseconds / 1000;
@@ -119,21 +64,41 @@ export default function Header(props: {
             </div>
             <div className='flex justify-between gap-x-2'>
                 <HeaderButton
-                    id='add-guess-button'
-                    overlay={props.overlay}
-                    onClick={props.addGuess}
+                    type='add-guess-overlay-button'
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={addGuess}
                 />
                 <HeaderButton
-                    id='remove-guess-button'
-                    overlay={props.overlay}
-                    onClick={props.removeGuess}
+                    type='remove-guess-overlay-button'
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={removeGuess}
                 />
-                <HeaderButton id='stats-button' overlay={props.overlay} />
                 <HeaderButton
-                    id='difficulties-button'
-                    overlay={props.overlay}
+                    type='stats-overlay-button'
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={() => {
+                        setOverlay('stats');
+                    }}
                 />
-                <HeaderButton id='help-button' overlay={props.overlay} />
+                <HeaderButton
+                    type='difficulties-overlay-button'
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={() => {
+                        setOverlay('select-difficulty');
+                    }}
+                />
+                <HeaderButton
+                    type='help-overlay-button'
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={() => {
+                        setOverlay('help');
+                    }}
+                />
             </div>
         </header>
     );
