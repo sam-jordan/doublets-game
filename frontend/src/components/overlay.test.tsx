@@ -1,8 +1,14 @@
 import { cleanup, render } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import Overlay from './overlay';
 
 describe('Overlay', () => {
+    beforeEach(() => {
+        const root = document.createElement('div');
+        root.id = 'root';
+        document.body.append(root);
+    });
+
     afterEach(() => {
         cleanup();
     });

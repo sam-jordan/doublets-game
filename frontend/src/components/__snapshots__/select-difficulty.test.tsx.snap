@@ -1,6 +1,6 @@
 <DocumentFragment>
   <div
-    class="overlay flex justify-between sm:min-w-lg"
+    class="flex justify-between sm:min-w-lg"
   >
     <h2
       class="font-(family-name:--title-fonts) font-bold text-2xl"
@@ -28,7 +28,7 @@
     Easy has a "par" of 4 words, Medium 5, and Hard 6.
   </p>
   <div
-    class="overlay flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8"
+    class="flex flex-col justify-between items-center text-xl gap-y-4 font-bold my-8"
   >
     <button
       class="border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl"

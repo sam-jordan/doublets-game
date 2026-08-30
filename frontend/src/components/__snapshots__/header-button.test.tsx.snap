@@ -8,6 +8,7 @@ exports[`HeaderButton > should render 1`] = `
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox=""
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -28,6 +29,7 @@ exports[`HeaderButton > should render correctly and disable onClick when overlay
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox=""
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -40,14 +42,15 @@ exports[`HeaderButton > should render correctly and disable onClick when overlay
 </DocumentFragment>
 `;
 
-exports[`HeaderButton > should render with the correct icon (add-guess-button) 1`] = `
+exports[`HeaderButton > should render with the correct icon (add-guess-overlay-button) 1`] = `
 <DocumentFragment>
   <button
     class="w-10 p-2 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
-    id="add-guess-button"
+    id="add-guess-overlay-button"
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox="0 0 448 512"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -60,14 +63,15 @@ exports[`HeaderButton > should render with the correct icon (add-guess-button) 1
 </DocumentFragment>
 `;
 
-exports[`HeaderButton > should render with the correct icon (difficulties-button) 1`] = `
+exports[`HeaderButton > should render with the correct icon (difficulties-overlay-button) 1`] = `
 <DocumentFragment>
   <button
     class="w-10 p-2 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
-    id="difficulties-button"
+    id="difficulties-overlay-button"
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox="0 0 640 640"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -80,14 +84,15 @@ exports[`HeaderButton > should render with the correct icon (difficulties-button
 </DocumentFragment>
 `;
 
-exports[`HeaderButton > should render with the correct icon (help-button) 1`] = `
+exports[`HeaderButton > should render with the correct icon (help-overlay-button) 1`] = `
 <DocumentFragment>
   <button
     class="w-10 p-2 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
-    id="help-button"
+    id="help-overlay-button"
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox="0 0 640 640"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -100,14 +105,15 @@ exports[`HeaderButton > should render with the correct icon (help-button) 1`] = 
 </DocumentFragment>
 `;
 
-exports[`HeaderButton > should render with the correct icon (remove-guess-button) 1`] = `
+exports[`HeaderButton > should render with the correct icon (remove-guess-overlay-button) 1`] = `
 <DocumentFragment>
   <button
     class="w-10 p-2 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
-    id="remove-guess-button"
+    id="remove-guess-overlay-button"
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox="0 0 448 512"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -120,14 +126,15 @@ exports[`HeaderButton > should render with the correct icon (remove-guess-button
 </DocumentFragment>
 `;
 
-exports[`HeaderButton > should render with the correct icon (stats-button) 1`] = `
+exports[`HeaderButton > should render with the correct icon (stats-overlay-button) 1`] = `
 <DocumentFragment>
   <button
     class="w-10 p-2 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
-    id="stats-button"
+    id="stats-overlay-button"
     type="button"
   >
     <svg
+      id="overlay-button"
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
     >
