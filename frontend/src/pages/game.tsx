@@ -46,7 +46,7 @@ export default function Game(props: UseGameState) {
 
     // Increment timer
     useEffect(() => {
-        if (solved[difficulty] !== undefined) {
+        if (solved[difficulty] !== undefined || overlay !== undefined) {
             return;
         }
 
@@ -65,7 +65,7 @@ export default function Game(props: UseGameState) {
         return () => {
             clearTimeout(timerTimeoutRef.current);
         };
-    }, [gameState]);
+    }, [gameState, overlay]);
 
     // Show game win animation
     useEffect(() => {
