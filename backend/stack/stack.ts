@@ -96,7 +96,7 @@ export class Stack extends cdk.Stack {
                 name: 'username',
                 type: dynamo.AttributeType.STRING,
             },
-            sortKey: { name: 'date', type: dynamo.AttributeType.STRING },
+            sortKey: { name: 'puzzle', type: dynamo.AttributeType.STRING },
             removalPolicy: IS_DEV
                 ? cdk.RemovalPolicy.DESTROY
                 : cdk.RemovalPolicy.RETAIN,
@@ -109,6 +109,9 @@ export class Stack extends cdk.Stack {
                 functionName: `${id}-stats-api-lambda`,
                 runtime: Runtime.NODEJS_24_X,
                 entry: './backend/lambda/stats-api/index.ts',
+                environment: {
+                    TABLE_NAME: `${id}-stats-table`,
+                },
             }
         );
 
@@ -130,12 +133,12 @@ export class Stack extends cdk.Stack {
         );
 
         httpApi.addRoutes({
-            path: '/game/{user}/attempted',
+            path: '/game/{user}/attempted/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
         });
         httpApi.addRoutes({
-            path: '/game/{user}/solved',
+            path: '/game/{user}/solved/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
         });
