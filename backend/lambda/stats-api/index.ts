@@ -6,6 +6,7 @@ import {
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
     DynamoDBDocumentClient,
+    GetCommand,
     PutCommand,
     UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
@@ -97,10 +98,27 @@ export async function handler(
         }
 
         case 'GET /stats/{user}': {
-            return {
-                statusCode: 200,
-                body: 'Hello, world!',
-            };
+            try {
+                const command = new GetCommand({
+                    TableName: process.env.TABLE_NAME,
+                    Key: {
+                        username: event.pathParameters?.username,
+                    },
+                });
+
+                const response = await documentClient.send(command);
+                console.log(response);
+                return {
+                    statusCode: 200,
+                    body: 'Stats!',
+                };
+            } catch (error) {
+                console.error(error);
+                return {
+                    statusCode: 500,
+                    body: 'Internal Server Error',
+                };
+            }
         }
 
         default: {
