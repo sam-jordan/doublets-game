@@ -120,7 +120,7 @@ export class Stack extends cdk.Stack {
                     apigwv2.CorsHttpMethod.POST,
                     apigwv2.CorsHttpMethod.PUT,
                 ],
-                allowOrigins: ['www.doublets.app'],
+                allowOrigins: ['https://www.doublets.app'],
             },
         });
 
