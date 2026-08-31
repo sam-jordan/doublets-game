@@ -44,7 +44,13 @@ export async function handler(
                     return badRequest();
                 }
 
-                const parsed = attemptedSchema.parse(JSON.parse(event.body));
+                const parsed = attemptedSchema.safeParse(
+                    JSON.parse(event.body)
+                );
+
+                if (!parsed.success) {
+                    return badRequest();
+                }
 
                 const date = DateTime.now()
                     .toUTC()
@@ -56,7 +62,7 @@ export async function handler(
                     Item: {
                         username: event.pathParameters?.user,
                         puzzle,
-                        puzzleStatus: JSON.stringify(parsed),
+                        puzzleStatus: JSON.stringify(parsed.data),
                     },
                     ConditionExpression: 'attribute_not_exists(username)',
                 });
@@ -81,7 +87,11 @@ export async function handler(
                     return badRequest();
                 }
 
-                const parsed = solvedSchema.parse(JSON.parse(event.body));
+                const parsed = solvedSchema.safeParse(JSON.parse(event.body));
+
+                if (!parsed.success) {
+                    return badRequest();
+                }
 
                 const date = DateTime.now()
                     .toUTC()
@@ -96,7 +106,7 @@ export async function handler(
                     },
                     UpdateExpression: 'set puzzleStatus = :puzzleStatus',
                     ExpressionAttributeValues: {
-                        ':puzzleStatus': JSON.stringify(parsed),
+                        ':puzzleStatus': JSON.stringify(parsed.data),
                     },
                 });
 
