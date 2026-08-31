@@ -21,6 +21,12 @@ import {
     solvedSchema,
 } from './types.js';
 import { calculateStats } from './calculate-stats.js';
+import {
+    badRequest,
+    internalServerError,
+    notFound,
+    ok,
+} from './api-responses.js';
 
 export async function handler(
     event: APIGatewayProxyEventV2,
@@ -35,10 +41,7 @@ export async function handler(
         case 'POST /game/{user}/attempted/{difficulty}': {
             try {
                 if (event.body === undefined) {
-                    return {
-                        statusCode: 400,
-                        body: 'Bad Request',
-                    };
+                    return badRequest();
                 }
 
                 const parsed = attemptedSchema.parse(JSON.parse(event.body));
@@ -59,35 +62,23 @@ export async function handler(
                 });
 
                 await documentClient.send(command);
-                return {
-                    statusCode: 200,
-                    body: 'Puzzle attempt stored successfully.',
-                };
+                return ok('Puzzle attempt stored successfully.');
             } catch (error) {
                 console.error(error);
 
                 // An item already exists for this puzzle
                 if (error instanceof ConditionalCheckFailedException) {
-                    return {
-                        statusCode: 400,
-                        body: 'Bad Request',
-                    };
+                    return badRequest();
                 }
 
-                return {
-                    statusCode: 500,
-                    body: 'Internal Server Error',
-                };
+                return internalServerError();
             }
         }
 
         case 'PUT /game/{user}/solved/{difficulty}': {
             try {
                 if (event.body === undefined) {
-                    return {
-                        statusCode: 400,
-                        body: 'Bad Request',
-                    };
+                    return badRequest();
                 }
 
                 const parsed = solvedSchema.parse(JSON.parse(event.body));
@@ -110,16 +101,10 @@ export async function handler(
                 });
 
                 await documentClient.send(command);
-                return {
-                    statusCode: 200,
-                    body: 'Puzzle solve stored successfully.',
-                };
+                return ok('Puzzle solve stored successfully.');
             } catch (error) {
                 console.error(error);
-                return {
-                    statusCode: 500,
-                    body: 'Internal Server Error',
-                };
+                return internalServerError();
             }
         }
 
@@ -167,24 +152,15 @@ export async function handler(
                     ),
                 };
 
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify(body),
-                };
+                return ok(JSON.stringify(body));
             } catch (error) {
                 console.error(error);
-                return {
-                    statusCode: 500,
-                    body: 'Internal Server Error',
-                };
+                return internalServerError();
             }
         }
 
         default: {
-            return {
-                statusCode: 404,
-                body: 'Not Found',
-            };
+            return notFound();
         }
     }
 }
