@@ -90,7 +90,7 @@ export class Stack extends cdk.Stack {
             },
         });
 
-        new dynamo.TableV2(this, `${id}-stats-table`, {
+        const table = new dynamo.TableV2(this, `${id}-stats-table`, {
             tableName: `${id}-stats-table`,
             partitionKey: {
                 name: 'username',
@@ -114,6 +114,8 @@ export class Stack extends cdk.Stack {
                 },
             }
         );
+
+        table.grantReadWriteData(statsApiLambda);
 
         const httpApi = new apigwv2.HttpApi(this, `${id}-stats-api`, {
             apiName: `${id}-stats-api`,
