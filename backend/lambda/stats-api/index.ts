@@ -52,6 +52,7 @@ export async function handler(
                         puzzle,
                         puzzleStatus: JSON.stringify(parsed),
                     },
+                    ConditionExpression: 'attribute_not_exists',
                 });
 
                 await documentClient.send(command);
