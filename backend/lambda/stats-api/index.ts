@@ -7,6 +7,8 @@ export async function handler(
     event: APIGatewayProxyEvent,
     _context: unknown
 ): Promise<APIGatewayProxyResult> {
+    console.log(event);
+
     switch (event.resource) {
         case '/game/{user}/attempted': {
             return {
@@ -32,7 +34,7 @@ export async function handler(
         default: {
             return {
                 statusCode: 404,
-                body: `Bad Request: ${event.resource}`,
+                body: 'Not Found',
             };
         }
     }
