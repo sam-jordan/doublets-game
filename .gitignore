@@ -6,3 +6,5 @@ coverage
 
 scripts/five-letter-words.txt
 .env
+
+local-test.js

@@ -44,7 +44,7 @@ export async function handler(
                     Item: {
                         username: event.pathParameters?.user,
                         puzzle,
-                        status: parsed,
+                        status: JSON.stringify(parsed),
                     },
                 });
 
@@ -84,9 +84,9 @@ export async function handler(
                         username: event.pathParameters?.user,
                         puzzle,
                     },
-                    UpdateExpression: 'set puzzle = :puzzle',
+                    UpdateExpression: 'set status = :status',
                     ExpressionAttributeValues: {
-                        ':puzzle': JSON.stringify(parsed),
+                        ':status': JSON.stringify(parsed),
                     },
                 });
 
