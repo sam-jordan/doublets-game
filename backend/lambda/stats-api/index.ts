@@ -1,30 +1,30 @@
 import {
-    type APIGatewayProxyEvent,
+    type APIGatewayProxyEventV2,
     type APIGatewayProxyResult,
 } from 'aws-lambda';
 
 export async function handler(
-    event: APIGatewayProxyEvent,
+    event: APIGatewayProxyEventV2,
     _context: unknown
 ): Promise<APIGatewayProxyResult> {
     console.log(event);
 
-    switch (event.resource) {
-        case '/game/{user}/attempted': {
+    switch (event.routeKey) {
+        case 'POST /game/{user}/attempted': {
             return {
                 statusCode: 200,
                 body: 'Hello, world!',
             };
         }
 
-        case '/game/{user}/solved': {
+        case 'POST /game/{user}/solved': {
             return {
                 statusCode: 200,
                 body: 'Hello, world!',
             };
         }
 
-        case '/stats/{user}': {
+        case 'GET /stats/{user}': {
             return {
                 statusCode: 200,
                 body: 'Hello, world!',

@@ -131,12 +131,12 @@ export class Stack extends cdk.Stack {
 
         httpApi.addRoutes({
             path: '/game/{user}/attempted',
-            methods: [apigwv2.HttpMethod.POST, apigwv2.HttpMethod.PUT],
+            methods: [apigwv2.HttpMethod.POST],
             integration,
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved',
-            methods: [apigwv2.HttpMethod.PUT],
+            methods: [apigwv2.HttpMethod.POST],
             integration,
         });
         httpApi.addRoutes({
