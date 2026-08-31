@@ -1,8 +1,8 @@
 import { Amplify } from 'aws-amplify';
-import { amplifyEnvironment } from './types';
+import { viteEnvironment } from './types';
 
 export default function configureAmplify() {
-    const env = amplifyEnvironment.parse(import.meta.env);
+    const env = viteEnvironment.parse(import.meta.env);
 
     Amplify.configure({
         Auth: {

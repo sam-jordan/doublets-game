@@ -87,9 +87,10 @@ export type UseGameState = {
     setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 };
 
-export const amplifyEnvironment = z.object({
+export const viteEnvironment = z.object({
     VITE_USER_POOL_ID: z.string(),
     VITE_USER_POOL_CLIENT_ID: z.string(),
+    VITE_API_URL: z.string(),
 });
 
 export type LoginDetails = {
@@ -107,3 +108,28 @@ export type SignInOptions = {
 export type LoadingProps = {
     size: string;
 };
+
+export type CallApiOptions = {
+    endpoint: {
+        path: string;
+        schema: z.ZodType;
+    };
+    method: 'GET' | 'POST' | 'PUT';
+};
+
+export class StatsApiError extends Error {
+    readonly status: number;
+
+    constructor(message: string, status: number) {
+        super(message);
+        this.status = status;
+    }
+}
+
+export const statsSchema = z.object({
+    puzzlesAttempted: z.number(),
+    puzzlesSolved: z.number(),
+    wordsUsed: z.number(),
+    averageTime: z.string().transform(value => Duration.fromISO(value)),
+    averageGuesses: z.number(),
+});

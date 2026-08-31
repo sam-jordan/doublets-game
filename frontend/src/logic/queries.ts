@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
 import configureAmplify from './configure-amplify';
-import type { SignInOptions } from './types';
+import { statsSchema, type SignInOptions } from './types';
+import { callApi } from './query-helpers';
 
 export function useCurrentUser() {
     configureAmplify();
@@ -18,7 +19,7 @@ export function useSignIn(options: SignInOptions) {
     const { username, password, submitted } = options;
 
     return useQuery({
-        queryKey: [username],
+        queryKey: [`${username}-sign-in`],
         queryFn: async () =>
             signIn({
                 username,
@@ -33,12 +34,31 @@ export function useSignUp(options: SignInOptions) {
     const { username, password, submitted } = options;
 
     return useQuery({
-        queryKey: [username],
+        queryKey: [`${username}-sign-up`],
         queryFn: async () =>
             signUp({
                 username,
                 password,
             }),
         enabled: submitted,
+    });
+}
+
+export function useStats(options: { username: string }) {
+    const { username } = options;
+
+    return useQuery({
+        queryKey: [`${username}-stats`],
+        async queryFn() {
+            const response = await callApi({
+                endpoint: {
+                    path: `stats/${username}`,
+                    schema: statsSchema,
+                },
+                method: 'GET',
+            });
+
+            return response;
+        },
     });
 }
