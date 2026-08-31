@@ -33,6 +33,7 @@ exports[`Stack > synthesises correctly 1`] = `
             "Ref": "doubletsgamedevbucketdeploymentAwsCliLayerB5B483D6",
           },
         ],
+        "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
             "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
@@ -557,7 +558,7 @@ exports[`Stack > synthesises correctly 1`] = `
             "PUT",
           ],
           "AllowOrigins": [
-            "www.doublets.app",
+            "https://www.doublets.app",
           ],
         },
         "Name": "doublets-game-dev-stats-api",
@@ -588,7 +589,7 @@ exports[`Stack > synthesises correctly 1`] = `
             [
               "integrations/",
               {
-                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegration8F760C54",
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
               },
             ],
           ],
@@ -633,20 +634,20 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "doubletsgamedevstatsapiPOSTgameuserattempted73874942": {
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficulty2758B623": {
       "Properties": {
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
         },
         "AuthorizationType": "NONE",
-        "RouteKey": "POST /game/{user}/attempted",
+        "RouteKey": "POST /game/{user}/attempted/{difficulty}",
         "Target": {
           "Fn::Join": [
             "",
             [
               "integrations/",
               {
-                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegration8F760C54",
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
               },
             ],
           ],
@@ -654,7 +655,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Route",
     },
-    "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegration8F760C54": {
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9": {
       "Properties": {
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
@@ -670,7 +671,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Integration",
     },
-    "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegrationPermissionECDC3981": {
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegrationPermissionFFFFD71C": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -700,27 +701,27 @@ exports[`Stack > synthesises correctly 1`] = `
               {
                 "Ref": "doubletsgamedevstatsapi138D48EF",
               },
-              "/*/*/game/{user}/attempted",
+              "/*/*/game/{user}/attempted/{difficulty}",
             ],
           ],
         },
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "doubletsgamedevstatsapiPUTgameuserattempted714E1A6E": {
+    "doubletsgamedevstatsapiPOSTgameusersolveddifficultyCF230B79": {
       "Properties": {
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
         },
         "AuthorizationType": "NONE",
-        "RouteKey": "PUT /game/{user}/attempted",
+        "RouteKey": "POST /game/{user}/solved/{difficulty}",
         "Target": {
           "Fn::Join": [
             "",
             [
               "integrations/",
               {
-                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegration8F760C54",
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
               },
             ],
           ],
@@ -728,7 +729,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Route",
     },
-    "doubletsgamedevstatsapiPUTgameuserattempteddoubletsgamedevstatsapilambdaintegrationPermissionC04E9A0F": {
+    "doubletsgamedevstatsapiPOSTgameusersolveddifficultydoubletsgamedevstatsapilambdaintegrationPermissionD3FE4042": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -758,65 +759,7 @@ exports[`Stack > synthesises correctly 1`] = `
               {
                 "Ref": "doubletsgamedevstatsapi138D48EF",
               },
-              "/*/*/game/{user}/attempted",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "doubletsgamedevstatsapiPUTgameusersolved79A36550": {
-      "Properties": {
-        "ApiId": {
-          "Ref": "doubletsgamedevstatsapi138D48EF",
-        },
-        "AuthorizationType": "NONE",
-        "RouteKey": "PUT /game/{user}/solved",
-        "Target": {
-          "Fn::Join": [
-            "",
-            [
-              "integrations/",
-              {
-                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddoubletsgamedevstatsapilambdaintegration8F760C54",
-              },
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::ApiGatewayV2::Route",
-    },
-    "doubletsgamedevstatsapiPUTgameusersolveddoubletsgamedevstatsapilambdaintegrationPermissionAC3CE896": {
-      "Properties": {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": {
-          "Fn::GetAtt": [
-            "doubletsgamedevstatsapilambda8DE1952B",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": {
-          "Fn::Join": [
-            "",
-            [
-              "arn:",
-              {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              {
-                "Ref": "doubletsgamedevstatsapi138D48EF",
-              },
-              "/*/*/game/{user}/solved",
+              "/*/*/game/{user}/solved/{difficulty}",
             ],
           ],
         },
@@ -833,6 +776,11 @@ exports[`Stack > synthesises correctly 1`] = `
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
           "S3Key": "51fe5faf642678a727d245254f0df77e899ab5464abdd381083b215401c5158b.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "TABLE_NAME": "doublets-game-dev-stats-table",
+          },
         },
         "FunctionName": "doublets-game-dev-stats-api-lambda",
         "Handler": "index.handler",
@@ -886,7 +834,7 @@ exports[`Stack > synthesises correctly 1`] = `
             "AttributeType": "S",
           },
           {
-            "AttributeName": "date",
+            "AttributeName": "puzzle",
             "AttributeType": "S",
           },
         ],
@@ -897,7 +845,7 @@ exports[`Stack > synthesises correctly 1`] = `
             "KeyType": "HASH",
           },
           {
-            "AttributeName": "date",
+            "AttributeName": "puzzle",
             "KeyType": "RANGE",
           },
         ],
