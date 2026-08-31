@@ -42,7 +42,7 @@ export async function handler(
                 const command = new PutCommand({
                     TableName: process.env.TABLE_NAME,
                     Item: {
-                        username: event.pathParameters?.username,
+                        username: event.pathParameters?.user,
                         puzzle,
                         status: parsed,
                     },
@@ -81,7 +81,7 @@ export async function handler(
                 const command = new UpdateCommand({
                     TableName: process.env.TABLE_NAME,
                     Key: {
-                        username: event.pathParameters?.username,
+                        username: event.pathParameters?.user,
                         puzzle,
                     },
                     UpdateExpression: 'set puzzle = :puzzle',
@@ -110,7 +110,7 @@ export async function handler(
                     TableName: process.env.TABLE_NAME,
                     KeyConditionExpression: 'username = :username',
                     ExpressionAttributeValues: {
-                        ':username': event.pathParameters?.username,
+                        ':username': event.pathParameters?.user,
                     },
                     ConsistentRead: true,
                 });
