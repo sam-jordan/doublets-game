@@ -10,6 +10,7 @@ import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
+import { HttpJwtAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { type Environment } from './environment.js';
 
 export class Stack extends cdk.Stack {
@@ -134,20 +135,33 @@ export class Stack extends cdk.Stack {
             statsApiLambda
         );
 
+        const issuer = `https://cognito-idp.eu-west-2.amazonaws.com/${props.USER_POOL_ID}`;
+        const authorizer = new HttpJwtAuthorizer(
+            `${id}-stats-authorizer`,
+            issuer,
+            {
+                jwtAudience: [props.USER_POOL_CLIENT_ID],
+                identitySource: ['$request.header.Authorization'],
+            }
+        );
+
         httpApi.addRoutes({
             path: '/game/{user}/attempted/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
+            authorizer,
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved/{difficulty}',
             methods: [apigwv2.HttpMethod.PUT],
             integration,
+            authorizer,
         });
         httpApi.addRoutes({
             path: '/stats/{user}',
             methods: [apigwv2.HttpMethod.GET],
             integration,
+            authorizer,
         });
     }
 }

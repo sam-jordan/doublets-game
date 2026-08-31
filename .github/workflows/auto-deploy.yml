@@ -42,7 +42,12 @@ jobs:
             - name: Deploy
               run: npm run deploy
               env:
+                  # Backend env
                   CERTIFICATE_ARN: unused
                   DEPLOY_ENV: dev
+                  USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
+                  USER_POOL_CLIENT_ID: ${{ secrets.USER_POOL_CLIENT_ID }}
+
+                  # Frontend env
                   VITE_USER_POOL_ID: ${{ secrets.USER_POOL_ID }}
                   VITE_USER_POOL_CLIENT_ID: ${{ secrets.USER_POOL_CLIENT_ID }}
