@@ -12,4 +12,12 @@ export const puzzleSchema = z.discriminatedUnion('attempted', [
     }),
 ]);
 
-export type Attempted = z.infer<typeof puzzleSchema>;
+export type Puzzle = z.infer<typeof puzzleSchema>;
+
+export type Stats = {
+    puzzlesAttempted: number;
+    puzzlesSolved: number;
+    wordsUsed: number;
+    averageTime: Duration;
+    averageGuesses: number;
+};
