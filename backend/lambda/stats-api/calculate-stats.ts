@@ -7,7 +7,7 @@ export function calculateStats(puzzles: Puzzle[]): Stats {
     const totalDuration = Duration.fromMillis(0);
 
     puzzles.map(puzzle => {
-        if (!puzzle.attempted) {
+        if (!puzzle.solved) {
             return;
         }
 
@@ -17,10 +17,11 @@ export function calculateStats(puzzles: Puzzle[]): Stats {
         return puzzle.guesses.map(guess => uniqueWords.add(guess));
     });
 
-    const solved = puzzles.filter(puzzle => puzzle.attempted).length;
+    const attempted = puzzles.filter(puzzle => puzzle.attempted).length;
+    const solved = puzzles.filter(puzzle => puzzle.solved).length;
 
     return {
-        puzzlesAttempted: puzzles.length,
+        puzzlesAttempted: attempted,
         puzzlesSolved: solved,
         wordsUsed: uniqueWords.size,
         averageTime: Duration.fromMillis(
