@@ -11,7 +11,12 @@ import {
     UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
 import { DateTime } from 'luxon';
-import { puzzleRecordsSchema, puzzleSchema } from './types.js';
+import {
+    attemptedSchema,
+    puzzleRecordsSchema,
+    puzzleSchema,
+    solvedSchema,
+} from './types.js';
 import { calculateStats } from './calculate-stats.js';
 
 export async function handler(
@@ -33,7 +38,7 @@ export async function handler(
                     };
                 }
 
-                const parsed = puzzleSchema.parse(JSON.parse(event.body));
+                const parsed = attemptedSchema.parse(JSON.parse(event.body));
 
                 const date = DateTime.now()
                     .toUTC()
@@ -72,7 +77,7 @@ export async function handler(
                     };
                 }
 
-                const parsed = puzzleSchema.parse(JSON.parse(event.body));
+                const parsed = solvedSchema.parse(JSON.parse(event.body));
 
                 const date = DateTime.now()
                     .toUTC()
