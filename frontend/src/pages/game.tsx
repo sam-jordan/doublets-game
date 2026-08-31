@@ -433,6 +433,7 @@ export default function Game(props: UseGameState) {
     return (
         <div>
             <Overlay overlay={overlay}>{getOverlay()}</Overlay>
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- handled by Effect/popover */}
             <div
                 className={clsx(
                     'font-(family-name:--standard-fonts) w-svw h-svh min-h-fit bg-grey-very-dark text-white flex flex-col',

@@ -18,6 +18,7 @@ export default function Overlay({ children, overlay }: OverlayProps) {
                 'fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 text-white rounded-lg w-[80vw]',
                 'sm:w-fit'
             )}
+            // eslint-disable-next-line react/no-unknown-property -- is in fact a valid property
             closedby='any'
         >
             {children}
