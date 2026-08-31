@@ -151,6 +151,10 @@ export default function Game(props: UseGameState) {
     }
 
     function handleKeyUp(key: string) {
+        if (key === 'Escape') {
+            setOverlay(undefined);
+        }
+
         if (overlay !== undefined) {
             return;
         }
