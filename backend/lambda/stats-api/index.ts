@@ -37,11 +37,12 @@ export async function handler(
     const client = new DynamoDBClient({ region: 'eu-west-2' });
     const documentClient = DynamoDBDocumentClient.from(client);
 
+    const origin = event.headers.Origin;
     switch (event.routeKey) {
         case 'POST /game/{user}/attempted/{difficulty}': {
             try {
                 if (event.body === undefined) {
-                    return badRequest();
+                    return badRequest(origin);
                 }
 
                 const parsed = attemptedSchema.safeParse(
@@ -49,7 +50,7 @@ export async function handler(
                 );
 
                 if (!parsed.success) {
-                    return badRequest();
+                    return badRequest(origin);
                 }
 
                 const date = DateTime.now()
@@ -68,29 +69,29 @@ export async function handler(
                 });
 
                 await documentClient.send(command);
-                return ok('Puzzle attempt stored successfully.');
+                return ok('Puzzle attempt stored successfully.', origin);
             } catch (error) {
                 console.error(error);
 
                 // An item already exists for this puzzle
                 if (error instanceof ConditionalCheckFailedException) {
-                    return badRequest();
+                    return badRequest(origin);
                 }
 
-                return internalServerError();
+                return internalServerError(origin);
             }
         }
 
         case 'PUT /game/{user}/solved/{difficulty}': {
             try {
                 if (event.body === undefined) {
-                    return badRequest();
+                    return badRequest(origin);
                 }
 
                 const parsed = solvedSchema.safeParse(JSON.parse(event.body));
 
                 if (!parsed.success) {
-                    return badRequest();
+                    return badRequest(origin);
                 }
 
                 const date = DateTime.now()
@@ -111,10 +112,10 @@ export async function handler(
                 });
 
                 await documentClient.send(command);
-                return ok('Puzzle solve stored successfully.');
+                return ok('Puzzle solve stored successfully.', origin);
             } catch (error) {
                 console.error(error);
-                return internalServerError();
+                return internalServerError(origin);
             }
         }
 
@@ -162,15 +163,15 @@ export async function handler(
                     ),
                 };
 
-                return ok(JSON.stringify(body));
+                return ok(JSON.stringify(body), origin);
             } catch (error) {
                 console.error(error);
-                return internalServerError();
+                return internalServerError(origin);
             }
         }
 
         default: {
-            return notFound();
+            return notFound(origin);
         }
     }
 }
