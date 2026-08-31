@@ -45,7 +45,7 @@ export async function handler(
                     Item: {
                         username: event.pathParameters?.user,
                         puzzle,
-                        status: JSON.stringify(parsed),
+                        puzzleStatus: JSON.stringify(parsed),
                     },
                 });
 
@@ -85,9 +85,9 @@ export async function handler(
                         username: event.pathParameters?.user,
                         puzzle,
                     },
-                    UpdateExpression: 'set status = :status',
+                    UpdateExpression: 'set puzzleStatus = :puzzleStatus',
                     ExpressionAttributeValues: {
-                        ':status': JSON.stringify(parsed),
+                        ':puzzleStatus': JSON.stringify(parsed),
                     },
                 });
 
@@ -124,21 +124,27 @@ export async function handler(
                         parsed
                             .filter(item => item.puzzle.includes('[easy]'))
                             .map(item =>
-                                puzzleSchema.parse(JSON.parse(item.status))
+                                puzzleSchema.parse(
+                                    JSON.parse(item.puzzleStatus)
+                                )
                             )
                     ),
                     medium: calculateStats(
                         parsed
                             .filter(item => item.puzzle.includes('[medium]'))
                             .map(item =>
-                                puzzleSchema.parse(JSON.parse(item.status))
+                                puzzleSchema.parse(
+                                    JSON.parse(item.puzzleStatus)
+                                )
                             )
                     ),
                     hard: calculateStats(
                         parsed
                             .filter(item => item.puzzle.includes('[hard]'))
                             .map(item =>
-                                puzzleSchema.parse(JSON.parse(item.status))
+                                puzzleSchema.parse(
+                                    JSON.parse(item.puzzleStatus)
+                                )
                             )
                     ),
                 };

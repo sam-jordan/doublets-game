@@ -18,7 +18,7 @@ export const puzzleRecordsSchema = z.array(
     z.object({
         username: z.string(),
         puzzle: z.string(),
-        status: z.string(),
+        puzzleStatus: z.string(),
     })
 );
 
