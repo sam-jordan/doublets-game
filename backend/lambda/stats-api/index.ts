@@ -11,7 +11,8 @@ import {
     UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
 import { DateTime } from 'luxon';
-import { puzzleSchema } from './types.js';
+import { puzzleRecordsSchema, puzzleSchema } from './types.js';
+import { calculateStats } from './calculate-stats.js';
 
 export async function handler(
     event: APIGatewayProxyEventV2,
@@ -116,10 +117,29 @@ export async function handler(
                 });
 
                 const response = await documentClient.send(command);
-                console.log(response);
+                const parsed = puzzleRecordsSchema.parse(response.Items);
+
+                const body = {
+                    easy: calculateStats(
+                        parsed
+                            .filter(item => item.puzzle.includes('[easy]'))
+                            .map(item => puzzleSchema.parse(item.status))
+                    ),
+                    medium: calculateStats(
+                        parsed
+                            .filter(item => item.puzzle.includes('[medium]'))
+                            .map(item => puzzleSchema.parse(item.status))
+                    ),
+                    hard: calculateStats(
+                        parsed
+                            .filter(item => item.puzzle.includes('[hard]'))
+                            .map(item => puzzleSchema.parse(item.status))
+                    ),
+                };
+
                 return {
                     statusCode: 200,
-                    body: 'Stats!',
+                    body: JSON.stringify(body),
                 };
             } catch (error) {
                 console.error(error);

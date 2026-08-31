@@ -14,6 +14,14 @@ export const puzzleSchema = z.discriminatedUnion('attempted', [
 
 export type Puzzle = z.infer<typeof puzzleSchema>;
 
+export const puzzleRecordsSchema = z.array(
+    z.object({
+        username: z.string(),
+        puzzle: z.string(),
+        status: z.string(),
+    })
+);
+
 export type Stats = {
     puzzlesAttempted: number;
     puzzlesSolved: number;
