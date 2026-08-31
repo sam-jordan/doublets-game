@@ -6,8 +6,8 @@ import {
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
     DynamoDBDocumentClient,
-    GetCommand,
     PutCommand,
+    QueryCommand,
     UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
 import { DateTime } from 'luxon';
@@ -106,11 +106,13 @@ export async function handler(
 
         case 'GET /stats/{user}': {
             try {
-                const command = new GetCommand({
+                const command = new QueryCommand({
                     TableName: process.env.TABLE_NAME,
-                    Key: {
-                        username: event.pathParameters?.username,
+                    KeyConditionExpression: 'username = :username',
+                    ExpressionAttributeValues: {
+                        ':username': event.pathParameters?.username,
                     },
+                    ConsistentRead: true,
                 });
 
                 const response = await documentClient.send(command);
