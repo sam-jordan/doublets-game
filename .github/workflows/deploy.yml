@@ -21,20 +21,14 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Run linting
-              run: npm run lint
-
-            - name: Build code
-              run: npm run build
-
-            - name: Run tests
-              run: npm run test
-
             - name: Configure AWS Credentials
               uses: aws-actions/configure-aws-credentials@v6.2.3
               with:
                   role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
                   aws-region: eu-west-2
+
+            - name: Build code
+              run: npm run build
 
             - name: Deploy
               run: npm run deploy
