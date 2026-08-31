@@ -24,8 +24,8 @@ export function calculateStats(puzzles: Puzzle[]): Stats {
         puzzlesSolved: solved,
         wordsUsed: uniqueWords.size,
         averageTime: Duration.fromMillis(
-            totalDuration.as('milliseconds') / solved
+            solved === 0 ? 0 : totalDuration.as('milliseconds') / solved
         ),
-        averageGuesses: totalGuesses / solved,
+        averageGuesses: solved === 0 ? 0 : totalGuesses / solved,
     };
 }
