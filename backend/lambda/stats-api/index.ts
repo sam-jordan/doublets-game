@@ -19,19 +19,19 @@ export async function handler(
 ): Promise<APIGatewayProxyResult> {
     console.log(event);
 
-    if (event.body === undefined) {
-        return {
-            statusCode: 400,
-            body: 'Bad Request',
-        };
-    }
-
     const client = new DynamoDBClient({ region: 'eu-west-2' });
     const documentClient = DynamoDBDocumentClient.from(client);
 
     switch (event.routeKey) {
         case 'POST /game/{user}/attempted/{difficulty}': {
             try {
+                if (event.body === undefined) {
+                    return {
+                        statusCode: 400,
+                        body: 'Bad Request',
+                    };
+                }
+
                 const parsed = puzzleSchema.parse(JSON.parse(event.body));
 
                 const date = DateTime.now()
@@ -64,6 +64,13 @@ export async function handler(
 
         case 'POST /game/{user}/solved/{difficulty}': {
             try {
+                if (event.body === undefined) {
+                    return {
+                        statusCode: 400,
+                        body: 'Bad Request',
+                    };
+                }
+
                 const parsed = puzzleSchema.parse(JSON.parse(event.body));
 
                 const date = DateTime.now()
