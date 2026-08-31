@@ -141,7 +141,7 @@ export class Stack extends cdk.Stack {
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved/{difficulty}',
-            methods: [apigwv2.HttpMethod.POST],
+            methods: [apigwv2.HttpMethod.PUT],
             integration,
         });
         httpApi.addRoutes({

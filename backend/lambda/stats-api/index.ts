@@ -81,7 +81,7 @@ export async function handler(
             }
         }
 
-        case 'POST /game/{user}/solved/{difficulty}': {
+        case 'PUT /game/{user}/solved/{difficulty}': {
             try {
                 if (event.body === undefined) {
                     return {
