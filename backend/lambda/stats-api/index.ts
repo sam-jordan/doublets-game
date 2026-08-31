@@ -123,17 +123,23 @@ export async function handler(
                     easy: calculateStats(
                         parsed
                             .filter(item => item.puzzle.includes('[easy]'))
-                            .map(item => puzzleSchema.parse(item.status))
+                            .map(item =>
+                                puzzleSchema.parse(JSON.parse(item.status))
+                            )
                     ),
                     medium: calculateStats(
                         parsed
                             .filter(item => item.puzzle.includes('[medium]'))
-                            .map(item => puzzleSchema.parse(item.status))
+                            .map(item =>
+                                puzzleSchema.parse(JSON.parse(item.status))
+                            )
                     ),
                     hard: calculateStats(
                         parsed
                             .filter(item => item.puzzle.includes('[hard]'))
-                            .map(item => puzzleSchema.parse(item.status))
+                            .map(item =>
+                                puzzleSchema.parse(JSON.parse(item.status))
+                            )
                     ),
                 };
 
