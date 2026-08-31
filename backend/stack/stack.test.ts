@@ -13,6 +13,8 @@ describe('Stack', () => {
         const stack = new Stack(app, 'doublets-game-dev', {
             DEPLOY_ENV: 'dev',
             CERTIFICATE_ARN: 'test-arn',
+            USER_POOL_ID: 'test-id',
+            USER_POOL_CLIENT_ID: 'test-id',
         });
 
         const template = Template.fromStack(stack);

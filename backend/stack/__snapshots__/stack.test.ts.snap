@@ -487,7 +487,7 @@ exports[`Stack > synthesises correctly 1`] = `
           },
         ],
         "SourceObjectKeys": [
-          "f88b3f70166738384e71f159be54ba314e6c8303d1d88b41df83b8aae39a80c9.zip",
+          "0af0ad190128ee168f2bd04be34799acb63ad9b9f86cc19b39fb9db85c264382.zip",
         ],
         "WaitForDistributionInvalidation": true,
       },
@@ -581,7 +581,10 @@ exports[`Stack > synthesises correctly 1`] = `
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
         },
-        "AuthorizationType": "NONE",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
         "RouteKey": "GET /stats/{user}",
         "Target": {
           "Fn::Join": [
@@ -639,7 +642,10 @@ exports[`Stack > synthesises correctly 1`] = `
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
         },
-        "AuthorizationType": "NONE",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
         "RouteKey": "POST /game/{user}/attempted/{difficulty}",
         "Target": {
           "Fn::Join": [
@@ -708,13 +714,16 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "doubletsgamedevstatsapiPOSTgameusersolveddifficultyCF230B79": {
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultyD3A1115E": {
       "Properties": {
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
         },
-        "AuthorizationType": "NONE",
-        "RouteKey": "POST /game/{user}/solved/{difficulty}",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "PUT /game/{user}/solved/{difficulty}",
         "Target": {
           "Fn::Join": [
             "",
@@ -729,7 +738,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Route",
     },
-    "doubletsgamedevstatsapiPOSTgameusersolveddifficultydoubletsgamedevstatsapilambdaintegrationPermissionD3FE4042": {
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultydoubletsgamedevstatsapilambdaintegrationPermissionF2D5525A": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -766,8 +775,28 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::Lambda::Permission",
     },
+    "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizerType": "JWT",
+        "IdentitySource": [
+          "$request.header.Authorization",
+        ],
+        "JwtConfiguration": {
+          "Audience": [
+            "test-id",
+          ],
+          "Issuer": "https://cognito-idp.eu-west-2.amazonaws.com/test-id",
+        },
+        "Name": "doublets-game-dev-stats-authorizer",
+      },
+      "Type": "AWS::ApiGatewayV2::Authorizer",
+    },
     "doubletsgamedevstatsapilambda8DE1952B": {
       "DependsOn": [
+        "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
         "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
       ],
       "Properties": {
@@ -824,6 +853,56 @@ exports[`Stack > synthesises correctly 1`] = `
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+            {
+              "Action": [
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
+        "Roles": [
+          {
+            "Ref": "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "doubletsgamedevstatstableC7B4E555": {
       "DeletionPolicy": "Delete",
