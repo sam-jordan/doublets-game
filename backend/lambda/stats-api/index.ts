@@ -3,7 +3,10 @@ import {
     type APIGatewayProxyEventV2,
     type APIGatewayProxyResult,
 } from 'aws-lambda';
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import {
+    ConditionalCheckFailedException,
+    DynamoDBClient,
+} from '@aws-sdk/client-dynamodb';
 import {
     DynamoDBDocumentClient,
     PutCommand,
@@ -62,6 +65,15 @@ export async function handler(
                 };
             } catch (error) {
                 console.error(error);
+
+                // An item already exists for this puzzle
+                if (error instanceof ConditionalCheckFailedException) {
+                    return {
+                        statusCode: 400,
+                        body: 'Bad Request',
+                    };
+                }
+
                 return {
                     statusCode: 500,
                     body: 'Internal Server Error',
