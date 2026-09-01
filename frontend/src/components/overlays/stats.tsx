@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Duration } from 'luxon';
 import { useState } from 'react';
 import clsx from 'clsx';
-import { useCurrentUser } from '../../logic/queries';
+import { useCurrentUser, useStats } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 
@@ -16,33 +15,12 @@ export default function Stats({ setOverlay }: StatsProps) {
     const [difficulty, setDifficulty] = useState<Difficulties>('easy');
 
     const currentUser = useCurrentUser();
+    const stats = useStats({
+        username: currentUser.data?.username,
+        enabled: Boolean(currentUser.data?.username),
+    });
 
-    // Temporary object for developing frontend
-    const stats = {
-        easy: {
-            puzzlesAttempted: 12,
-            puzzlesSolved: 10,
-            wordsUsed: 43,
-            averageTime: Duration.fromMillis(3 * 60 * 1000),
-            averageGuesses: 4,
-        },
-        medium: {
-            puzzlesAttempted: 9,
-            puzzlesSolved: 5,
-            wordsUsed: 28,
-            averageTime: Duration.fromMillis(5.2 * 60 * 1000),
-            averageGuesses: 5.3,
-        },
-        hard: {
-            puzzlesAttempted: 8,
-            puzzlesSolved: 4,
-            wordsUsed: 22,
-            averageTime: Duration.fromMillis(7.1 * 60 * 1000),
-            averageGuesses: 7.5,
-        },
-    };
-
-    return currentUser.isPending ? (
+    return stats.isPending ? (
         <LoadingSpinner size='4rem' />
     ) : (
         <>
@@ -75,6 +53,8 @@ export default function Stats({ setOverlay }: StatsProps) {
                 >
                     Log in
                 </Link>
+            ) : stats.isError ? (
+                <p>Stats error</p>
             ) : (
                 <>
                     <div className='flex gap-4 font-bold mb-4'>
@@ -99,38 +79,42 @@ export default function Stats({ setOverlay }: StatsProps) {
                     <div className='border-y-2 border-y-white flex justify-between p-4'>
                         <div>
                             <p>Puzzles attempted:</p>
-                            <p>{stats[difficulty].puzzlesAttempted}</p>
+                            <p>{stats.data[difficulty].puzzlesAttempted}</p>
                         </div>
                         <div>
                             <p>Puzzles solved:</p>
-                            <p>{stats[difficulty].puzzlesSolved}</p>
+                            <p>{stats.data[difficulty].puzzlesSolved}</p>
                         </div>
                         <div>
                             <p>Success rate:</p>
                             <p>
-                                {(
-                                    (stats[difficulty].puzzlesSolved /
-                                        stats[difficulty].puzzlesAttempted) *
-                                    100
-                                ).toFixed(2)}
+                                {stats.data[difficulty].puzzlesAttempted > 0
+                                    ? (
+                                          (stats.data[difficulty]
+                                              .puzzlesSolved /
+                                              stats.data[difficulty]
+                                                  .puzzlesAttempted) *
+                                          100
+                                      ).toFixed(2)
+                                    : 0}
                             </p>
                         </div>
                     </div>
                     <div className='border-b-2 border-y-white flex justify-between p-4'>
                         <div>
                             <p>Average guesses:</p>
-                            <p>{stats[difficulty].averageGuesses}</p>
+                            <p>{stats.data[difficulty].averageGuesses}</p>
                         </div>
                         <div>
                             <p>Average time:</p>
                             <p>
-                                {stats[difficulty].averageTime.milliseconds /
-                                    1000}
+                                {stats.data[difficulty].averageTime
+                                    .milliseconds / 1000}
                             </p>
                         </div>
                         <div>
                             <p>Words used:</p>
-                            <p>{stats[difficulty].wordsUsed}</p>
+                            <p>{stats.data[difficulty].wordsUsed}</p>
                         </div>
                     </div>
                 </>

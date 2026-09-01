@@ -4,7 +4,11 @@ export async function callApi(options: CallApiOptions) {
     const env = viteEnvironment.parse(import.meta.env);
 
     const { endpoint, method } = options;
-    const response = await fetch(`${env.VITE_API_URL}/${endpoint.path}`, {
+    const url = import.meta.env.PROD
+        ? `${env.VITE_API_URL}/${endpoint.path}`
+        : `/${endpoint.path}`;
+
+    const response = await fetch(url, {
         method,
     });
 

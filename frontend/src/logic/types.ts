@@ -126,10 +126,18 @@ export class StatsApiError extends Error {
     }
 }
 
-export const statsSchema = z.object({
+const statsPerDifficultySchema = z.object({
     puzzlesAttempted: z.number(),
     puzzlesSolved: z.number(),
     wordsUsed: z.number(),
     averageTime: z.string().transform(value => Duration.fromISO(value)),
     averageGuesses: z.number(),
 });
+
+export const statsSchema = z.object({
+    easy: statsPerDifficultySchema,
+    medium: statsPerDifficultySchema,
+    hard: statsPerDifficultySchema,
+});
+
+export type Stats = z.infer<typeof statsSchema>;

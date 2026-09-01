@@ -5,7 +5,7 @@ function addHeaders(origin?: string): Record<string, string> {
         'Content-Type': 'application/json',
     };
 
-    if (origin?.includes('www.doublets.app')) {
+    if (origin === 'www.doublets.app') {
         headers['Access-Control-Allow-Origin'] = origin;
     }
 

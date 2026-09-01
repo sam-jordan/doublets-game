@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
 import configureAmplify from './configure-amplify';
-import { statsSchema, type SignInOptions } from './types';
+import { statsSchema, type SignInOptions, type Stats } from './types';
 import { callApi } from './query-helpers';
 
 export function useCurrentUser() {
@@ -44,8 +44,11 @@ export function useSignUp(options: SignInOptions) {
     });
 }
 
-export function useStats(options: { username: string }) {
-    const { username } = options;
+export function useStats(options: {
+    username: string | undefined;
+    enabled: boolean;
+}): UseQueryResult<Stats> {
+    const { username, enabled } = options;
 
     return useQuery({
         queryKey: [`${username}-stats`],
@@ -60,5 +63,6 @@ export function useStats(options: { username: string }) {
 
             return response;
         },
+        enabled,
     });
 }
