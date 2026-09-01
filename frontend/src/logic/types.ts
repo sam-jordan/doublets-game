@@ -1,5 +1,6 @@
 import { Duration } from 'luxon';
 import z from 'zod';
+import { type JWT } from 'aws-amplify/auth';
 
 export const DIFFICULTIES = ['easy', 'medium', 'hard'] as const;
 export type Difficulties = (typeof DIFFICULTIES)[number];
@@ -141,3 +142,10 @@ export const statsSchema = z.object({
 });
 
 export type Stats = z.infer<typeof statsSchema>;
+
+export const sessionSchema = z.object({
+    tokens: z.object({
+        accessToken: z.custom<JWT>(),
+        idToken: z.custom<JWT>().optional(),
+    }),
+});

@@ -48,6 +48,7 @@ export function useStats(options: {
     username: string | undefined;
     enabled: boolean;
 }): UseQueryResult<Stats> {
+    configureAmplify();
     const { username, enabled } = options;
 
     return useQuery({
