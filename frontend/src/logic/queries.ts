@@ -1,7 +1,16 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
+import { DateTime } from 'luxon';
+import z from 'zod';
 import configureAmplify from './configure-amplify';
-import { statsSchema, type SignInOptions, type Stats } from './types';
+import {
+    statsSchema,
+    type Attempted,
+    type Difficulties,
+    type SignInOptions,
+    type Solved,
+    type Stats,
+} from './types';
 import { callApi } from './query-helpers';
 
 export function useCurrentUser() {
@@ -41,6 +50,62 @@ export function useSignUp(options: SignInOptions) {
                 password,
             }),
         enabled: submitted,
+    });
+}
+
+export function useAttempted(options: {
+    username: string | undefined;
+    difficulty: Difficulties;
+    body: Attempted;
+    enabled: boolean;
+}) {
+    configureAmplify();
+    const { username, difficulty, body, enabled } = options;
+
+    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
+    return useQuery({
+        queryKey: [`${username}-attempted-${date}-${difficulty}`],
+        async queryFn() {
+            const response = await callApi({
+                endpoint: {
+                    path: `game/${username}/attempted/${difficulty}`,
+                    schema: z.string(),
+                },
+                method: 'POST',
+                body,
+            });
+
+            return response;
+        },
+        enabled,
+    });
+}
+
+export function useSolved(options: {
+    username: string | undefined;
+    difficulty: Difficulties;
+    body: Solved;
+    enabled: boolean;
+}) {
+    configureAmplify();
+    const { username, difficulty, body, enabled } = options;
+
+    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
+    return useQuery({
+        queryKey: [`${username}-solved-${date}-${difficulty}`],
+        async queryFn() {
+            const response = await callApi({
+                endpoint: {
+                    path: `game/${username}/solved/${difficulty}`,
+                    schema: z.string(),
+                },
+                method: 'PUT',
+                body,
+            });
+
+            return response;
+        },
+        enabled,
     });
 }
 

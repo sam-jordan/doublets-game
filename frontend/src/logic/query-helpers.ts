@@ -20,6 +20,7 @@ export async function callApi(options: CallApiOptions) {
         headers: {
             Authorization: session.tokens.accessToken.toString(),
         },
+        body: JSON.stringify(options.body ?? undefined),
     });
 
     if (!response.ok) {

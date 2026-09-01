@@ -116,6 +116,7 @@ export type CallApiOptions = {
         schema: z.ZodType;
     };
     method: 'GET' | 'POST' | 'PUT';
+    body?: unknown;
 };
 
 export class StatsApiError extends Error {
@@ -134,6 +135,20 @@ const statsPerDifficultySchema = z.object({
     averageTime: z.string().transform(value => Duration.fromISO(value)),
     averageGuesses: z.number(),
 });
+
+export const attemptedSchema = z.object({
+    attempted: z.boolean(),
+    solved: z.literal(false),
+});
+export const solvedSchema = z.object({
+    attempted: z.boolean(),
+    solved: z.literal(true),
+    solveTime: z.string().transform(value => Duration.fromISO(value)),
+    guesses: z.array(z.string()),
+});
+
+export type Attempted = z.infer<typeof attemptedSchema>;
+export type Solved = z.infer<typeof solvedSchema>;
 
 export const statsSchema = z.object({
     easy: statsPerDifficultySchema,
