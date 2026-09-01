@@ -6,8 +6,22 @@ import App from './pages/app';
 import Login from './pages/login';
 import NotFound from './pages/not-found';
 import Signup from './pages/signup';
+import { StatsApiError } from './logic/types';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry(_failureCount, error) {
+                // Retrying client errors will not change the result
+                return !(
+                    error instanceof StatsApiError &&
+                    error.status >= 400 &&
+                    error.status < 500
+                );
+            },
+        },
+    },
+});
 
 createRoot(document.querySelector('#root')!).render(
     <StrictMode>
