@@ -78,6 +78,7 @@ export function useAttempted(options: {
             return response;
         },
         enabled,
+        staleTime: Infinity,
     });
 }
 
@@ -106,6 +107,7 @@ export function useSolved(options: {
             return response;
         },
         enabled,
+        staleTime: Infinity,
     });
 }
 
@@ -130,5 +132,6 @@ export function useStats(options: {
             return response;
         },
         enabled,
+        staleTime: 1000 * 60 * 5, // 5 minutes
     });
 }
