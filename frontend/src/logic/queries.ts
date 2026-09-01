@@ -1,21 +1,7 @@
-import {
-    useQueries,
-    useQuery,
-    type UseQueryResult,
-} from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
-import { DateTime } from 'luxon';
-import z from 'zod';
 import configureAmplify from './configure-amplify';
-import {
-    DIFFICULTIES,
-    statsSchema,
-    type Attempted,
-    type Difficulties,
-    type SignInOptions,
-    type Solved,
-    type Stats,
-} from './types';
+import { statsSchema, type SignInOptions, type Stats } from './types';
 import { callApi } from './query-helpers';
 
 export function useCurrentUser() {
@@ -55,66 +41,6 @@ export function useSignUp(options: SignInOptions) {
                 password,
             }),
         enabled: submitted,
-    });
-}
-
-export function useAttempted(options: {
-    username: string | undefined;
-    body: Attempted;
-    attempted: Record<'easy' | 'medium' | 'hard', boolean>;
-}): UseQueryResult[] {
-    configureAmplify();
-    const { username, body, attempted } = options;
-
-    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
-    return useQueries({
-        queries: DIFFICULTIES.map(difficulty => ({
-            queryKey: [`${username}-attempted-${date}-${difficulty}`],
-            async queryFn() {
-                const response = await callApi({
-                    endpoint: {
-                        path: `game/${username}/attempted/${difficulty}`,
-                        schema: z.string(),
-                    },
-                    method: 'POST',
-                    body,
-                });
-
-                return response;
-            },
-            enabled: attempted[difficulty],
-            staleTime: Infinity,
-        })),
-    });
-}
-
-export function useSolved(options: {
-    username: string | undefined;
-    body: Record<Difficulties, Solved>;
-    solved: Record<'easy' | 'medium' | 'hard', number | undefined>;
-}): UseQueryResult[] {
-    configureAmplify();
-    const { username, body, solved } = options;
-
-    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
-    return useQueries({
-        queries: DIFFICULTIES.map(difficulty => ({
-            queryKey: [`${username}-solved-${date}-${difficulty}`],
-            async queryFn() {
-                const response = await callApi({
-                    endpoint: {
-                        path: `game/${username}/solved/${difficulty}`,
-                        schema: z.string(),
-                    },
-                    method: 'PUT',
-                    body: body[difficulty],
-                });
-
-                return response;
-            },
-            enabled: solved[difficulty] !== undefined,
-            staleTime: Infinity,
-        })),
     });
 }
 

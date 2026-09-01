@@ -64,6 +64,7 @@ export type GameState = {
     difficulty: Difficulties;
     solved: Record<Difficulties, number | undefined>;
     timers: Record<Difficulties, Duration>;
+    attempted: Record<Difficulties, boolean>;
 };
 
 export const gameStateSchema = z.object({
@@ -81,6 +82,7 @@ export const gameStateSchema = z.object({
         z.enum(DIFFICULTIES),
         z.string().transform(value => Duration.fromISO(value))
     ),
+    attempted: z.record(z.enum(DIFFICULTIES), z.boolean()),
 });
 
 export type UseGameState = {

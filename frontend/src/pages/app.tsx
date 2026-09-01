@@ -33,6 +33,9 @@ export default function App() {
                     Duration.fromMillis(0),
                 ])
             ) as Record<Difficulties, Duration>,
+            attempted: Object.fromEntries(
+                DIFFICULTIES.map(d => [d, false])
+            ) as Record<Difficulties, boolean>,
         }
     );
 

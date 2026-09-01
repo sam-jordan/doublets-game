@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { DateTime, Duration } from 'luxon';
+import { useMutation } from '@tanstack/react-query';
+import z from 'zod';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import {
-    DIFFICULTIES,
+    type Attempted,
     type Difficulties,
     type Solved,
     type UseGameState,
@@ -18,7 +20,8 @@ import Overlay from '../components/overlay';
 import Stats from '../components/overlays/stats';
 import Help from '../components/overlays/help';
 import SelectDifficulty from '../components/overlays/select-difficulty';
-import { useAttempted, useCurrentUser, useSolved } from '../logic/queries';
+import { useCurrentUser } from '../logic/queries';
+import { callApi } from '../logic/query-helpers';
 
 export default function Game(props: UseGameState) {
     // Displays
@@ -41,38 +44,38 @@ export default function Game(props: UseGameState) {
 
     // Main state
     const { gameState, setGameState } = props;
-    const { guesses, currentGuess, difficulty, solved, timers } = gameState;
-    const [attempted, setAttempted] = useState<Record<Difficulties, boolean>>(
-        Object.fromEntries(DIFFICULTIES.map(d => [d, false])) as Record<
-            Difficulties,
-            boolean
-        >
-    );
+    const { guesses, currentGuess, difficulty, solved, timers, attempted } =
+        gameState;
 
     // TanStack queries
     const currentUser = useCurrentUser();
-    useAttempted({
-        username: currentUser.data?.username,
-        body: {
-            attempted: true,
-            solved: false,
-        },
-        attempted,
-    });
-    useSolved({
-        username: currentUser.data?.username,
-        body: Object.fromEntries(
-            DIFFICULTIES.map(d => [
-                d,
-                {
-                    attempted: true,
-                    solved: true,
-                    solveTime: timers[d],
-                    guesses: guesses[d].map(guess => guess.letters.join('')),
+    const attemptedMutation = useMutation({
+        mutationFn: async (options: {
+            username: string | undefined;
+            body: Attempted;
+        }) =>
+            callApi({
+                endpoint: {
+                    path: `game/${options.username}/attempted/${difficulty}`,
+                    schema: z.string(),
                 },
-            ])
-        ) as Record<Difficulties, Solved>,
-        solved,
+                method: 'POST',
+                body: options.body,
+            }),
+    });
+    const solvedMutation = useMutation({
+        mutationFn: async (options: {
+            username: string | undefined;
+            body: Solved;
+        }) =>
+            callApi({
+                endpoint: {
+                    path: `game/${options.username}/solved/${difficulty}`,
+                    schema: z.string(),
+                },
+                method: 'PUT',
+                body: options.body,
+            }),
     });
 
     const puzzle = getPuzzle(difficulty);
@@ -177,6 +180,17 @@ export default function Game(props: UseGameState) {
                     [difficulty]: DateTime.now().toMillis(),
                 },
             });
+            solvedMutation.mutate({
+                username: currentUser.data?.username,
+                body: {
+                    attempted: true,
+                    solved: true,
+                    solveTime: timers[difficulty],
+                    guesses: guesses[difficulty].map(guess =>
+                        guess.letters.join('')
+                    ),
+                },
+            });
         } else {
             setUseShake(result.index);
             setPopup({ show: true, message: result.message });
@@ -259,10 +273,6 @@ export default function Game(props: UseGameState) {
             return;
         }
 
-        if (!attempted[difficulty]) {
-            setAttempted({ ...attempted, [difficulty]: true });
-        }
-
         const nextIndex =
             guesses[difficulty][currentGuess].letters.indexOf(' ');
         const nextGuess = {
@@ -316,7 +326,25 @@ export default function Game(props: UseGameState) {
         };
 
         setLastTyped(nextIndex);
-        setGameState({ ...gameState, guesses: nextGuesses });
+        if (attempted[difficulty]) {
+            setGameState({ ...gameState, guesses: nextGuesses });
+        } else {
+            setGameState({
+                ...gameState,
+                guesses: nextGuesses,
+                attempted: {
+                    ...attempted,
+                    [difficulty]: true,
+                },
+            });
+            attemptedMutation.mutate({
+                username: currentUser.data?.username,
+                body: {
+                    attempted: true,
+                    solved: false,
+                },
+            });
+        }
     }
 
     function handleBackspace() {
