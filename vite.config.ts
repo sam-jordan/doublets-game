@@ -28,6 +28,11 @@ export default defineConfig(({ mode }) => {
                     changeOrigin: true,
                     secure: false,
                 },
+                '/game': {
+                    target: env.VITE_API_URL,
+                    changeOrigin: true,
+                    secure: false,
+                },
             },
         },
     };

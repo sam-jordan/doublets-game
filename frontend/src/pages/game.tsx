@@ -4,7 +4,12 @@ import { DateTime, Duration } from 'luxon';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { type Difficulties, type UseGameState } from '../logic/types';
+import {
+    DIFFICULTIES,
+    type Difficulties,
+    type Solved,
+    type UseGameState,
+} from '../logic/types';
 import Popup from '../components/popup';
 import Word from '../components/word';
 import Keyboard from '../components/keyboard';
@@ -13,6 +18,7 @@ import Overlay from '../components/overlay';
 import Stats from '../components/overlays/stats';
 import Help from '../components/overlays/help';
 import SelectDifficulty from '../components/overlays/select-difficulty';
+import { useAttempted, useCurrentUser, useSolved } from '../logic/queries';
 
 export default function Game(props: UseGameState) {
     // Displays
@@ -36,6 +42,38 @@ export default function Game(props: UseGameState) {
     // Main state
     const { gameState, setGameState } = props;
     const { guesses, currentGuess, difficulty, solved, timers } = gameState;
+    const [attempted, setAttempted] = useState<Record<Difficulties, boolean>>(
+        Object.fromEntries(DIFFICULTIES.map(d => [d, false])) as Record<
+            Difficulties,
+            boolean
+        >
+    );
+
+    // TanStack queries
+    const currentUser = useCurrentUser();
+    useAttempted({
+        username: currentUser.data?.username,
+        body: {
+            attempted: true,
+            solved: false,
+        },
+        attempted,
+    });
+    useSolved({
+        username: currentUser.data?.username,
+        body: Object.fromEntries(
+            DIFFICULTIES.map(d => [
+                d,
+                {
+                    attempted: true,
+                    solved: true,
+                    solveTime: timers[d],
+                    guesses: guesses[d].map(guess => guess.letters.join('')),
+                },
+            ])
+        ) as Record<Difficulties, Solved>,
+        solved,
+    });
 
     const puzzle = getPuzzle(difficulty);
 
@@ -219,6 +257,10 @@ export default function Game(props: UseGameState) {
     function handleType(value: string) {
         if (solved[difficulty] !== undefined) {
             return;
+        }
+
+        if (!attempted[difficulty]) {
+            setAttempted({ ...attempted, [difficulty]: true });
         }
 
         const nextIndex =
