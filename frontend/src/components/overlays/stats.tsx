@@ -62,7 +62,7 @@ export default function Stats({ setOverlay }: StatsProps) {
                             <button
                                 key={`${d}-tab`}
                                 className={clsx(
-                                    'rounded-lg p-2 w-32',
+                                    'rounded-lg p-2 w-36',
                                     difficulty === d
                                         ? 'bg-grey-mid'
                                         : 'bg-grey-very-dark'
@@ -77,44 +77,52 @@ export default function Stats({ setOverlay }: StatsProps) {
                         ))}
                     </div>
                     <div className='border-y-2 border-y-white flex justify-between p-4'>
-                        <div>
-                            <p>Puzzles attempted:</p>
-                            <p>{stats.data[difficulty].puzzlesAttempted}</p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
+                                {stats.data[difficulty].puzzlesAttempted}
+                            </p>
+                            <p className='text-center'>Puzzles attempted</p>
                         </div>
-                        <div>
-                            <p>Puzzles solved:</p>
-                            <p>{stats.data[difficulty].puzzlesSolved}</p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
+                                {stats.data[difficulty].puzzlesSolved}
+                            </p>
+                            <p className='text-center'>Puzzles solved</p>
                         </div>
-                        <div>
-                            <p>Success rate:</p>
-                            <p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
                                 {stats.data[difficulty].puzzlesAttempted > 0
-                                    ? (
+                                    ? Math.round(
                                           (stats.data[difficulty]
                                               .puzzlesSolved /
                                               stats.data[difficulty]
                                                   .puzzlesAttempted) *
-                                          100
-                                      ).toFixed(2)
+                                              100
+                                      )
                                     : 0}
                             </p>
+                            <p className='text-center'>Success rate (%)</p>
                         </div>
                     </div>
                     <div className='border-b-2 border-y-white flex justify-between p-4'>
-                        <div>
-                            <p>Average guesses:</p>
-                            <p>{stats.data[difficulty].averageGuesses}</p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
+                                {stats.data[difficulty].averageGuesses}
+                            </p>
+                            <p className='text-center'>Average guesses</p>
                         </div>
-                        <div>
-                            <p>Average time:</p>
-                            <p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
                                 {stats.data[difficulty].averageTime
                                     .milliseconds / 1000}
                             </p>
+                            <p className='text-center'>Average time</p>
                         </div>
-                        <div>
-                            <p>Words used:</p>
-                            <p>{stats.data[difficulty].wordsUsed}</p>
+                        <div className='sm:w-36'>
+                            <p className='text-3xl text-center'>
+                                {stats.data[difficulty].wordsUsed}
+                            </p>
+                            <p className='text-center'>Words used</p>
                         </div>
                     </div>
                 </>
