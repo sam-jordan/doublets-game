@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { type LoginDetails } from '../logic/types';
+import { DoubletsError, type LoginDetails } from '../logic/types';
 import { useSignIn } from '../logic/queries';
 import Loading from './loading';
 
@@ -46,8 +46,9 @@ export default function Login() {
                     }
 
                     default: {
-                        console.log(query.error);
-                        break;
+                        throw new DoubletsError(
+                            'An error occurred when logging in.'
+                        );
                     }
                 }
             } else if (query.data.nextStep.signInStep === 'DONE') {

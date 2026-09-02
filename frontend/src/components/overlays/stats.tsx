@@ -163,6 +163,7 @@ export default function Stats({ setOverlay }: StatsProps) {
                     type='button'
                     onClick={() => {
                         mutation.mutate();
+                        globalThis.location.reload();
                     }}
                 >
                     Log out
