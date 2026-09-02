@@ -15,8 +15,8 @@ export default function Overlay({ children, overlay }: OverlayProps) {
         <dialog
             open
             className={clsx(
-                'fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 text-white rounded-lg w-[80vw]',
-                'sm:w-fit'
+                'fixed top-5 left-1/2 bg-grey-very-dark -translate-x-1/2 p-4 text-white rounded-lg w-[80vw] min-h-48',
+                'sm:w-fit sm:min-w-100'
             )}
             // eslint-disable-next-line react/no-unknown-property -- is in fact a valid property
             closedby='any'
