@@ -1,9 +1,9 @@
 import process from 'node:process';
 import { type APIGatewayProxyResult } from 'aws-lambda';
-import { environment } from '../../stack/environment.js';
+import { statsEnvironment } from './environment.js';
 
 function addHeaders(origin?: string): Record<string, string> {
-    const env = environment.parse(process.env);
+    const env = statsEnvironment.parse(process.env);
 
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
