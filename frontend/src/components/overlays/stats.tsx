@@ -69,8 +69,8 @@ export default function Stats({ setOverlay }: StatsProps) {
 
     if (stats.isError) {
         return (
-            <div>
-                <div className='flex justify-between mb-2'>
+            <div className='flex flex-col items-center gap-4'>
+                <div className='flex justify-between w-full'>
                     <h2 className='font-(family-name:--title-fonts) font-bold text-2xl'>
                         Statistics
                     </h2>
