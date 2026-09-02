@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { signOut } from 'aws-amplify/auth';
+import { useMutation } from '@tanstack/react-query';
 import { useCurrentUser, useStats } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
@@ -18,6 +20,10 @@ export default function Stats({ setOverlay }: StatsProps) {
     const stats = useStats({
         username: currentUser.data?.username,
         enabled: Boolean(currentUser.data?.username),
+    });
+
+    const mutation = useMutation({
+        mutationFn: signOut,
     });
 
     return stats.isPending ? (
@@ -124,6 +130,17 @@ export default function Stats({ setOverlay }: StatsProps) {
                             </p>
                             <p className='text-center'>Words used</p>
                         </div>
+                    </div>
+                    <div className='flex justify-center mt-4'>
+                        <button
+                            className='border-2 border-white w-48 cursor-pointer py-2 hover:bg-grey-mid active:bg-grey-mid rounded-3xl font-bold'
+                            type='button'
+                            onClick={() => {
+                                mutation.mutate();
+                            }}
+                        >
+                            Log out
+                        </button>
                     </div>
                 </>
             )}
