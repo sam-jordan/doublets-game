@@ -77,19 +77,19 @@ export default function Stats({ setOverlay }: StatsProps) {
                         ))}
                     </div>
                     <div className='border-y-2 border-y-white flex justify-between p-4'>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].puzzlesAttempted}
                             </p>
                             <p className='text-center'>Puzzles attempted</p>
                         </div>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].puzzlesSolved}
                             </p>
                             <p className='text-center'>Puzzles solved</p>
                         </div>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].puzzlesAttempted > 0
                                     ? Math.round(
@@ -105,20 +105,20 @@ export default function Stats({ setOverlay }: StatsProps) {
                         </div>
                     </div>
                     <div className='border-b-2 border-y-white flex justify-between p-4'>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].averageGuesses}
                             </p>
                             <p className='text-center'>Average guesses</p>
                         </div>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].averageTime
                                     .milliseconds / 1000}
                             </p>
                             <p className='text-center'>Average time</p>
                         </div>
-                        <div className='sm:w-36'>
+                        <div className='w-24 sm:w-36'>
                             <p className='text-3xl text-center'>
                                 {stats.data[difficulty].wordsUsed}
                             </p>
