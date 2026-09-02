@@ -65,7 +65,8 @@ export async function handler(
                         puzzle,
                         puzzleStatus: JSON.stringify(parsed.data),
                     },
-                    ConditionExpression: 'attribute_not_exists(username)',
+                    ConditionExpression:
+                        'attribute_not_exists(username) AND attribute_not_exists(puzzle)',
                 });
 
                 await documentClient.send(command);
