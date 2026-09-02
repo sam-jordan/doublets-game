@@ -29,7 +29,8 @@ export default function Stats({ setOverlay }: StatsProps) {
 
     if (currentUser.isPending) {
         return (
-            <div className='flex-1 flex justify-center items-center'>
+            <div className='flex-1 flex flex-col justify-center items-center gap-2'>
+                <p className='font-bold'>Loading...</p>
                 <LoadingSpinner size='4rem' />
             </div>
         );
@@ -59,7 +60,8 @@ export default function Stats({ setOverlay }: StatsProps) {
 
     if (stats.isPending) {
         return (
-            <div className='flex-1 flex justify-center items-center'>
+            <div className='flex-1 flex flex-col justify-center items-center gap-2'>
+                <p className='font-bold'>Loading...</p>
                 <LoadingSpinner size='4rem' />
             </div>
         );
