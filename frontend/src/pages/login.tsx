@@ -142,6 +142,10 @@ export default function Login() {
                     </Link>
                 </p>
             </div>
+            <p className='font-(family-name:--standard-fonts) text-center p-4'>
+                Please note: We collect <strong>only</strong> gameplay data, for
+                the purpose of calculating statistics.
+            </p>
         </div>
     );
 }
