@@ -112,6 +112,7 @@ export class Stack extends cdk.Stack {
                 entry: './backend/lambda/stats-api/index.ts',
                 environment: {
                     TABLE_NAME: `${id}-stats-table`,
+                    DEV_DOMAIN: props.DEV_DOMAIN,
                 },
             }
         );
@@ -126,7 +127,7 @@ export class Stack extends cdk.Stack {
                     apigwv2.CorsHttpMethod.POST,
                     apigwv2.CorsHttpMethod.PUT,
                 ],
-                allowOrigins: ['https://www.doublets.app'],
+                allowOrigins: ['https://www.doublets.app', props.DEV_DOMAIN],
             },
         });
 

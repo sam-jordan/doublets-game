@@ -15,6 +15,7 @@ describe('Stack', () => {
             CERTIFICATE_ARN: 'test-arn',
             USER_POOL_ID: 'test-id',
             USER_POOL_CLIENT_ID: 'test-id',
+            DEV_DOMAIN: 'test-domain',
         });
 
         const template = Template.fromStack(stack);

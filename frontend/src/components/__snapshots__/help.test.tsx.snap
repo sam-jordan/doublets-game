@@ -1,73 +1,75 @@
 <DocumentFragment>
-  <div
-    class="flex justify-between"
-  >
-    <h2
-      class="font-(family-name:--title-fonts) font-bold text-2xl"
+  <div>
+    <div
+      class="flex justify-between"
     >
-      How to Play
-    </h2>
-    <button
-      class="w-4 cursor-pointer -mt-4"
-      type="button"
-    >
-      <svg
-        viewBox="0 0 640 640"
-        xmlns="http://www.w3.org/2000/svg"
+      <h2
+        class="font-(family-name:--title-fonts) font-bold text-2xl"
       >
-        <path
-          d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"
-          fill="rgb(255, 255, 255)"
-        />
-      </svg>
-    </button>
+        How to Play
+      </h2>
+      <button
+        class="w-4 cursor-pointer -mt-4"
+        type="button"
+      >
+        <svg
+          viewBox="0 0 640 640"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"
+            fill="rgb(255, 255, 255)"
+          />
+        </svg>
+      </button>
+    </div>
+    <p
+      class="font-(family-name:--title-fonts) mb-2"
+    >
+      Connect the start and end words using similar words.
+    </p>
+    <ul
+      class="font-(family-name:--standard-fonts) pl-2"
+    >
+      <li>
+        • Change 
+        <span
+          class="font-extrabold"
+        >
+          exactly one
+        </span>
+         letter between each guess,
+        <br />
+        indicated by the 
+        <span
+          class="text-pink-bright"
+        >
+          pink
+        </span>
+         tiles.
+      </li>
+      <li>
+        • Each guess must be a valid 5-letter word.
+      </li>
+      <li
+        class="sm:hidden"
+      >
+        • Guesses can be selected by pressing on them or using Enter/Backspace on the keyboard.
+      </li>
+      <li
+        class="hidden sm:list-item"
+      >
+        • Guesses can be selected using the mouse, the arrow keys or Enter/Backspace.
+      </li>
+      <li>
+        • Use the + and - buttons at the top of the page to add and remove guesses.
+      </li>
+      <li>
+        • Press Enter on the final guess to submit.
+      </li>
+      <li>
+        • Don't worry, you can keep trying if the submission isn't valid!
+      </li>
+    </ul>
   </div>
-  <p
-    class="font-(family-name:--title-fonts) mb-2"
-  >
-    Connect the start and end words using similar words.
-  </p>
-  <ul
-    class="font-(family-name:--standard-fonts) pl-2"
-  >
-    <li>
-      • Change 
-      <span
-        class="font-extrabold"
-      >
-        exactly one
-      </span>
-       letter between each guess,
-      <br />
-      indicated by the 
-      <span
-        class="text-pink-bright"
-      >
-        pink
-      </span>
-       tiles.
-    </li>
-    <li>
-      • Each guess must be a valid 5-letter word.
-    </li>
-    <li
-      class="sm:hidden"
-    >
-      • Guesses can be selected by pressing on them or using Enter/Backspace on the keyboard.
-    </li>
-    <li
-      class="hidden sm:list-item"
-    >
-      • Guesses can be selected using the mouse, the arrow keys or Enter/Backspace.
-    </li>
-    <li>
-      • Use the + and - buttons at the top of the page to add and remove guesses.
-    </li>
-    <li>
-      • Press Enter on the final guess to submit.
-    </li>
-    <li>
-      • Don't worry, you can keep trying if the submission isn't valid!
-    </li>
-  </ul>
 </DocumentFragment>
