@@ -7,6 +7,7 @@ import { useCurrentUser, useStats } from '../../logic/queries';
 import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 import OverlayCloseButton from '../overlay-close-button';
+import configureAmplify from '../../logic/configure-amplify';
 
 type StatsProps = {
     readonly setOverlay: React.Dispatch<
@@ -24,7 +25,14 @@ export default function Stats({ setOverlay }: StatsProps) {
     });
 
     const mutation = useMutation({
-        mutationFn: signOut,
+        async mutationFn() {
+            configureAmplify();
+            await signOut();
+        },
+        onSuccess() {
+            setOverlay(undefined);
+            globalThis.location.reload();
+        },
     });
 
     if (currentUser.isPending) {
@@ -163,7 +171,6 @@ export default function Stats({ setOverlay }: StatsProps) {
                     type='button'
                     onClick={() => {
                         mutation.mutate();
-                        globalThis.location.reload();
                     }}
                 >
                     Log out
