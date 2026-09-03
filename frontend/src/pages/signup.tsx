@@ -31,7 +31,9 @@ export default function Signup() {
             configureAmplify();
             await signOut();
         },
-        onSuccess: globalThis.location.reload,
+        onSuccess() {
+            globalThis.location.reload();
+        },
     });
 
     useEffect(() => {
@@ -42,19 +44,16 @@ export default function Signup() {
 
             if (query.isError) {
                 setSubmitted(false);
-                switch (query.error.name) {
-                    case 'UsernameExistsException': {
-                        setError(
-                            'This username is already taken. Please choose another.'
-                        );
-                        break;
-                    }
 
-                    default: {
-                        throw new DoubletsError(
-                            'An error occurred when signing up.'
-                        );
-                    }
+                // Username already in use
+                if (query.error.name === 'UsernameExistsException') {
+                    setError(
+                        'This username is already taken. Please choose another.'
+                    );
+                } else {
+                    throw new DoubletsError(
+                        'An error occurred when signing up.'
+                    );
                 }
             } else if (query.data.nextStep.signUpStep === 'DONE') {
                 setSubmitted(false);
@@ -68,7 +67,6 @@ export default function Signup() {
 
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
-        setError(undefined);
 
         if (loginDetails.password.length < 8) {
             setError('Password must be at least 8 characters long.');
@@ -102,6 +100,7 @@ export default function Signup() {
         }
 
         if (loginDetails.password === loginDetails.confirm) {
+            setError(undefined);
             setSubmitted(true);
         } else {
             setError('Passwords do not match');
