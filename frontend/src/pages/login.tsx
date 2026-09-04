@@ -43,12 +43,27 @@ export default function Login() {
 
             if (query.isError) {
                 setSubmitted(false);
-
-                // Incorrect username/password
                 if (query.error.name === 'NotAuthorizedException') {
-                    setError(
-                        'The username or password you entered is incorrect. Please try again.'
-                    );
+                    switch (query.error.message) {
+                        case 'Incorrect username or password.': {
+                            setError(
+                                'The username or password you entered is incorrect. Please try again.'
+                            );
+                            break;
+                        }
+
+                        case 'Password attempts exceeded': {
+                            setError(
+                                'Too many incorrect login attempts. Please try again later.'
+                            );
+                            break;
+                        }
+
+                        default: {
+                            setError('An error occurred when logging in.');
+                            break;
+                        }
+                    }
                 } else {
                     throw new DoubletsError(
                         'An error occurred when logging in.'

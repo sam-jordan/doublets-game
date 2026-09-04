@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
+import { AuthError, getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
 import configureAmplify from './configure-amplify';
 import { statsSchema, type SignInOptions, type Stats } from './types';
 import { callApi } from './query-helpers';
@@ -26,6 +26,9 @@ export function useSignIn(options: SignInOptions) {
                 password,
             }),
         enabled: submitted,
+        retry(_failureCount, error) {
+            return !(error instanceof AuthError);
+        },
     });
 }
 
@@ -41,6 +44,9 @@ export function useSignUp(options: SignInOptions) {
                 password,
             }),
         enabled: submitted,
+        retry(_failureCount, error) {
+            return !(error instanceof AuthError);
+        },
     });
 }
 
