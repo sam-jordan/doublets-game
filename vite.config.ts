@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
         root: mode === 'test' ? '.' : 'frontend',
         build: {
             outDir: 'build',
+            sourcemap: true,
         },
         server: {
             // Caching is disabled on port 5173 only
