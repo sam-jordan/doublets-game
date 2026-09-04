@@ -123,6 +123,9 @@ function getFromCache(date: DateTime): GameState | undefined {
         return;
     }
 
-    const parsed = gameStateSchema.parse(JSON.parse(cached));
-    return parsed;
+    const parsed = gameStateSchema.safeParse(JSON.parse(cached));
+
+    if (parsed.success) {
+        return parsed.data;
+    }
 }
