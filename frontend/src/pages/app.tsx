@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DateTime, Duration } from 'luxon';
-import { Link } from 'react-router';
-import clsx from 'clsx';
+// import { Link } from 'react-router';
+// import clsx from 'clsx';
 import {
     DIFFICULTIES,
     gameStateSchema,
@@ -10,10 +10,10 @@ import {
     type GameState,
 } from '../logic/types';
 import { emptyGuesses } from '../logic/empty-guesses';
-import { getPuzzle } from '../logic/get-puzzle';
-import { useCurrentUser } from '../logic/queries';
-import Loading from './loading';
-import Game from './game';
+// import { getPuzzle } from '../logic/get-puzzle';
+// import { useCurrentUser } from '../logic/queries';
+// import Loading from './loading';
+// import Game from './game';
 
 export default function App() {
     const date = DateTime.now().toUTC();
@@ -44,66 +44,66 @@ export default function App() {
 
     const parsed = viteEnvironment.safeParse(import.meta.env);
 
-    return <p>{`${parsed.error?.name}:${parsed.error?.message}`}</p>
+    return <p>{`${parsed.error?.name}:${parsed.error?.message}`}</p>;
 
-    const currentUser = useCurrentUser();
+    // const currentUser = useCurrentUser();
 
-    if (launched) {
-        return <Game gameState={gameState} setGameState={setGameState} />;
-    }
+    // if (launched) {
+    //     return <Game gameState={gameState} setGameState={setGameState} />;
+    // }
 
-    const puzzle = getPuzzle(gameState.difficulty);
+    // const puzzle = getPuzzle(gameState.difficulty);
 
-    return currentUser.isPending ? (
-        <Loading size='6rem' />
-    ) : (
-        <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-pink-bright text-white flex flex-col justify-center items-center'>
-            <div className='flex flex-col justify-between items-center gap-4'>
-                <img
-                    src='/logo.png'
-                    className='w-32 h-37.5'
-                    alt='Doublets logo'
-                />
-                <h2 className='text-5xl font-extrabold'>Doublets</h2>
-                <p className='text-xl sm:text-2xl text-center'>
-                    Get from the start word to the end <br /> by changing one
-                    letter at a time.
-                </p>
-                <div
-                    className={clsx(
-                        'font-(family-name:--standard-fonts) flex flex-col gap-2',
-                        'sm:flex-row sm:gap-4'
-                    )}
-                >
-                    {currentUser.isError ? (
-                        <Link
-                            className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
-                            to='/user/login'
-                        >
-                            Log in
-                        </Link>
-                    ) : null}
-                    <button
-                        type='button'
-                        className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
-                        onClick={() => {
-                            setLaunched(true);
-                        }}
-                    >
-                        Play
-                    </button>
-                </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <p className='font-(family-name:--standard-fonts)'>
-                        {date.toLocaleString(DateTime.DATE_MED)}
-                    </p>
-                    <p className='font-(family-name:--standard-fonts)'>
-                        {`No. ${puzzle.index + 1}`}
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
+    // return currentUser.isPending ? (
+    //     <Loading size='6rem' />
+    // ) : (
+    //     <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-pink-bright text-white flex flex-col justify-center items-center'>
+    //         <div className='flex flex-col justify-between items-center gap-4'>
+    //             <img
+    //                 src='/logo.png'
+    //                 className='w-32 h-37.5'
+    //                 alt='Doublets logo'
+    //             />
+    //             <h2 className='text-5xl font-extrabold'>Doublets</h2>
+    //             <p className='text-xl sm:text-2xl text-center'>
+    //                 Get from the start word to the end <br /> by changing one
+    //                 letter at a time.
+    //             </p>
+    //             <div
+    //                 className={clsx(
+    //                     'font-(family-name:--standard-fonts) flex flex-col gap-2',
+    //                     'sm:flex-row sm:gap-4'
+    //                 )}
+    //             >
+    //                 {currentUser.isError ? (
+    //                     <Link
+    //                         className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
+    //                         to='/user/login'
+    //                     >
+    //                         Log in
+    //                     </Link>
+    //                 ) : null}
+    //                 <button
+    //                     type='button'
+    //                     className='bg-grey-very-dark text-xl py-3 rounded-4xl w-48 cursor-pointer text-center'
+    //                     onClick={() => {
+    //                         setLaunched(true);
+    //                     }}
+    //                 >
+    //                     Play
+    //                 </button>
+    //             </div>
+    //             <div className='flex flex-col justify-center items-center'>
+    //                 <p className='font-(family-name:--standard-fonts)'>
+    //                     {date.toLocaleString(DateTime.DATE_MED)}
+    //                 </p>
+    //                 <p className='font-(family-name:--standard-fonts)'>
+    //                     {`No. ${puzzle.index + 1}`}
+    //                 </p>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 }
 
 function getFromCache(date: DateTime): GameState | undefined {
