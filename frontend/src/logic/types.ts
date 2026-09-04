@@ -90,12 +90,6 @@ export type UseGameState = {
     setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 };
 
-export const viteEnvironment = z.object({
-    VITE_USER_POOL_ID: z.string(),
-    VITE_USER_POOL_CLIENT_ID: z.string(),
-    VITE_API_URL: z.string(),
-});
-
 export type LoginDetails = {
     username: string;
     password: string;
