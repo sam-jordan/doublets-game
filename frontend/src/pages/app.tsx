@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import {
     DIFFICULTIES,
     gameStateSchema,
+    viteEnvironment,
     type Difficulties,
     type GameState,
 } from '../logic/types';
@@ -40,6 +41,10 @@ export default function App() {
     );
 
     const [launched, setLaunched] = useState<boolean>(cached !== undefined);
+
+    const parsed = viteEnvironment.safeParse(import.meta.env);
+
+    return <p>{`${parsed.error?.name}:${parsed.error?.message}`}</p>
 
     const currentUser = useCurrentUser();
 
