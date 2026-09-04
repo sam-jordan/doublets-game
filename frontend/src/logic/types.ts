@@ -147,3 +147,9 @@ export const sessionSchema = z.object({
         idToken: z.custom<JWT>().optional(),
     }),
 });
+
+export const viteEnvironment = z.object({
+    VITE_USER_POOL_ID: z.string(),
+    VITE_USER_POOL_CLIENT_ID: z.string(),
+    VITE_API_URL: z.string(),
+});
