@@ -32,7 +32,7 @@ export default function App() {
                     difficulty,
                     Duration.fromMillis(0),
                 ])
-            ) as Record<Difficulties, Duration>,
+            ) as Record<Difficulties, Duration<true>>,
             attempted: Object.fromEntries(
                 DIFFICULTIES.map(d => [d, false])
             ) as Record<Difficulties, boolean>,
