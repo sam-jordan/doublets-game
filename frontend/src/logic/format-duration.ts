@@ -1,3 +1,5 @@
+/* eslint-disable @stylistic/no-mixed-operators -- conflicts with Prettier */
+
 import type { Duration } from 'luxon';
 
 export function formatDuration(duration: Duration) {
