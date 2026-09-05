@@ -137,33 +137,33 @@ export class Stack extends cdk.Stack {
             statsApiLambda
         );
 
-        const issuer = `https://cognito-idp.eu-west-2.amazonaws.com/${props.USER_POOL_ID}`;
-        const authorizer = new HttpJwtAuthorizer(
-            `${id}-stats-authorizer`,
-            issuer,
-            {
-                jwtAudience: [props.USER_POOL_CLIENT_ID],
-                identitySource: ['$request.header.Authorization'],
-            }
-        );
+        // const issuer = `https://cognito-idp.eu-west-2.amazonaws.com/${props.USER_POOL_ID}`;
+        // const authorizer = new HttpJwtAuthorizer(
+        //     `${id}-stats-authorizer`,
+        //     issuer,
+        //     {
+        //         jwtAudience: [props.USER_POOL_CLIENT_ID],
+        //         identitySource: ['$request.header.Authorization'],
+        //     }
+        // );
 
         httpApi.addRoutes({
             path: '/game/{user}/attempted/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
-            authorizer,
+            // Authorizer,
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved/{difficulty}',
             methods: [apigwv2.HttpMethod.PUT],
             integration,
-            authorizer,
+            // Authorizer,
         });
         httpApi.addRoutes({
             path: '/stats/{user}',
             methods: [apigwv2.HttpMethod.GET],
             integration,
-            authorizer,
+            // Authorizer,
         });
     }
 }

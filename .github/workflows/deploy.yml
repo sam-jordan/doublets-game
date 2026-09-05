@@ -29,9 +29,14 @@ jobs:
 
             - name: Build code
               run: npm run build
+              env:
+                  VITE_USER_POOL_ID: undefined
+                  VITE_USER_POOL_CLIENT_ID: undefined
+                  VITE_API_URL: undefined
 
             - name: Deploy
               run: npm run deploy
               env:
                   CERTIFICATE_ARN: ${{ secrets.CERTIFICATE_ARN }}
                   DEPLOY_ENV: prod
+                  DEV_DOMAIN: ${{ secrets.DEV_DOMAIN }}
