@@ -487,7 +487,7 @@ exports[`Stack > synthesises correctly 1`] = `
           },
         ],
         "SourceObjectKeys": [
-          "0af0ad190128ee168f2bd04be34799acb63ad9b9f86cc19b39fb9db85c264382.zip",
+          "c6d8159ec193f20b3e4d49bcba09b16941df59626503bf6363e59c0b6cd702da.zip",
         ],
         "WaitForDistributionInvalidation": true,
       },
@@ -552,6 +552,9 @@ exports[`Stack > synthesises correctly 1`] = `
     "doubletsgamedevstatsapi138D48EF": {
       "Properties": {
         "CorsConfiguration": {
+          "AllowHeaders": [
+            "Authorization",
+          ],
           "AllowMethods": [
             "GET",
             "POST",
