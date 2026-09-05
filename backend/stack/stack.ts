@@ -128,7 +128,7 @@ export class Stack extends cdk.Stack {
                     apigwv2.CorsHttpMethod.PUT,
                 ],
                 allowOrigins: ['https://www.doublets.app', props.DEV_DOMAIN],
-                allowCredentials: true,
+                allowHeaders: ['Authorization'],
             },
         });
 
