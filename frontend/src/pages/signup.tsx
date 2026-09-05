@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { useMutation } from '@tanstack/react-query';
 import { signOut } from 'aws-amplify/auth';
-import { DoubletsError, type LoginDetails } from '../logic/types';
+import { type LoginDetails } from '../logic/types';
 import { useCurrentUser, useSignUp } from '../logic/queries';
 import configureAmplify from '../logic/configure-amplify';
 import Loading from './loading';
@@ -51,9 +51,7 @@ export default function Signup() {
                         'This username is already taken. Please choose another.'
                     );
                 } else {
-                    throw new DoubletsError(
-                        'An error occurred when signing up.'
-                    );
+                    setError('An error occurred when signing up.');
                 }
             } else if (query.data.nextStep.signUpStep === 'DONE') {
                 setSubmitted(false);

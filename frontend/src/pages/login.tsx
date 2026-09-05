@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { useMutation } from '@tanstack/react-query';
 import { signOut } from 'aws-amplify/auth';
-import { DoubletsError, type LoginDetails } from '../logic/types';
+import { type LoginDetails } from '../logic/types';
 import { useCurrentUser, useSignIn } from '../logic/queries';
 import configureAmplify from '../logic/configure-amplify';
 import Loading from './loading';
@@ -43,38 +43,51 @@ export default function Login() {
 
             if (query.isError) {
                 setSubmitted(false);
-                if (query.error.name === 'NotAuthorizedException') {
-                    switch (query.error.message) {
-                        case 'Incorrect username or password.': {
-                            setError(
-                                'The username or password you entered is incorrect. Please try again.'
-                            );
-                            break;
+
+                switch (query.error.name) {
+                    case 'NotAuthorizedException': {
+                        switch (query.error.message) {
+                            case 'Incorrect username or password.': {
+                                setError(
+                                    'The username or password you entered is incorrect. Please try again.'
+                                );
+                                break;
+                            }
+
+                            case 'Password attempts exceeded': {
+                                setError(
+                                    'Too many incorrect login attempts. Please try again later.'
+                                );
+                                break;
+                            }
+
+                            default: {
+                                setError('An error occurred when logging in.');
+                                break;
+                            }
                         }
 
-                        case 'User does not exist.': {
-                            setError(
-                                'The username or password you entered is incorrect. Please try again.'
-                            );
-                            break;
-                        }
-
-                        case 'Password attempts exceeded': {
-                            setError(
-                                'Too many incorrect login attempts. Please try again later.'
-                            );
-                            break;
-                        }
-
-                        default: {
-                            setError('An error occurred when logging in.');
-                            break;
-                        }
+                        break;
                     }
-                } else {
-                    throw new DoubletsError(
-                        'An error occurred when logging in.'
-                    );
+
+                    case 'UserNotFoundException': {
+                        setError(
+                            'The username or password you entered is incorrect. Please try again.'
+                        );
+                        break;
+                    }
+
+                    case 'EmptySignInPassword': {
+                        setError(
+                            'Please enter a password before attempting to log in.'
+                        );
+                        break;
+                    }
+
+                    default: {
+                        setError('An error occurred when logging in.');
+                        break;
+                    }
                 }
             } else if (query.data.nextStep.signInStep === 'DONE') {
                 setSubmitted(false);
