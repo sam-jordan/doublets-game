@@ -8,6 +8,7 @@ import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
+import { formatDuration } from '../../logic/format-duration';
 
 type StatsProps = {
     readonly setOverlay: React.Dispatch<
@@ -154,7 +155,7 @@ export default function Stats({ setOverlay }: StatsProps) {
                 </div>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].averageTime.milliseconds / 1000}
+                        {formatDuration(stats.data[difficulty].averageTime)}
                     </p>
                     <p className='text-center'>Average time</p>
                 </div>
