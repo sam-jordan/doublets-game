@@ -134,7 +134,7 @@ export default function Signup() {
                             </label>
                             <input
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
                                     'sm:w-96'
                                 )}
                                 id='username'
@@ -153,7 +153,7 @@ export default function Signup() {
                             </label>
                             <input
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
                                     'sm:w-96'
                                 )}
                                 id='password'
@@ -173,7 +173,7 @@ export default function Signup() {
                             </label>
                             <input
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
                                     'sm:w-96'
                                 )}
                                 id='confirm'

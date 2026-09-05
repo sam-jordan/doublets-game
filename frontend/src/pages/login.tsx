@@ -52,6 +52,13 @@ export default function Login() {
                             break;
                         }
 
+                        case 'User does not exist.': {
+                            setError(
+                                'The username or password you entered is incorrect. Please try again.'
+                            );
+                            break;
+                        }
+
                         case 'Password attempts exceeded': {
                             setError(
                                 'Too many incorrect login attempts. Please try again later.'
@@ -112,7 +119,7 @@ export default function Login() {
                             </label>
                             <input
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
                                     'sm:w-96'
                                 )}
                                 id='username'
@@ -131,7 +138,7 @@ export default function Login() {
                             </label>
                             <input
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12',
+                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
                                     'sm:w-96'
                                 )}
                                 id='password'
