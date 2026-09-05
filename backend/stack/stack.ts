@@ -128,6 +128,7 @@ export class Stack extends cdk.Stack {
                     apigwv2.CorsHttpMethod.PUT,
                 ],
                 allowOrigins: ['https://www.doublets.app', props.DEV_DOMAIN],
+                allowCredentials: true,
             },
         });
 
@@ -150,19 +151,19 @@ export class Stack extends cdk.Stack {
             path: '/game/{user}/attempted/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
-            // Authorizer,
+            authorizer,
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved/{difficulty}',
             methods: [apigwv2.HttpMethod.PUT],
             integration,
-            // Authorizer,
+            authorizer,
         });
         httpApi.addRoutes({
             path: '/stats/{user}',
             methods: [apigwv2.HttpMethod.GET],
             integration,
-            // Authorizer,
+            authorizer,
         });
     }
 }
