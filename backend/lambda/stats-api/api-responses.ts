@@ -9,7 +9,7 @@ function addHeaders(origin?: string): Record<string, string> {
         'Content-Type': 'application/json',
     };
 
-    const allowedOrigins = ['www.doublets.app', env.DEV_DOMAIN];
+    const allowedOrigins = ['https://www.doublets.app', env.DEV_DOMAIN];
     if (origin !== undefined && allowedOrigins.includes(origin)) {
         headers['Access-Control-Allow-Origin'] = origin;
     }

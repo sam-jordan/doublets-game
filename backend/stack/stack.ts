@@ -150,19 +150,19 @@ export class Stack extends cdk.Stack {
             path: '/game/{user}/attempted/{difficulty}',
             methods: [apigwv2.HttpMethod.POST],
             integration,
-            authorizer,
+            // Authorizer,
         });
         httpApi.addRoutes({
             path: '/game/{user}/solved/{difficulty}',
             methods: [apigwv2.HttpMethod.PUT],
             integration,
-            authorizer,
+            // Authorizer,
         });
         httpApi.addRoutes({
             path: '/stats/{user}',
             methods: [apigwv2.HttpMethod.GET],
             integration,
-            authorizer,
+            // Authorizer,
         });
     }
 }
