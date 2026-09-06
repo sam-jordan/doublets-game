@@ -27,6 +27,7 @@ export default function HeaderButton({
                     ? 'hover:bg-grey-mid active:bg-grey-mid cursor-pointer'
                     : ''
             )}
+            id={`${icon.iconName}-overlay-button`}
             onClick={() => {
                 if (overlay === undefined) {
                     onClick();
@@ -38,7 +39,6 @@ export default function HeaderButton({
             <FontAwesomeIcon
                 icon={icon}
                 style={{ color: 'rgb(255, 255, 255)' }}
-                id='overlay-button'
             />
         </button>
     );
