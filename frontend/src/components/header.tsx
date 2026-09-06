@@ -1,4 +1,10 @@
 import clsx from 'clsx';
+import {
+    faCircleQuestion,
+    faSquareMinus,
+    faSquarePlus,
+} from '@fortawesome/free-regular-svg-icons';
+import { faChartSimple, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import { type GameState } from '../logic/types';
 import { formatDuration } from '../logic/format-duration';
 import HeaderButton from './header-button';
@@ -58,19 +64,19 @@ export default function Header({
             </div>
             <div className='flex justify-between gap-x-2'>
                 <HeaderButton
-                    type='add-guess-overlay-button'
+                    icon={faSquarePlus}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={addGuess}
                 />
                 <HeaderButton
-                    type='remove-guess-overlay-button'
+                    icon={faSquareMinus}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={removeGuess}
                 />
                 <HeaderButton
-                    type='stats-overlay-button'
+                    icon={faChartSimple}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={() => {
@@ -78,7 +84,7 @@ export default function Header({
                     }}
                 />
                 <HeaderButton
-                    type='difficulties-overlay-button'
+                    icon={faDumbbell}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={() => {
@@ -86,7 +92,7 @@ export default function Header({
                     }}
                 />
                 <HeaderButton
-                    type='help-overlay-button'
+                    icon={faCircleQuestion}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={() => {
