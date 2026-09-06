@@ -478,7 +478,9 @@ export default function Game(props: UseGameState) {
             }
 
             case 'stats': {
-                return <Stats setOverlay={setOverlay} />;
+                return (
+                    <Stats setOverlay={setOverlay} difficulty={difficulty} />
+                );
             }
 
             case undefined: {

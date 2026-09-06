@@ -15,10 +15,12 @@ type StatsProps = {
     readonly setOverlay: React.Dispatch<
         React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
+    readonly difficulty: Difficulties;
 };
 
-export default function Stats({ setOverlay }: StatsProps) {
-    const [difficulty, setDifficulty] = useState<Difficulties>('easy');
+export default function Stats({ setOverlay, difficulty }: StatsProps) {
+    const [statsDifficulty, setStatsDifficulty] =
+        useState<Difficulties>(difficulty);
 
     const currentUser = useCurrentUser();
     const stats = useStats({
@@ -118,13 +120,13 @@ export default function Stats({ setOverlay }: StatsProps) {
                         key={`${d}-tab`}
                         className={clsx(
                             'rounded-lg p-2 w-36',
-                            difficulty === d
+                            statsDifficulty === d
                                 ? 'bg-grey-mid'
                                 : 'bg-grey-very-dark'
                         )}
                         type='button'
                         onClick={() => {
-                            setDifficulty(d);
+                            setStatsDifficulty(d);
                         }}
                     >
                         {`${d.slice(0, 1).toUpperCase()}${d.slice(1)}`}
@@ -134,22 +136,23 @@ export default function Stats({ setOverlay }: StatsProps) {
             <div className='border-y-2 border-y-white flex justify-between p-4'>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].puzzlesAttempted}
+                        {stats.data[statsDifficulty].puzzlesAttempted}
                     </p>
                     <p className='text-center'>Puzzles attempted</p>
                 </div>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].puzzlesSolved}
+                        {stats.data[statsDifficulty].puzzlesSolved}
                     </p>
                     <p className='text-center'>Puzzles solved</p>
                 </div>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].puzzlesAttempted > 0
+                        {stats.data[statsDifficulty].puzzlesAttempted > 0
                             ? Math.round(
-                                  (stats.data[difficulty].puzzlesSolved /
-                                      stats.data[difficulty].puzzlesAttempted) *
+                                  (stats.data[statsDifficulty].puzzlesSolved /
+                                      stats.data[statsDifficulty]
+                                          .puzzlesAttempted) *
                                       100
                               )
                             : 0}
@@ -160,19 +163,21 @@ export default function Stats({ setOverlay }: StatsProps) {
             <div className='border-b-2 border-y-white flex justify-between p-4'>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].averageGuesses}
+                        {stats.data[statsDifficulty].averageGuesses}
                     </p>
                     <p className='text-center'>Average guesses</p>
                 </div>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {formatDuration(stats.data[difficulty].averageTime)}
+                        {formatDuration(
+                            stats.data[statsDifficulty].averageTime
+                        )}
                     </p>
                     <p className='text-center'>Average time</p>
                 </div>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[difficulty].wordsUsed}
+                        {stats.data[statsDifficulty].wordsUsed}
                     </p>
                     <p className='text-center'>Words used</p>
                 </div>
