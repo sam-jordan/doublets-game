@@ -1,7 +1,6 @@
-/* eslint-disable @stylistic/no-mixed-operators -- conflicts with Prettier */
-
 import clsx from 'clsx';
 import { type GameState } from '../logic/types';
+import { formatDuration } from '../logic/format-duration';
 import HeaderButton from './header-button';
 
 type HeaderProps = {
@@ -23,11 +22,6 @@ export default function Header({
 }: HeaderProps) {
     const { solved, difficulty, timers } = gameState;
 
-    const seconds =
-        timers[difficulty].seconds + timers[difficulty].milliseconds / 1000;
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-
     return (
         <header className='flex justify-between border-b px-4'>
             <div className='flex items-center gap-4'>
@@ -43,7 +37,7 @@ export default function Header({
                     {`${difficulty.slice(0, 1).toUpperCase()}${difficulty.slice(1)}`}
                 </p>
                 <p className='font-(family-name:--standard-fonts)'>
-                    {`${hours > 0 ? `${hours}:${minutes - hours * 60}` : minutes}:${seconds - minutes * 60 < 10 ? `0${seconds - minutes * 60}` : seconds - minutes * 60}`}
+                    {formatDuration(timers[difficulty])}
                     <span className='inline-flex'>
                         {solved[difficulty] === undefined ? null : (
                             <svg
