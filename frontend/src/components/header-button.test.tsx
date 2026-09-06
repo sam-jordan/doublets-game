@@ -3,6 +3,7 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import HeaderButton from './header-button';
 
 const onClick = vi.fn(() => void {});
@@ -17,7 +18,7 @@ describe('HeaderButton', () => {
     it('should render', () => {
         const { asFragment } = render(
             <HeaderButton
-                type='test'
+                icon={faCircleQuestion}
                 overlay={undefined}
                 setOverlay={setOverlay}
                 onClick={onClick}
@@ -31,7 +32,7 @@ describe('HeaderButton', () => {
         const user = userEvent.setup();
         const ui = render(
             <HeaderButton
-                type='test'
+                icon={faCircleQuestion}
                 overlay={undefined}
                 setOverlay={setOverlay}
                 onClick={onClick}
@@ -44,30 +45,11 @@ describe('HeaderButton', () => {
         expect(onClick).toHaveBeenCalledOnce();
     });
 
-    it.each([
-        'add-guess-overlay-button',
-        'remove-guess-overlay-button',
-        'difficulties-overlay-button',
-        'help-overlay-button',
-        'stats-overlay-button',
-    ])('should render with the correct icon (%s)', id => {
-        const { asFragment } = render(
-            <HeaderButton
-                type={id}
-                overlay={undefined}
-                setOverlay={setOverlay}
-                onClick={onClick}
-            />
-        );
-
-        expect(asFragment()).toMatchSnapshot();
-    });
-
     it('should render correctly and disable onClick when overlay is defined', async () => {
         const user = userEvent.setup();
         const ui = render(
             <HeaderButton
-                type='test'
+                icon={faCircleQuestion}
                 overlay='help'
                 setOverlay={setOverlay}
                 onClick={onClick}

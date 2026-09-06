@@ -87,10 +87,6 @@ export type SignInOptions = {
     submitted: boolean;
 };
 
-export type LoadingProps = {
-    size: string;
-};
-
 export type CallApiOptions = {
     endpoint: {
         path: string;
