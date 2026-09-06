@@ -137,6 +137,7 @@ export default function Login() {
                                 )}
                                 id='username'
                                 value={loginDetails.username}
+                                autoComplete='username'
                                 onChange={event => {
                                     setLoginDetails({
                                         ...loginDetails,
@@ -157,6 +158,7 @@ export default function Login() {
                                 id='password'
                                 type='password'
                                 value={loginDetails.password}
+                                autoComplete='current-password'
                                 onChange={event => {
                                     setLoginDetails({
                                         ...loginDetails,
