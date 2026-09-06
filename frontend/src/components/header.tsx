@@ -75,19 +75,19 @@ export default function Header({
                     onClick={removeGuess}
                 />
                 <HeaderButton
-                    icon={faChartSimple}
-                    overlay={overlay}
-                    setOverlay={setOverlay}
-                    onClick={() => {
-                        setOverlay('stats');
-                    }}
-                />
-                <HeaderButton
                     icon={faDumbbell}
                     overlay={overlay}
                     setOverlay={setOverlay}
                     onClick={() => {
                         setOverlay('select-difficulty');
+                    }}
+                />
+                <HeaderButton
+                    icon={faChartSimple}
+                    overlay={overlay}
+                    setOverlay={setOverlay}
+                    onClick={() => {
+                        setOverlay('stats');
                     }}
                 />
                 <HeaderButton
