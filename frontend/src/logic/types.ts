@@ -5,8 +5,6 @@ import { type JWT } from 'aws-amplify/auth';
 export const DIFFICULTIES = ['easy', 'medium', 'hard'] as const;
 export type Difficulties = (typeof DIFFICULTIES)[number];
 
-export type WordTypes = 'fixed' | 'guess';
-
 export type Puzzle = { index: number; startWord: string; endWord: string };
 
 type Word = {
@@ -119,11 +117,11 @@ const statsPerDifficultySchema = z.object({
     averageGuesses: z.number(),
 });
 
-export const attemptedSchema = z.object({
+const attemptedSchema = z.object({
     attempted: z.boolean(),
     solved: z.literal(false),
 });
-export const solvedSchema = z.object({
+const solvedSchema = z.object({
     attempted: z.boolean(),
     solved: z.literal(true),
     solveTime: z.custom<Duration>(),
