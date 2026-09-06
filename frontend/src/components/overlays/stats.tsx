@@ -3,8 +3,9 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { signOut } from 'aws-amplify/auth';
 import { useMutation } from '@tanstack/react-query';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useCurrentUser, useStats } from '../../logic/queries';
-import LoadingSpinner from '../loading-spinner';
 import { DIFFICULTIES, type Difficulties } from '../../logic/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
@@ -40,7 +41,12 @@ export default function Stats({ setOverlay }: StatsProps) {
         return (
             <div className='flex-1 flex flex-col justify-center items-center gap-2'>
                 <p className='font-bold'>Loading...</p>
-                <LoadingSpinner size='4rem' />
+                <FontAwesomeIcon
+                    icon={faCircleNotch}
+                    style={{ color: 'rgb(255, 255, 255)' }}
+                    size='4x'
+                    className='animate-spin'
+                />
             </div>
         );
     }
@@ -71,7 +77,12 @@ export default function Stats({ setOverlay }: StatsProps) {
         return (
             <div className='flex-1 flex flex-col justify-center items-center gap-2'>
                 <p className='font-bold'>Loading...</p>
-                <LoadingSpinner size='4rem' />
+                <FontAwesomeIcon
+                    icon={faCircleNotch}
+                    style={{ color: 'rgb(255, 255, 255)' }}
+                    size='4x'
+                    className='animate-spin'
+                />
             </div>
         );
     }

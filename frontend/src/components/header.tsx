@@ -55,8 +55,7 @@ export default function Header({
                                 icon={faTrophy}
                                 style={{ color: 'rgb(255, 255, 255)' }}
                                 className='ml-1'
-                                height='0.75rem'
-                                width='0.75rem'
+                                size='xs'
                             />
                         )}
                     </span>

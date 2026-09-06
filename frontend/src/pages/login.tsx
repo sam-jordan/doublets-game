@@ -106,12 +106,12 @@ export default function Login() {
     }
 
     if (currentUser.isPending) {
-        return <Loading size='6rem' />;
+        return <Loading />;
     }
 
     if (currentUser.isError) {
         if (submitted && query.isPending) {
-            return <Loading size='6rem' />;
+            return <Loading />;
         }
 
         return (

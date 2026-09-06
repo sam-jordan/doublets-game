@@ -50,7 +50,7 @@ export default function App() {
     const puzzle = getPuzzle(gameState.difficulty);
 
     return currentUser.isPending ? (
-        <Loading size='6rem' />
+        <Loading />
     ) : (
         <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>

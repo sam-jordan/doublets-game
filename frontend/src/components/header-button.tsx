@@ -21,7 +21,7 @@ export default function HeaderButton({
         <button
             type='button'
             className={clsx(
-                'w-10',
+                'w-10 min-h-12',
                 'sm:w-12',
                 overlay === undefined
                     ? 'hover:bg-grey-mid active:bg-grey-mid cursor-pointer'
@@ -39,6 +39,7 @@ export default function HeaderButton({
             <FontAwesomeIcon
                 icon={icon}
                 style={{ color: 'rgb(255, 255, 255)' }}
+                size='xl'
             />
         </button>
     );

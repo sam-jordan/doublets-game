@@ -45,8 +45,6 @@ export default function Keyboard({ handleKeyUp, overlay }: KeyboardProps) {
                                 <FontAwesomeIcon
                                     icon={faDeleteLeft}
                                     style={{ color: 'rgb(255, 255, 255)' }}
-                                    width='1.5rem'
-                                    height='1.5rem'
                                 />
                             ) : (
                                 <p>{key.toUpperCase()}</p>
