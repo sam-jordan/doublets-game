@@ -172,7 +172,44 @@ export async function handler(
         }
 
         case 'GET /game/{user}/sync/{date}': {
-            return ok('Hello, world!', origin);
+            try {
+                const command = new QueryCommand({
+                    TableName: process.env.TABLE_NAME,
+                    KeyConditionExpression: 'username = :username',
+                    ExpressionAttributeValues: {
+                        ':username': event.pathParameters?.user,
+                    },
+                    ConsistentRead: true,
+                });
+
+                const response = await documentClient.send(command);
+                const parsed = puzzleRecordsSchema.parse(response.Items);
+
+                const date = DateTime.now()
+                    .toUTC()
+                    .toLocaleString(DateTime.DATE_SHORT);
+                const today = parsed.filter(record =>
+                    record.puzzle.startsWith(`[${date}]`)
+                );
+
+                const body: Record<string, string> = {};
+                for (const record of today) {
+                    const fromRegex =
+                        /\[\d+\/\d+\/\d{4}\]#\[(?<difficulty>[a-z]+)\]/v.exec(
+                            record.puzzle
+                        );
+                    const difficulty = fromRegex?.groups?.difficulty;
+
+                    if (difficulty !== undefined && difficulty !== null) {
+                        body[difficulty] = record.puzzleStatus;
+                    }
+                }
+
+                return ok(JSON.stringify(body), origin);
+            } catch (error) {
+                console.error(error);
+                return internalServerError(origin);
+            }
         }
 
         default: {

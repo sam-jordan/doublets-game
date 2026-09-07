@@ -41,7 +41,7 @@ export function notFound(origin?: string): APIGatewayProxyResult {
     };
 }
 
-export function internalServerError(origin?: string) {
+export function internalServerError(origin?: string): APIGatewayProxyResult {
     return {
         statusCode: 500,
         body: 'Internal Server Error',
