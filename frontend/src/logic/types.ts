@@ -7,17 +7,6 @@ export type Difficulties = (typeof DIFFICULTIES)[number];
 
 export type Puzzle = { index: number; startWord: string; endWord: string };
 
-type Word = {
-    index: number;
-    letters: string[];
-    gameWin?: number | undefined;
-};
-
-export type Guess = Word & {
-    type: 'guess';
-    changed: number[];
-};
-
 const guessSchema = z.object({
     index: z.number(),
     letters: z.array(z.string()),
@@ -26,7 +15,12 @@ const guessSchema = z.object({
     changed: z.array(z.number()),
 });
 
-type Fixed = Word & {
+export type Guess = z.infer<typeof guessSchema>;
+
+type Fixed = {
+    index: number;
+    letters: string[];
+    gameWin?: number | undefined;
     type: 'fixed';
 };
 
