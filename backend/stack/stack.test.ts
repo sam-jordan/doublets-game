@@ -3,6 +3,14 @@ import * as cdk from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 import { Stack } from './stack.js';
 
+function removeDynamicValues(template: Record<string, unknown>): unknown {
+    const json = JSON.stringify(template).replaceAll(
+        /[0-9a-f]{64}\.zip/gv,
+        'KEY.zip'
+    );
+    return JSON.parse(json);
+}
+
 describe('Stack', () => {
     it('synthesises correctly', () => {
         const app = new cdk.App({
@@ -19,6 +27,6 @@ describe('Stack', () => {
         });
 
         const template = Template.fromStack(stack);
-        expect(template.toJSON()).toMatchSnapshot();
+        expect(removeDynamicValues(template.toJSON())).toMatchSnapshot();
     }, 20_000);
 });

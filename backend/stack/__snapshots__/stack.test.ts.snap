@@ -20,7 +20,7 @@ exports[`Stack > synthesises correctly 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "97e9ebf0b174a5c8f7faa505739022b7f509edddffcab9211dcd08b759944c4f.zip",
+          "S3Key": "KEY.zip",
         },
         "Environment": {
           "Variables": {
@@ -179,7 +179,7 @@ exports[`Stack > synthesises correctly 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "faa95a81ae7d7373f3e1f242268f904eb748d8d0fdd306e8a6fe515a1905a7d6.zip",
+          "S3Key": "KEY.zip",
         },
         "Description": {
           "Fn::Join": [
@@ -237,7 +237,7 @@ exports[`Stack > synthesises correctly 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "bcf9265ae5e22936667f94e7ce25ac916af541c8aaab650b5eb5473994515ee8.zip",
+          "S3Key": "KEY.zip",
         },
         "FunctionName": "doublets-game-dev-auto-confirm-lambda",
         "Handler": "index.handler",
@@ -461,7 +461,7 @@ exports[`Stack > synthesises correctly 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "98f62bef9320f8c0a0a7be21d7c746f069131f196f51ffe3008a6bb730b368ec.zip",
+          "S3Key": "KEY.zip",
         },
         "Description": "/opt/awscli/aws",
       },
@@ -487,7 +487,7 @@ exports[`Stack > synthesises correctly 1`] = `
           },
         ],
         "SourceObjectKeys": [
-          "acd19862cde32cb67a98469cf17a37680cfc0318bd92091ee921dcf517d3d07a.zip",
+          "KEY.zip",
         ],
         "WaitForDistributionInvalidation": true,
       },
@@ -808,7 +808,7 @@ exports[`Stack > synthesises correctly 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "51fe5faf642678a727d245254f0df77e899ab5464abdd381083b215401c5158b.zip",
+          "S3Key": "KEY.zip",
         },
         "Environment": {
           "Variables": {
