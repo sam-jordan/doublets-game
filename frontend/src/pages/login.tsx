@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { useMutation } from '@tanstack/react-query';
 import { signOut } from 'aws-amplify/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { type LoginDetails } from '../logic/types';
 import { useCurrentUser, useSignIn } from '../logic/queries';
 import configureAmplify from '../logic/configure-amplify';
@@ -15,6 +17,7 @@ export default function Login() {
     });
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [error, setError] = useState<string>();
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const success = useNavigate();
 
@@ -150,22 +153,51 @@ export default function Login() {
                             <label htmlFor='password' className='block mb-1'>
                                 Password
                             </label>
-                            <input
+                            <div
                                 className={clsx(
-                                    'bg-white text-black rounded-xl pl-2 w-64 h-12 cursor-text',
+                                    'w-64 h-12 relative',
                                     'sm:w-96'
                                 )}
-                                id='password'
-                                type='password'
-                                value={loginDetails.password}
-                                autoComplete='current-password'
-                                onChange={event => {
-                                    setLoginDetails({
-                                        ...loginDetails,
-                                        password: event.target.value,
-                                    });
-                                }}
-                            />
+                            >
+                                <input
+                                    className='bg-white text-black rounded-xl pl-2 cursor-text w-full h-full'
+                                    id='password'
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={loginDetails.password}
+                                    autoComplete='current-password'
+                                    onChange={event => {
+                                        setLoginDetails({
+                                            ...loginDetails,
+                                            password: event.target.value,
+                                        });
+                                    }}
+                                />
+                                <button
+                                    className='h-full aspect-square absolute top-0 right-0'
+                                    type='button'
+                                    aria-label='Show Password'
+                                    onClick={event => {
+                                        event.preventDefault();
+                                        setShowPassword(!showPassword);
+                                    }}
+                                >
+                                    {showPassword ? (
+                                        <FontAwesomeIcon
+                                            icon={faEyeSlash}
+                                            style={{
+                                                color: 'rgb(129, 131, 132)',
+                                            }}
+                                        />
+                                    ) : (
+                                        <FontAwesomeIcon
+                                            icon={faEye}
+                                            style={{
+                                                color: 'rgb(129, 131, 132)',
+                                            }}
+                                        />
+                                    )}
+                                </button>
+                            </div>
                         </div>
                         {error === undefined ? null : (
                             <p className='text-pink-bright -mb-4'>{error}</p>
