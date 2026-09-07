@@ -171,6 +171,10 @@ export async function handler(
             }
         }
 
+        case 'GET /game/{user}/sync/{date}': {
+            return ok('Hello, world!', origin);
+        }
+
         default: {
             return notFound(origin);
         }
