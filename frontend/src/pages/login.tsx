@@ -80,6 +80,13 @@ export default function Login() {
                         break;
                     }
 
+                    case 'EmptySignInUsername': {
+                        setError(
+                            'Please enter a username before attempting to log in.'
+                        );
+                        break;
+                    }
+
                     case 'EmptySignInPassword': {
                         setError(
                             'Please enter a password before attempting to log in.'

@@ -48,13 +48,26 @@ export default function Signup() {
             if (query.isError) {
                 setSubmitted(false);
 
-                // Username already in use
-                if (query.error.name === 'UsernameExistsException') {
-                    setError(
-                        'This username is already taken. Please choose another.'
-                    );
-                } else {
-                    setError('An error occurred when signing up.');
+                switch (query.error.name) {
+                    // Username already in use
+                    case 'UsernameExistsException': {
+                        setError(
+                            'This username is already taken. Please choose another.'
+                        );
+                        break;
+                    }
+
+                    case 'EmptySignInUsername': {
+                        setError(
+                            'Please enter a username before attempting to sign up.'
+                        );
+                        break;
+                    }
+
+                    default: {
+                        setError('An error occurred when signing up.');
+                        break;
+                    }
                 }
             } else if (query.data.nextStep.signUpStep === 'DONE') {
                 setSubmitted(false);
