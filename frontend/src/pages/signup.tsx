@@ -147,7 +147,7 @@ export default function Signup() {
                             />
                         </div>
                         <div>
-                            <label htmlFor='username' className='block mb-1'>
+                            <label htmlFor='password' className='block mb-1'>
                                 Password
                             </label>
                             <input
@@ -168,7 +168,7 @@ export default function Signup() {
                             />
                         </div>
                         <div>
-                            <label htmlFor='username' className='block mb-1'>
+                            <label htmlFor='confirm' className='block mb-1'>
                                 Confirm password
                             </label>
                             <input

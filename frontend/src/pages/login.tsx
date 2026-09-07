@@ -147,7 +147,7 @@ export default function Login() {
                             />
                         </div>
                         <div>
-                            <label htmlFor='username' className='block mb-1'>
+                            <label htmlFor='password' className='block mb-1'>
                                 Password
                             </label>
                             <input
