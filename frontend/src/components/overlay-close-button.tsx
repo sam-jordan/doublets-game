@@ -14,6 +14,7 @@ export default function OverlayCloseButton({
         <button
             type='button'
             className='w-4 cursor-pointer -mt-4'
+            aria-label='close-dialog'
             onClick={() => {
                 setOverlay(undefined);
             }}

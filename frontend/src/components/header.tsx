@@ -66,18 +66,21 @@ export default function Header({
                     icon={faSquarePlus}
                     overlay={overlay}
                     setOverlay={setOverlay}
+                    name='Add Guess'
                     onClick={addGuess}
                 />
                 <HeaderButton
                     icon={faSquareMinus}
                     overlay={overlay}
                     setOverlay={setOverlay}
+                    name='Remove Guess'
                     onClick={removeGuess}
                 />
                 <HeaderButton
                     icon={faDumbbell}
                     overlay={overlay}
                     setOverlay={setOverlay}
+                    name='Select Difficulty'
                     onClick={() => {
                         setOverlay('select-difficulty');
                     }}
@@ -86,6 +89,7 @@ export default function Header({
                     icon={faChartSimple}
                     overlay={overlay}
                     setOverlay={setOverlay}
+                    name='Stats'
                     onClick={() => {
                         setOverlay('stats');
                     }}
@@ -94,6 +98,7 @@ export default function Header({
                     icon={faCircleQuestion}
                     overlay={overlay}
                     setOverlay={setOverlay}
+                    name='Help'
                     onClick={() => {
                         setOverlay('help');
                     }}

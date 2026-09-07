@@ -37,6 +37,7 @@ export default function Keyboard({ handleKeyUp, overlay }: KeyboardProps) {
                                     ? 'cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light'
                                     : ''
                             )}
+                            aria-label={key}
                             onClick={() => {
                                 handleKeyUp(key);
                             }}

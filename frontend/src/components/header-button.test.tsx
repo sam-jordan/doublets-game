@@ -21,6 +21,7 @@ describe('HeaderButton', () => {
                 icon={faCircleQuestion}
                 overlay={undefined}
                 setOverlay={setOverlay}
+                name='test'
                 onClick={onClick}
             />
         );
@@ -35,6 +36,7 @@ describe('HeaderButton', () => {
                 icon={faCircleQuestion}
                 overlay={undefined}
                 setOverlay={setOverlay}
+                name='test'
                 onClick={onClick}
             />
         );
@@ -52,6 +54,7 @@ describe('HeaderButton', () => {
                 icon={faCircleQuestion}
                 overlay='help'
                 setOverlay={setOverlay}
+                name='test'
                 onClick={onClick}
             />
         );

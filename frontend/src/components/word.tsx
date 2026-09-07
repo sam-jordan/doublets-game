@@ -64,6 +64,7 @@ export default function Row(props: RowProps) {
                 shouldUseShake ? 'animate-shake' : '',
                 shouldUseJump ? 'animate-jump' : ''
             )}
+            aria-label='guess'
             onClick={handleClick}
         >
             {props.letters.map((character, charIndex) => (

@@ -9,6 +9,7 @@ type HeaderButtonProps = {
         React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
     readonly onClick: () => void;
+    readonly name: string;
 };
 
 export default function HeaderButton({
@@ -16,6 +17,7 @@ export default function HeaderButton({
     overlay,
     setOverlay,
     onClick,
+    name,
 }: HeaderButtonProps) {
     return (
         <button
@@ -28,6 +30,7 @@ export default function HeaderButton({
                     : ''
             )}
             id={`${icon.iconName}-overlay-button`}
+            aria-label={name}
             onClick={() => {
                 if (overlay === undefined) {
                     onClick();
