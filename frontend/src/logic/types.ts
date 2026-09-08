@@ -141,3 +141,10 @@ export const viteEnvironment = z.object({
     VITE_USER_POOL_CLIENT_ID: z.string(),
     VITE_API_URL: z.string(),
 });
+
+const puzzleSchema = z.discriminatedUnion('solved', [
+    attemptedSchema,
+    solvedSchema,
+]);
+
+export const syncSchema = z.record(z.enum(DIFFICULTIES), puzzleSchema);

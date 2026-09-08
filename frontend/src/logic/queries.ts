@@ -1,7 +1,13 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { AuthError, getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
+import { DateTime } from 'luxon';
 import configureAmplify from './configure-amplify';
-import { statsSchema, type SignInOptions, type Stats } from './types';
+import {
+    statsSchema,
+    syncSchema,
+    type SignInOptions,
+    type Stats,
+} from './types';
 import { callApi } from './query-helpers';
 
 export function useCurrentUser() {
@@ -72,5 +78,25 @@ export function useStats(options: {
         },
         enabled,
         staleTime: 1000 * 60 * 5, // 5 minutes
+    });
+}
+
+export function useSync({ username }: { username: string }) {
+    configureAmplify();
+    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
+
+    return useQuery({
+        queryKey: [`${username}-${date}-sync`],
+        async queryFn() {
+            const response = await callApi({
+                endpoint: {
+                    path: `game/${username}/sync/${date}`,
+                    schema: syncSchema,
+                },
+                method: 'GET',
+            });
+
+            return response;
+        },
     });
 }
