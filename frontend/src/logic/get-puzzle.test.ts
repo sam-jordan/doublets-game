@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { type Difficulties, type Puzzle } from './types';
+import type { Difficulties, Puzzle } from '../../../shared/types';
 import { getPuzzle } from './get-puzzle';
 
 describe('getPuzzle', () => {

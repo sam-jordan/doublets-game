@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { type Guess } from '../../../shared/types';
 import { getChanged, validateSolution, validateWord } from './validators';
-import { type Guess } from './types';
 
 describe('validateWord', () => {
     it('should invalidate a word with empty letters', () => {

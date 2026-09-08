@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useCurrentUser, useStats } from '../../logic/queries';
-import { DIFFICULTIES, type Difficulties } from '../../logic/types';
+import { DIFFICULTIES, type Difficulties } from '../../../../shared/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
 import { formatDuration } from '../../logic/format-duration';

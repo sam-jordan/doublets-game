@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { signOut } from 'aws-amplify/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { type LoginDetails } from '../logic/types';
+import { type LoginDetails } from '../../../shared/types';
 import { useCurrentUser, useSignUp } from '../logic/queries';
 import configureAmplify from '../logic/configure-amplify';
 import Loading from './loading';

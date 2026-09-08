@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { type RowProps } from '../logic/types';
+import type { RowProps } from '../../../shared/types';
 
 export default function Row(props: RowProps) {
     const [letterJump, setLetterJump] = useState<number | undefined>(undefined);

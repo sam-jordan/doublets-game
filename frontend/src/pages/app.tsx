@@ -7,7 +7,7 @@ import {
     gameStateSchema,
     type Difficulties,
     type GameState,
-} from '../logic/types';
+} from '../../../shared/types';
 import { emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import { useCurrentUser } from '../logic/queries';

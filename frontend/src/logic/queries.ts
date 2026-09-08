@@ -1,13 +1,13 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { AuthError, getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
 import { DateTime } from 'luxon';
-import configureAmplify from './configure-amplify';
 import {
     statsSchema,
     syncSchema,
     type SignInOptions,
     type Stats,
-} from './types';
+} from '../../../shared/types';
+import configureAmplify from './configure-amplify';
 import { callApi } from './query-helpers';
 
 export function useCurrentUser() {

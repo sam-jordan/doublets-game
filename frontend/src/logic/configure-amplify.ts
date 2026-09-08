@@ -1,5 +1,5 @@
 import { Amplify } from 'aws-amplify';
-import { viteEnvironment } from './types';
+import { viteEnvironment } from '../../../shared/types';
 
 export default function configureAmplify() {
     const env = viteEnvironment.safeParse(import.meta.env);

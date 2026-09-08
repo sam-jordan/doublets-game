@@ -1,5 +1,9 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
-import { sessionSchema, StatsApiError, type CallApiOptions } from './types';
+import {
+    sessionSchema,
+    StatsApiError,
+    type CallApiOptions,
+} from '../../../shared/types';
 
 export async function callApi(options: CallApiOptions) {
     const { endpoint, method } = options;

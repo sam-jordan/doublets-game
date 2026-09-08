@@ -1,4 +1,4 @@
-import { DIFFICULTIES, type Difficulties } from '../../logic/types';
+import { DIFFICULTIES, type Difficulties } from '../../../../shared/types';
 import OverlayCloseButton from '../overlay-close-button';
 
 type SelectDifficultyProps = {

@@ -1,6 +1,10 @@
 import { DateTime } from 'luxon';
 import puzzles from '../static/puzzles.json' with { type: 'json' };
-import { type Difficulties, DoubletsError, type Puzzle } from './types';
+import {
+    type Difficulties,
+    DoubletsError,
+    type Puzzle,
+} from '../../../shared/types';
 
 // Get the daily puzzle based on the number of days since 1st August 2026
 export function getPuzzle(difficulty: Difficulties): Puzzle {

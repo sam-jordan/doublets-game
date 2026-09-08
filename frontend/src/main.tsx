@@ -2,11 +2,11 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StatsApiError } from '../../shared/types';
 import App from './pages/app';
 import Login from './pages/login';
 import NotFound from './pages/not-found';
 import Signup from './pages/signup';
-import { StatsApiError } from './logic/types';
 
 const queryClient = new QueryClient({
     defaultOptions: {

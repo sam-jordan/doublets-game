@@ -10,8 +10,8 @@ import {
     faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { type GameState } from '../logic/types';
 import { formatDuration } from '../logic/format-duration';
+import type { GameState } from '../../../shared/types';
 import HeaderButton from './header-button';
 
 type HeaderProps = {

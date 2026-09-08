@@ -1,4 +1,8 @@
-import { DIFFICULTIES, type Difficulties, type Guess } from './types';
+import {
+    DIFFICULTIES,
+    type Difficulties,
+    type Guess,
+} from '../../../shared/types';
 
 export function emptyGuess(index: number): Guess {
     return {

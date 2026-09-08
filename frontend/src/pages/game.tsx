@@ -11,7 +11,7 @@ import {
     type Difficulties,
     type Solved,
     type UseGameState,
-} from '../logic/types';
+} from '../../../shared/types';
 import Popup from '../components/popup';
 import Word from '../components/word';
 import Keyboard from '../components/keyboard';
