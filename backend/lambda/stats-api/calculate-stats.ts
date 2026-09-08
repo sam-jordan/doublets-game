@@ -1,7 +1,7 @@
 import { Duration } from 'luxon';
-import { type Puzzle, type Stats } from './types.js';
+import { type ApiPuzzle, type ApiStats } from '../../../shared/types.js';
 
-export function calculateStats(puzzles: Puzzle[]): Stats {
+export function calculateStats(puzzles: ApiPuzzle[]): ApiStats {
     const uniqueWords = new Set();
     let totalGuesses = 0;
     let totalDuration = Duration.fromMillis(0);

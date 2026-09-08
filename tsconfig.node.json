@@ -9,5 +9,5 @@
         "outDir": "dist",
         "strict": true
     },
-    "include": ["backend", "scripts"]
+    "include": ["backend", "scripts", "shared"]
 }

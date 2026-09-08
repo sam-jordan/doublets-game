@@ -19,7 +19,7 @@ import {
     puzzleRecordsSchema,
     puzzleSchema,
     solvedSchema,
-} from './types.js';
+} from '../../../shared/types.js';
 import { calculateStats } from './calculate-stats.js';
 import {
     badRequest,
