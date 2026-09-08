@@ -9,6 +9,7 @@
         How to Play
       </h2>
       <button
+        aria-label="close-dialog"
         class="w-4 cursor-pointer -mt-4"
         type="button"
       >

@@ -36,7 +36,7 @@ describe('SelectDifficulty', () => {
             />
         );
 
-        const button = ui.getByRole('button', { name: '' });
+        const button = ui.getByRole('button', { name: 'close-dialog' });
         await user.click(button);
 
         expect(setOverlay).toHaveBeenCalledExactlyOnceWith(undefined);

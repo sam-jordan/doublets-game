@@ -9,6 +9,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="q"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -17,6 +18,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="w"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -25,6 +27,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="e"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -33,6 +36,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="r"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -41,6 +45,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="t"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -49,6 +54,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="y"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -57,6 +63,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="u"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -65,6 +72,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="i"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -73,6 +81,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="o"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -81,6 +90,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="p"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -93,6 +103,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="a"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -101,6 +112,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="s"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -109,6 +121,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="d"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -117,6 +130,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="f"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -125,6 +139,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="g"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -133,6 +148,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="h"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -141,6 +157,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="j"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -149,6 +166,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="k"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -157,6 +175,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="l"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -169,6 +188,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="Enter"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-12 sm:w-17 text-xs sm:text-sm"
         type="button"
       >
@@ -177,6 +197,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="z"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -185,6 +206,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="x"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -193,6 +215,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="c"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -201,6 +224,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="v"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -209,6 +233,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="b"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -217,6 +242,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="n"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -225,6 +251,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="m"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl"
         type="button"
       >
@@ -233,6 +260,7 @@ exports[`Keyboard > should render differently when overlay is defined 1`] = `
         </p>
       </button>
       <button
+        aria-label="Backspace"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-12 sm:w-17 text-lg sm:text-xl"
         type="button"
       >
@@ -265,6 +293,7 @@ exports[`Keyboard > should render when shown 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="q"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -273,6 +302,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="w"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -281,6 +311,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="e"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -289,6 +320,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="r"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -297,6 +329,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="t"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -305,6 +338,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="y"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -313,6 +347,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="u"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -321,6 +356,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="i"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -329,6 +365,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="o"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -337,6 +374,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="p"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -349,6 +387,7 @@ exports[`Keyboard > should render when shown 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="a"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -357,6 +396,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="s"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -365,6 +405,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="d"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -373,6 +414,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="f"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -381,6 +423,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="g"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -389,6 +432,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="h"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -397,6 +441,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="j"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -405,6 +450,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="k"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -413,6 +459,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="l"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -425,6 +472,7 @@ exports[`Keyboard > should render when shown 1`] = `
       class="flex gap-x-1.5"
     >
       <button
+        aria-label="Enter"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-12 sm:w-17 text-xs sm:text-sm cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -433,6 +481,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="z"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -441,6 +490,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="x"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -449,6 +499,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="c"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -457,6 +508,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="v"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -465,6 +517,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="b"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -473,6 +526,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="n"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -481,6 +535,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="m"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-8 sm:w-10.75 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >
@@ -489,6 +544,7 @@ exports[`Keyboard > should render when shown 1`] = `
         </p>
       </button>
       <button
+        aria-label="Backspace"
         class="h-14.5 bg-grey-light rounded-sm p-3 select-none font-bold flex justify-center items-center w-12 sm:w-17 text-lg sm:text-xl cursor-pointer hover:bg-grey-very-light active:bg-grey-very-light"
         type="button"
       >

@@ -3,6 +3,7 @@
 exports[`HeaderButton > should render 1`] = `
 <DocumentFragment>
   <button
+    aria-label="test"
     class="w-10 min-h-12 sm:w-12 hover:bg-grey-mid active:bg-grey-mid cursor-pointer"
     id="circle-question-overlay-button"
     type="button"
@@ -28,6 +29,7 @@ exports[`HeaderButton > should render 1`] = `
 exports[`HeaderButton > should render correctly and disable onClick when overlay is defined 1`] = `
 <DocumentFragment>
   <button
+    aria-label="test"
     class="w-10 min-h-12 sm:w-12"
     id="circle-question-overlay-button"
     type="button"
