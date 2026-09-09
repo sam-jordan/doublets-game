@@ -15,31 +15,23 @@ import Loading from './loading';
 import Game from './game';
 
 export default function App() {
-    const date = DateTime.now().toUTC();
-    const cached = getFromCache(date);
-
     // Main state
-    const [gameState, setGameState] = useState<GameState>(
-        cached ?? {
-            guesses: emptyGuesses(),
-            currentGuess: 0,
-            difficulty: 'easy',
-            solved: Object.fromEntries(
-                DIFFICULTIES.map(difficulty => [difficulty, undefined])
-            ) as Record<Difficulties, number | undefined>,
-            timers: Object.fromEntries(
-                DIFFICULTIES.map(difficulty => [
-                    difficulty,
-                    Duration.fromMillis(0),
-                ])
-            ) as Record<Difficulties, Duration<true>>,
-            attempted: Object.fromEntries(
-                DIFFICULTIES.map(d => [d, false])
-            ) as Record<Difficulties, boolean>,
-        }
-    );
+    const [gameState, setGameState] = useState<GameState>({
+        guesses: emptyGuesses(),
+        currentGuess: 0,
+        difficulty: 'easy',
+        solved: Object.fromEntries(
+            DIFFICULTIES.map(difficulty => [difficulty, undefined])
+        ) as Record<Difficulties, number | undefined>,
+        timers: Object.fromEntries(
+            DIFFICULTIES.map(difficulty => [difficulty, Duration.fromMillis(0)])
+        ) as Record<Difficulties, Duration<true>>,
+        attempted: Object.fromEntries(
+            DIFFICULTIES.map(d => [d, false])
+        ) as Record<Difficulties, boolean>,
+    });
 
-    const [launched, setLaunched] = useState<boolean>(cached !== undefined);
+    const [launched, setLaunched] = useState<boolean>(false);
 
     const currentUser = useCurrentUser();
 
@@ -48,6 +40,7 @@ export default function App() {
     }
 
     const puzzle = getPuzzle(gameState.difficulty);
+    const date = DateTime.now().toUTC();
 
     return currentUser.isPending ? (
         <Loading />

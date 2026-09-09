@@ -81,7 +81,13 @@ export function useStats(options: {
     });
 }
 
-export function useSync({ username }: { username: string }) {
+export function useSync({
+    username,
+    enabled,
+}: {
+    username: string;
+    enabled: boolean;
+}) {
     configureAmplify();
     const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
 
@@ -98,5 +104,6 @@ export function useSync({ username }: { username: string }) {
 
             return response;
         },
+        enabled,
     });
 }
