@@ -29,13 +29,19 @@ import {
     ok,
 } from './api-responses.js';
 
+let client: DynamoDBClient;
+
 export async function handler(
     event: APIGatewayProxyEventV2,
     _context: unknown
 ): Promise<APIGatewayProxyResult> {
     console.log(event);
 
-    const client = new DynamoDBClient({ region: 'eu-west-2' });
+    if (client === undefined) {
+        client = new DynamoDBClient({ region: 'eu-west-2' });
+        console.log('Client initialised');
+    }
+
     const documentClient = DynamoDBDocumentClient.from(client);
 
     const origin = event.headers.Origin;
