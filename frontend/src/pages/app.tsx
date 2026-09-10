@@ -31,12 +31,13 @@ export default function App() {
         ) as Record<Difficulties, boolean>,
     });
     const [launched, setLaunched] = useState<boolean>(false);
+    const [synced, setSynced] = useState<boolean>(false);
 
     // Queries
     const currentUser = useCurrentUser();
     const sync = useSync({
         username: currentUser.data?.username,
-        enabled: Boolean(currentUser.data?.username),
+        enabled: !synced && Boolean(currentUser.data?.username),
     });
 
     if (currentUser.isPending) {
@@ -49,6 +50,7 @@ export default function App() {
     const cached = getFromCache(date);
     if (currentUser.isError && cached !== undefined) {
         setGameState(cached);
+        setSynced(true);
     }
 
     if (currentUser.data) {
@@ -57,7 +59,7 @@ export default function App() {
         }
 
         if (sync.isError) {
-            console.error('uh oh');
+            console.error(sync.error);
         } else {
             for (const difficulty of DIFFICULTIES) {
                 const record = sync.data[difficulty];
@@ -115,6 +117,8 @@ export default function App() {
                     setGameState(nextGameState);
                 }
             }
+
+            setSynced(true);
         }
     }
 

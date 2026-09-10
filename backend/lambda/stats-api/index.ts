@@ -16,6 +16,7 @@ import {
 import { DateTime } from 'luxon';
 import {
     attemptedSchema,
+    DIFFICULTIES,
     puzzleRecordsSchema,
     puzzleSchema,
     solvedSchema,
@@ -192,7 +193,10 @@ export async function handler(
                     record.puzzle.startsWith(`[${date}]`)
                 );
 
-                const body: Record<string, string> = {};
+                const body: Record<string, string | undefined> =
+                    Object.fromEntries(
+                        DIFFICULTIES.map(difficulty => [difficulty, undefined])
+                    );
                 for (const record of today) {
                     const fromRegex =
                         /\[\d+\/\d+\/\d{4}\]#\[(?<difficulty>[a-z]+)\]/v.exec(
