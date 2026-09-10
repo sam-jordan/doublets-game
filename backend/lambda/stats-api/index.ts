@@ -29,7 +29,7 @@ import {
     ok,
 } from './api-responses.js';
 
-let client: DynamoDBClient;
+let documentClient: DynamoDBDocumentClient;
 
 export async function handler(
     event: APIGatewayProxyEventV2,
@@ -37,12 +37,11 @@ export async function handler(
 ): Promise<APIGatewayProxyResult> {
     console.log(event);
 
-    if (client === undefined) {
-        client = new DynamoDBClient({ region: 'eu-west-2' });
-        console.log('Client initialised');
+    if (documentClient === undefined) {
+        const client = new DynamoDBClient({ region: 'eu-west-2' });
+        documentClient = DynamoDBDocumentClient.from(client);
+        console.log('Clients initialised');
     }
-
-    const documentClient = DynamoDBDocumentClient.from(client);
 
     const origin = event.headers.Origin;
     switch (event.routeKey) {
