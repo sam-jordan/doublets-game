@@ -11,6 +11,7 @@ import {
 import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
 import { useCurrentUser, useSync } from '../logic/queries';
+import { getChanged } from '../logic/validators';
 import Loading from './loading';
 import Game from './game';
 
@@ -96,22 +97,39 @@ export default function App() {
                     } else {
                         nextGameState = {
                             ...nextGameState,
-                            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+
                             attempted: {
+                                ...nextGameState.attempted,
                                 [difficulty]: record.attempted,
-                            } as Record<Difficulties, boolean>,
+                            },
+                            solved: {
+                                ...nextGameState.solved,
+                                [difficulty]: DateTime.now().toMillis(),
+                            },
                         };
 
                         if (!record.solved) {
                             continue;
                         }
 
-                        nextGameState.solved[difficulty] =
-                            record.solveTime.as('milliseconds');
+                        nextGameState.timers[difficulty] = record.solveTime;
                         nextGameState.guesses[difficulty] = record.guesses.map(
                             (guess, index) => {
                                 const empty = emptyGuess(index);
                                 empty.letters = guess.split('');
+
+                                if (index === 0) {
+                                    empty.changed = getChanged(
+                                        guess.split(''),
+                                        puzzle.startWord.split('')
+                                    );
+                                } else {
+                                    empty.changed = getChanged(
+                                        guess.split(''),
+                                        record.guesses[index - 1].split('')
+                                    );
+                                }
+
                                 return empty;
                             }
                         );

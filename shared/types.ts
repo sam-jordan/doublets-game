@@ -115,7 +115,7 @@ export const attemptedSchema = z.object({
 export const solvedSchema = z.object({
     attempted: z.boolean(),
     solved: z.literal(true),
-    solveTime: z.custom<Duration>(),
+    solveTime: z.string().transform(value => Duration.fromISO(value)),
     guesses: z.array(z.string()),
 });
 
