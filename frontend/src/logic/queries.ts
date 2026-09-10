@@ -1,6 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { AuthError, getCurrentUser, signIn, signUp } from 'aws-amplify/auth';
-import { DateTime } from 'luxon';
 import {
     statsSchema,
     syncSchema,
@@ -88,14 +87,13 @@ export function useSync(options: {
 }): UseQueryResult<Sync> {
     configureAmplify();
     const { username, enabled } = options;
-    const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
 
     return useQuery({
-        queryKey: [`${username}-${date}-sync`],
+        queryKey: [`${username}-sync`],
         async queryFn() {
             const response = await callApi({
                 endpoint: {
-                    path: `game/${username}/sync/${date}`,
+                    path: `game/${username}/sync`,
                     schema: syncSchema,
                 },
                 method: 'GET',

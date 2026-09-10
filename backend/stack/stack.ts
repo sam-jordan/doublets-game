@@ -166,7 +166,7 @@ export class Stack extends cdk.Stack {
             authorizer,
         });
         httpApi.addRoutes({
-            path: '/game/{user}/sync/{date}',
+            path: '/game/{user}/sync',
             methods: [apigwv2.HttpMethod.GET],
             integration,
             authorizer,

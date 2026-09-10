@@ -171,7 +171,7 @@ export async function handler(
             }
         }
 
-        case 'GET /game/{user}/sync/{date}': {
+        case 'GET /game/{user}/sync': {
             try {
                 const command = new QueryCommand({
                     TableName: process.env.TABLE_NAME,
