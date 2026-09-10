@@ -580,7 +580,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Stage",
     },
-    "doubletsgamedevstatsapiGETgameusersyncdateE2FBB660": {
+    "doubletsgamedevstatsapiGETgameusersyncAE276893": {
       "Properties": {
         "ApiId": {
           "Ref": "doubletsgamedevstatsapi138D48EF",
@@ -589,7 +589,7 @@ exports[`Stack > synthesises correctly 1`] = `
         "AuthorizerId": {
           "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
         },
-        "RouteKey": "GET /game/{user}/sync/{date}",
+        "RouteKey": "GET /game/{user}/sync",
         "Target": {
           "Fn::Join": [
             "",
@@ -604,7 +604,7 @@ exports[`Stack > synthesises correctly 1`] = `
       },
       "Type": "AWS::ApiGatewayV2::Route",
     },
-    "doubletsgamedevstatsapiGETgameusersyncdatedoubletsgamedevstatsapilambdaintegrationPermission34CF4AFE": {
+    "doubletsgamedevstatsapiGETgameusersyncdoubletsgamedevstatsapilambdaintegrationPermissionCF8F9E9E": {
       "Properties": {
         "Action": "lambda:InvokeFunction",
         "FunctionName": {
@@ -634,7 +634,7 @@ exports[`Stack > synthesises correctly 1`] = `
               {
                 "Ref": "doubletsgamedevstatsapi138D48EF",
               },
-              "/*/*/game/{user}/sync/{date}",
+              "/*/*/game/{user}/sync",
             ],
           ],
         },
