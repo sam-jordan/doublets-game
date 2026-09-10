@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DateTime, Duration } from 'luxon';
 import { Link } from 'react-router';
 import clsx from 'clsx';
@@ -40,90 +40,102 @@ export default function App() {
         enabled: !synced && Boolean(currentUser.data?.username),
     });
 
-    if (currentUser.isPending) {
-        return <Loading />;
-    }
-
     const puzzle = getPuzzle(gameState.difficulty);
     const date = DateTime.now().toUTC();
 
-    const cached = getFromCache(date);
-    if (currentUser.isError && cached !== undefined) {
-        setGameState(cached);
-        setSynced(true);
-    }
-
-    if (currentUser.data) {
-        if (sync.isPending) {
-            return <Loading />;
+    useEffect(() => {
+        if (currentUser.isPending || synced) {
+            return;
         }
 
-        if (sync.isError) {
-            console.error(sync.error);
-        } else {
-            for (const difficulty of DIFFICULTIES) {
-                const record = sync.data[difficulty];
-
-                if (record === undefined) {
-                    if (cached !== undefined) {
-                        const nextGameState = {
-                            ...gameState,
-                            guesses: {
-                                ...gameState.guesses,
-                                [difficulty]: cached.guesses[difficulty],
-                            },
-                            solved: {
-                                ...gameState.solved,
-                                [difficulty]: cached.solved[difficulty],
-                            },
-                            currentGuess: cached.currentGuess,
-                            difficulty: cached.difficulty,
-                            timers: {
-                                ...gameState.timers,
-                                [difficulty]: cached.timers[difficulty],
-                            },
-                            attempted: {
-                                ...gameState.attempted,
-                                [difficulty]: cached.attempted[difficulty],
-                            },
-                        };
-
-                        setGameState(nextGameState);
-                    }
-                } else {
-                    const nextGameState = {
-                        ...gameState,
-                        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-                        attempted: {
-                            [difficulty]: record.attempted,
-                        } as Record<Difficulties, boolean>,
-                    };
-
-                    if (!record.solved) {
-                        setGameState(nextGameState);
-                        continue;
-                    }
-
-                    nextGameState.solved[difficulty] =
-                        record.solveTime.as('milliseconds');
-                    nextGameState.guesses[difficulty] = record.guesses.map(
-                        (guess, index) => {
-                            const empty = emptyGuess(index);
-                            empty.letters = guess.split('');
-                            return empty;
-                        }
-                    );
-
-                    setGameState(nextGameState);
-                }
+        const cached = getFromCache(date);
+        if (currentUser.isError) {
+            if (cached !== undefined) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
+                setGameState(cached);
             }
 
             setSynced(true);
         }
+
+        if (currentUser.data) {
+            if (sync.isPending) {
+                return;
+            }
+
+            if (sync.isError) {
+                console.error(sync.error);
+            } else {
+                let nextGameState = { ...gameState };
+                for (const difficulty of DIFFICULTIES) {
+                    const record = sync.data[difficulty];
+
+                    if (record === undefined) {
+                        if (cached !== undefined) {
+                            nextGameState = {
+                                guesses: {
+                                    ...nextGameState.guesses,
+                                    [difficulty]: cached.guesses[difficulty],
+                                },
+                                solved: {
+                                    ...nextGameState.solved,
+                                    [difficulty]: cached.solved[difficulty],
+                                },
+                                currentGuess: cached.currentGuess,
+                                difficulty: cached.difficulty,
+                                timers: {
+                                    ...nextGameState.timers,
+                                    [difficulty]: cached.timers[difficulty],
+                                },
+                                attempted: {
+                                    ...nextGameState.attempted,
+                                    [difficulty]: cached.attempted[difficulty],
+                                },
+                            };
+                        }
+                    } else {
+                        nextGameState = {
+                            ...nextGameState,
+                            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+                            attempted: {
+                                [difficulty]: record.attempted,
+                            } as Record<Difficulties, boolean>,
+                        };
+
+                        if (!record.solved) {
+                            continue;
+                        }
+
+                        nextGameState.solved[difficulty] =
+                            record.solveTime.as('milliseconds');
+                        nextGameState.guesses[difficulty] = record.guesses.map(
+                            (guess, index) => {
+                                const empty = emptyGuess(index);
+                                empty.letters = guess.split('');
+                                return empty;
+                            }
+                        );
+                    }
+                }
+
+                setGameState(nextGameState);
+                setSynced(true);
+            }
+        }
+    }, [currentUser.status, sync.status]);
+
+    if (currentUser.isPending || !synced) {
+        return <Loading />;
     }
 
-    if (launched) {
-        return <Game gameState={gameState} setGameState={setGameState} />;
+    if (launched && synced) {
+        return (
+            <Game
+                gameState={gameState}
+                setGameState={setGameState}
+                currentUser={currentUser}
+            />
+        );
     }
 
     return (

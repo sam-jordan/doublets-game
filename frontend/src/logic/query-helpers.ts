@@ -33,6 +33,6 @@ export async function callApi(options: CallApiOptions) {
             return parsed.data;
         }
 
-        // Throw new DoubletsError(z.prettifyError(parsed.error));
+        // Throw new DoubletsError(z.treeifyError(parsed.error));
     }
 }

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { DateTime, Duration } from 'luxon';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, type UseQueryResult } from '@tanstack/react-query';
 import z from 'zod';
+import type { AuthUser } from 'aws-amplify/auth';
 import { getChanged, validateSolution } from '../logic/validators';
 import { emptyGuess } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
@@ -20,10 +21,17 @@ import Overlay from '../components/overlay';
 import Stats from '../components/overlays/stats';
 import Help from '../components/overlays/help';
 import SelectDifficulty from '../components/overlays/select-difficulty';
-import { useCurrentUser } from '../logic/queries';
 import { callApi } from '../logic/query-helpers';
 
-export default function Game(props: UseGameState) {
+type GameProps = UseGameState & {
+    readonly currentUser: UseQueryResult<AuthUser>;
+};
+
+export default function Game({
+    gameState,
+    setGameState,
+    currentUser,
+}: GameProps) {
     // Displays
     const [popup, setPopup] = useState<{ show: boolean; message: string }>({
         show: false,
@@ -43,12 +51,10 @@ export default function Game(props: UseGameState) {
     const timerTimeoutRef = useRef<number | undefined>(undefined);
 
     // Main state
-    const { gameState, setGameState } = props;
     const { guesses, currentGuess, difficulty, solved, timers, attempted } =
         gameState;
 
     // TanStack queries
-    const currentUser = useCurrentUser();
     const attemptedMutation = useMutation({
         mutationFn: async (options: {
             username: string | undefined;
@@ -479,7 +485,11 @@ export default function Game(props: UseGameState) {
 
             case 'stats': {
                 return (
-                    <Stats setOverlay={setOverlay} difficulty={difficulty} />
+                    <Stats
+                        setOverlay={setOverlay}
+                        difficulty={difficulty}
+                        currentUser={currentUser}
+                    />
                 );
             }
 

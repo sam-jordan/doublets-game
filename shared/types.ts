@@ -153,10 +153,13 @@ export const syncSchema = z.record(
     z
         .string()
         .optional()
-        .transform(
-            value =>
-                value !== undefined && puzzleSchema.parse(JSON.parse(value))
-        )
+        .transform(value => {
+            if (value === undefined) {
+                return value;
+            }
+
+            return puzzleSchema.parse(JSON.parse(value));
+        })
 );
 export type Sync = z.infer<typeof syncSchema>;
 

@@ -1,11 +1,11 @@
 import { Link } from 'react-router';
 import { useState } from 'react';
 import clsx from 'clsx';
-import { signOut } from 'aws-amplify/auth';
-import { useMutation } from '@tanstack/react-query';
+import { signOut, type AuthUser } from 'aws-amplify/auth';
+import { useMutation, type UseQueryResult } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { useCurrentUser, useStats } from '../../logic/queries';
+import { useStats } from '../../logic/queries';
 import { DIFFICULTIES, type Difficulties } from '../../../../shared/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
@@ -16,13 +16,17 @@ type StatsProps = {
         React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
     readonly difficulty: Difficulties;
+    readonly currentUser: UseQueryResult<AuthUser>;
 };
 
-export default function Stats({ setOverlay, difficulty }: StatsProps) {
+export default function Stats({
+    setOverlay,
+    difficulty,
+    currentUser,
+}: StatsProps) {
     const [statsDifficulty, setStatsDifficulty] =
         useState<Difficulties>(difficulty);
 
-    const currentUser = useCurrentUser();
     const stats = useStats({
         username: currentUser.data?.username,
         enabled: Boolean(currentUser.data?.username),
