@@ -8,9 +8,9 @@ import {
     type Difficulties,
     type GameState,
 } from '../../../shared/types';
-import { emptyGuesses } from '../logic/empty-guesses';
+import { emptyGuess, emptyGuesses } from '../logic/empty-guesses';
 import { getPuzzle } from '../logic/get-puzzle';
-import { useCurrentUser } from '../logic/queries';
+import { useCurrentUser, useSync } from '../logic/queries';
 import Loading from './loading';
 import Game from './game';
 
@@ -30,21 +30,99 @@ export default function App() {
             DIFFICULTIES.map(d => [d, false])
         ) as Record<Difficulties, boolean>,
     });
-
     const [launched, setLaunched] = useState<boolean>(false);
 
+    // Queries
     const currentUser = useCurrentUser();
+    const sync = useSync({
+        username: currentUser.data?.username,
+        enabled: Boolean(currentUser.data?.username),
+    });
 
-    if (launched) {
-        return <Game gameState={gameState} setGameState={setGameState} />;
+    if (currentUser.isPending) {
+        return <Loading />;
     }
 
     const puzzle = getPuzzle(gameState.difficulty);
     const date = DateTime.now().toUTC();
 
-    return currentUser.isPending ? (
-        <Loading />
-    ) : (
+    const cached = getFromCache(date);
+    if (currentUser.isError && cached !== undefined) {
+        setGameState(cached);
+    }
+
+    if (currentUser.data) {
+        if (sync.isPending) {
+            return <Loading />;
+        }
+
+        if (sync.isError) {
+            console.error('uh oh');
+        } else {
+            for (const difficulty of DIFFICULTIES) {
+                const record = sync.data[difficulty];
+
+                if (record === undefined) {
+                    if (cached !== undefined) {
+                        const nextGameState = {
+                            ...gameState,
+                            guesses: {
+                                ...gameState.guesses,
+                                [difficulty]: cached.guesses[difficulty],
+                            },
+                            solved: {
+                                ...gameState.solved,
+                                [difficulty]: cached.solved[difficulty],
+                            },
+                            currentGuess: cached.currentGuess,
+                            difficulty: cached.difficulty,
+                            timers: {
+                                ...gameState.timers,
+                                [difficulty]: cached.timers[difficulty],
+                            },
+                            attempted: {
+                                ...gameState.attempted,
+                                [difficulty]: cached.attempted[difficulty],
+                            },
+                        };
+
+                        setGameState(nextGameState);
+                    }
+                } else {
+                    const nextGameState = {
+                        ...gameState,
+                        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+                        attempted: {
+                            [difficulty]: record.attempted,
+                        } as Record<Difficulties, boolean>,
+                    };
+
+                    if (!record.solved) {
+                        setGameState(nextGameState);
+                        continue;
+                    }
+
+                    nextGameState.solved[difficulty] =
+                        record.solveTime.as('milliseconds');
+                    nextGameState.guesses[difficulty] = record.guesses.map(
+                        (guess, index) => {
+                            const empty = emptyGuess(index);
+                            empty.letters = guess.split('');
+                            return empty;
+                        }
+                    );
+
+                    setGameState(nextGameState);
+                }
+            }
+        }
+    }
+
+    if (launched) {
+        return <Game gameState={gameState} setGameState={setGameState} />;
+    }
+
+    return (
         <div className='font-(family-name:--title-fonts) w-svw h-svh min-h-fit bg-pink-bright text-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-between items-center gap-4'>
                 <img

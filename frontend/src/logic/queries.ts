@@ -6,6 +6,7 @@ import {
     syncSchema,
     type SignInOptions,
     type Stats,
+    type Sync,
 } from '../../../shared/types';
 import configureAmplify from './configure-amplify';
 import { callApi } from './query-helpers';
@@ -81,14 +82,12 @@ export function useStats(options: {
     });
 }
 
-export function useSync({
-    username,
-    enabled,
-}: {
-    username: string;
+export function useSync(options: {
+    username: string | undefined;
     enabled: boolean;
-}) {
+}): UseQueryResult<Sync> {
     configureAmplify();
+    const { username, enabled } = options;
     const date = DateTime.now().toUTC().toLocaleString(DateTime.DATE_SHORT);
 
     return useQuery({

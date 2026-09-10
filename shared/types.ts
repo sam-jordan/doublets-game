@@ -149,6 +149,7 @@ export const puzzleSchema = z.discriminatedUnion('solved', [
 ]);
 
 export const syncSchema = z.record(z.enum(DIFFICULTIES), puzzleSchema);
+export type Sync = z.infer<typeof syncSchema>;
 
 export type ApiPuzzle = z.infer<typeof puzzleSchema>;
 
