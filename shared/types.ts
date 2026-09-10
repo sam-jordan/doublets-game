@@ -152,7 +152,11 @@ export const syncSchema = z.record(
     z.enum(DIFFICULTIES),
     z
         .string()
-        .transform(value => puzzleSchema.optional().parse(JSON.parse(value)))
+        .optional()
+        .transform(
+            value =>
+                value !== undefined && puzzleSchema.parse(JSON.parse(value))
+        )
 );
 export type Sync = z.infer<typeof syncSchema>;
 

@@ -32,5 +32,7 @@ export async function callApi(options: CallApiOptions) {
         if (parsed.success) {
             return parsed.data;
         }
+
+        // Throw new DoubletsError(z.prettifyError(parsed.error));
     }
 }
