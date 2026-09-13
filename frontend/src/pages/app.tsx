@@ -14,6 +14,7 @@ import { useCurrentUser, useSync } from '../logic/queries';
 import { getChanged } from '../logic/validators';
 import Loading from './loading';
 import Game from './game';
+import SyncError from './sync-error';
 
 export default function App() {
     // Main state
@@ -64,9 +65,7 @@ export default function App() {
                 return;
             }
 
-            if (sync.isError) {
-                console.error(sync.error);
-            } else {
+            if (sync.data) {
                 let nextGameState = { ...gameState };
                 for (const difficulty of DIFFICULTIES) {
                     const record = sync.data[difficulty];
@@ -141,6 +140,10 @@ export default function App() {
     }, [currentUser.status, sync.status]);
 
     if (currentUser.isPending || !synced) {
+        if (sync.isError) {
+            return <SyncError />;
+        }
+
         return <Loading />;
     }
 
