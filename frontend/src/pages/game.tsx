@@ -134,7 +134,8 @@ export default function Game({
         const animationTimers: number[] = [];
         if (
             solved[difficulty] !== undefined &&
-            DateTime.now().toMillis() < solved[difficulty] + 6500
+            DateTime.now().toMillis() <
+                solved[difficulty] + 750 * (guesses[difficulty].length + 2)
         ) {
             // Animating the start word
             // eslint-disable-next-line react-hooks/set-state-in-effect
