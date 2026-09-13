@@ -22,6 +22,7 @@ import Stats from '../components/overlays/stats';
 import Help from '../components/overlays/help';
 import SelectDifficulty from '../components/overlays/select-difficulty';
 import { callApi } from '../logic/query-helpers';
+import { getClient } from '../logic/get-query-client';
 
 type GameProps = UseGameState & {
     readonly currentUser: UseQueryResult<AuthUser>;
@@ -68,6 +69,10 @@ export default function Game({
                 method: 'POST',
                 body: options.body,
             }),
+        onSuccess() {
+            const queryClient = getClient();
+            queryClient.clear();
+        },
     });
     const solvedMutation = useMutation({
         mutationFn: async (options: {
@@ -82,6 +87,10 @@ export default function Game({
                 method: 'PUT',
                 body: options.body,
             }),
+        onSuccess() {
+            const queryClient = getClient();
+            queryClient.clear();
+        },
     });
 
     const puzzle = getPuzzle(difficulty);
