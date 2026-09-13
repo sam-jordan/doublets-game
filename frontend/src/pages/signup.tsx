@@ -73,7 +73,7 @@ export default function Signup() {
                         break;
                     }
                 }
-            } else if (query.data.nextStep.signUpStep === 'DONE') {
+            } else if (query.data?.nextStep.signInStep === 'DONE') {
                 setSubmitted(false);
                 await success('/');
             }

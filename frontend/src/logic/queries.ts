@@ -44,11 +44,19 @@ export function useSignUp(options: SignInOptions) {
 
     return useQuery({
         queryKey: [`${username}-sign-up`],
-        queryFn: async () =>
-            signUp({
+        async queryFn() {
+            const response = await signUp({
                 username,
                 password,
-            }),
+            });
+
+            if (response.nextStep.signUpStep === 'DONE') {
+                return signIn({
+                    username,
+                    password,
+                });
+            }
+        },
         enabled: submitted,
         retry(_failureCount, error) {
             return !(error instanceof AuthError);
