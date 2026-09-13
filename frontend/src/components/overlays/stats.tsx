@@ -10,6 +10,7 @@ import { DIFFICULTIES, type Difficulties } from '../../../../shared/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
 import { formatDuration } from '../../logic/format-duration';
+import { getClient } from '../../logic/get-query-client';
 
 type StatsProps = {
     readonly setOverlay: React.Dispatch<
@@ -36,6 +37,9 @@ export default function Stats({
         async mutationFn() {
             configureAmplify();
             await signOut();
+
+            const queryClient = getClient();
+            queryClient.clear();
         },
         onSuccess() {
             setOverlay(undefined);
