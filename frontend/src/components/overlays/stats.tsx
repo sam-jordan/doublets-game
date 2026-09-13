@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { signOut, type AuthUser } from 'aws-amplify/auth';
 import { useMutation, type UseQueryResult } from '@tanstack/react-query';
@@ -18,12 +18,14 @@ type StatsProps = {
     >;
     readonly difficulty: Difficulties;
     readonly currentUser: UseQueryResult<AuthUser>;
+    readonly statsRefetch: number;
 };
 
 export default function Stats({
     setOverlay,
     difficulty,
     currentUser,
+    statsRefetch,
 }: StatsProps) {
     const [statsDifficulty, setStatsDifficulty] =
         useState<Difficulties>(difficulty);
@@ -46,6 +48,15 @@ export default function Stats({
             globalThis.location.reload();
         },
     });
+
+    useEffect(() => {
+        if (statsRefetch === 0) {
+            return;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        stats.refetch();
+    }, [statsRefetch]);
 
     if (currentUser.isPending) {
         return (

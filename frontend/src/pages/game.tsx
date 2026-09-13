@@ -41,6 +41,7 @@ export default function Game({
     const [overlay, setOverlay] = useState<
         'help' | 'select-difficulty' | 'stats' | undefined
     >(undefined);
+    const [statsRefetch, setStatsRefetch] = useState<number>(0);
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -72,6 +73,7 @@ export default function Game({
         onSuccess() {
             const queryClient = getClient();
             queryClient.clear();
+            setStatsRefetch(statsRefetch + 1);
         },
     });
     const solvedMutation = useMutation({
@@ -90,6 +92,7 @@ export default function Game({
         onSuccess() {
             const queryClient = getClient();
             queryClient.clear();
+            setStatsRefetch(statsRefetch + 1);
         },
     });
 
@@ -498,6 +501,7 @@ export default function Game({
                         setOverlay={setOverlay}
                         difficulty={difficulty}
                         currentUser={currentUser}
+                        statsRefetch={statsRefetch}
                     />
                 );
             }
