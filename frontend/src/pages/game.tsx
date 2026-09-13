@@ -135,6 +135,7 @@ export default function Game({
         if (
             solved[difficulty] !== undefined &&
             DateTime.now().toMillis() <
+                // eslint-disable-next-line @stylistic/no-mixed-operators
                 solved[difficulty] + 750 * (guesses[difficulty].length + 2)
         ) {
             // Animating the start word
