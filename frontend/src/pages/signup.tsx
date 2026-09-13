@@ -8,6 +8,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { type LoginDetails } from '../../../shared/types';
 import { useCurrentUser, useSignUp } from '../logic/queries';
 import configureAmplify from '../logic/configure-amplify';
+import { getClient } from '../logic/get-query-client';
 import Loading from './loading';
 
 export default function Signup() {
@@ -33,6 +34,9 @@ export default function Signup() {
         async mutationFn() {
             configureAmplify();
             await signOut();
+
+            const queryClient = getClient();
+            queryClient.clear();
         },
         onSuccess() {
             globalThis.location.reload();
@@ -69,7 +73,7 @@ export default function Signup() {
                         break;
                     }
                 }
-            } else if (query.data.nextStep.signUpStep === 'DONE') {
+            } else if (query.data?.nextStep.signInStep === 'DONE') {
                 setSubmitted(false);
                 await success('/');
             }

@@ -22,6 +22,7 @@ import Stats from '../components/overlays/stats';
 import Help from '../components/overlays/help';
 import SelectDifficulty from '../components/overlays/select-difficulty';
 import { callApi } from '../logic/query-helpers';
+import { getClient } from '../logic/get-query-client';
 
 type GameProps = UseGameState & {
     readonly currentUser: UseQueryResult<AuthUser>;
@@ -40,6 +41,7 @@ export default function Game({
     const [overlay, setOverlay] = useState<
         'help' | 'select-difficulty' | 'stats' | undefined
     >(undefined);
+    const [statsRefetch, setStatsRefetch] = useState<number>(0);
 
     // Animations
     const [lastTyped, setLastTyped] = useState<number | undefined>(undefined);
@@ -68,6 +70,11 @@ export default function Game({
                 method: 'POST',
                 body: options.body,
             }),
+        onSuccess() {
+            const queryClient = getClient();
+            queryClient.clear();
+            setStatsRefetch(statsRefetch + 1);
+        },
     });
     const solvedMutation = useMutation({
         mutationFn: async (options: {
@@ -82,6 +89,11 @@ export default function Game({
                 method: 'PUT',
                 body: options.body,
             }),
+        onSuccess() {
+            const queryClient = getClient();
+            queryClient.clear();
+            setStatsRefetch(statsRefetch + 1);
+        },
     });
 
     const puzzle = getPuzzle(difficulty);
@@ -122,7 +134,9 @@ export default function Game({
         const animationTimers: number[] = [];
         if (
             solved[difficulty] !== undefined &&
-            DateTime.now().toMillis() < solved[difficulty] + 6500
+            DateTime.now().toMillis() <
+                // eslint-disable-next-line @stylistic/no-mixed-operators
+                solved[difficulty] + 750 * (guesses[difficulty].length + 2)
         ) {
             // Animating the start word
             // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -489,6 +503,7 @@ export default function Game({
                         setOverlay={setOverlay}
                         difficulty={difficulty}
                         currentUser={currentUser}
+                        statsRefetch={statsRefetch}
                     />
                 );
             }

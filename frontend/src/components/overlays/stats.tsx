@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { signOut, type AuthUser } from 'aws-amplify/auth';
 import { useMutation, type UseQueryResult } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import { DIFFICULTIES, type Difficulties } from '../../../../shared/types';
 import OverlayCloseButton from '../overlay-close-button';
 import configureAmplify from '../../logic/configure-amplify';
 import { formatDuration } from '../../logic/format-duration';
+import { getClient } from '../../logic/get-query-client';
 
 type StatsProps = {
     readonly setOverlay: React.Dispatch<
@@ -17,12 +18,14 @@ type StatsProps = {
     >;
     readonly difficulty: Difficulties;
     readonly currentUser: UseQueryResult<AuthUser>;
+    readonly statsRefetch: number;
 };
 
 export default function Stats({
     setOverlay,
     difficulty,
     currentUser,
+    statsRefetch,
 }: StatsProps) {
     const [statsDifficulty, setStatsDifficulty] =
         useState<Difficulties>(difficulty);
@@ -36,12 +39,24 @@ export default function Stats({
         async mutationFn() {
             configureAmplify();
             await signOut();
+
+            const queryClient = getClient();
+            queryClient.clear();
         },
         onSuccess() {
             setOverlay(undefined);
             globalThis.location.reload();
         },
     });
+
+    useEffect(() => {
+        if (statsRefetch === 0) {
+            return;
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        stats.refetch();
+    }, [statsRefetch]);
 
     if (currentUser.isPending) {
         return (
