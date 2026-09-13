@@ -102,10 +102,6 @@ export default function App() {
                                 ...nextGameState.attempted,
                                 [difficulty]: record.attempted,
                             },
-                            solved: {
-                                ...nextGameState.solved,
-                                [difficulty]: DateTime.now().toMillis(),
-                            },
                         };
 
                         if (!record.solved) {
@@ -113,6 +109,8 @@ export default function App() {
                         }
 
                         nextGameState.timers[difficulty] = record.solveTime;
+                        nextGameState.solved[difficulty] =
+                            DateTime.now().toMillis();
                         nextGameState.guesses[difficulty] = record.guesses.map(
                             (guess, index) => {
                                 const empty = emptyGuess(index);
