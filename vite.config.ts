@@ -13,6 +13,17 @@ export default defineConfig(({ mode }) => {
         test: {
             environment: 'jsdom',
             include: ['**/*.test.{tsx,ts}'],
+            coverage: {
+                include: ['**/*.{tsx,ts,js}'],
+                exclude: [
+                    'dist',
+                    'build',
+                    'cdk.out',
+                    'local-test.js',
+                    'coverage',
+                    '**/*.config.{ts,js}',
+                ],
+            },
         },
         root: mode === 'test' ? '.' : 'frontend',
         build: {
