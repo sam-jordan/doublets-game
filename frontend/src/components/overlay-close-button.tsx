@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-type OverlayCloseButtonOptions = {
+type OverlayCloseButtonProps = {
     readonly setOverlay: React.Dispatch<
         React.SetStateAction<'help' | 'select-difficulty' | 'stats' | undefined>
     >;
@@ -9,7 +9,7 @@ type OverlayCloseButtonOptions = {
 
 export default function OverlayCloseButton({
     setOverlay,
-}: OverlayCloseButtonOptions) {
+}: OverlayCloseButtonProps) {
     return (
         <button
             type='button'
