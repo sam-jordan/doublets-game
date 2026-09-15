@@ -58,7 +58,7 @@ export default function Stats({
         stats.refetch();
     }, [statsRefetch]);
 
-    if (currentUser.isPending) {
+    if (currentUser.isPending || stats.isPending) {
         return (
             <div className='flex-1 flex flex-col justify-center items-center gap-2'>
                 <p className='font-bold'>Loading...</p>
@@ -90,20 +90,6 @@ export default function Stats({
                 >
                     Log in
                 </Link>
-            </div>
-        );
-    }
-
-    if (stats.isPending) {
-        return (
-            <div className='flex-1 flex flex-col justify-center items-center gap-2'>
-                <p className='font-bold'>Loading...</p>
-                <FontAwesomeIcon
-                    icon={faCircleNotch}
-                    style={{ color: 'rgb(255, 255, 255)' }}
-                    size='4x'
-                    className='animate-spin'
-                />
             </div>
         );
     }
