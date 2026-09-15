@@ -12,7 +12,7 @@ function removeDynamicValues(template: Record<string, unknown>): unknown {
 }
 
 describe('Stack', () => {
-    it('synthesises correctly', () => {
+    it('synthesises correctly for dev', () => {
         const app = new cdk.App({
             context: {
                 'aws:cdk:bundling-stacks': [],
@@ -21,6 +21,24 @@ describe('Stack', () => {
         const stack = new Stack(app, 'doublets-game-dev', {
             DEPLOY_ENV: 'dev',
             CERTIFICATE_ARN: 'test-arn',
+            USER_POOL_ID: 'test-id',
+            USER_POOL_CLIENT_ID: 'test-id',
+            DEV_DOMAIN: 'test-domain',
+        });
+
+        const template = Template.fromStack(stack);
+        expect(removeDynamicValues(template.toJSON())).toMatchSnapshot();
+    }, 20_000);
+
+    it('synthesises correctly for prod', () => {
+        const app = new cdk.App({
+            context: {
+                'aws:cdk:bundling-stacks': [],
+            },
+        });
+        const stack = new Stack(app, 'doublets-game-dev', {
+            DEPLOY_ENV: 'prod',
+            CERTIFICATE_ARN: 'arn:1:2:us-east-1:3:4:test-arn',
             USER_POOL_ID: 'test-id',
             USER_POOL_CLIENT_ID: 'test-id',
             DEV_DOMAIN: 'test-domain',

@@ -1133,3 +1133,2279 @@ exports[`Stack > synthesises correctly 1`] = `
   },
 }
 `;
+
+exports[`Stack > synthesises correctly for dev 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": {
+      "DependsOn": [
+        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": [
+          {
+            "Ref": "doubletsgamedevbucketdeploymentAwsCliLayerB5B483D6",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.13",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::",
+                      {
+                        "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+                      },
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::",
+                      {
+                        "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+        "Roles": [
+          {
+            "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+      "DependsOn": [
+        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Lambda function for auto-deleting objects in ",
+              {
+                "Ref": "doubletsgamedevbucketA9F6D051",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevautoconfirmlambda62DB5C67": {
+      "DependsOn": [
+        "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "FunctionName": "doublets-game-dev-auto-confirm-lambda",
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevbucketA9F6D051": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "BucketName": "doublets-game-dev-bucket",
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+          {
+            "Key": "aws-cdk:cr-owned:e10db672",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevbucketAutoDeleteObjectsCustomResourceCB5C059D": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "doubletsgamedevbucketPolicy63E12697",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevbucketPolicy63E12697": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": {
+                "AWS": "*",
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:PutBucketPolicy",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": "s3:GetObject",
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":cloudfront::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":distribution/",
+                        {
+                          "Ref": "doubletsgamedevdistribution9F21C34D",
+                        },
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "doubletsgamedevbucketA9F6D051",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "doubletsgamedevbucketdeploymentAwsCliLayerB5B483D6": {
+      "Properties": {
+        "Content": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Description": "/opt/awscli/aws",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "doubletsgamedevbucketdeploymentCustomResource0397B4F5": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "DestinationBucketName": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "OutputObjectKeys": true,
+        "Prune": true,
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+            "Arn",
+          ],
+        },
+        "SourceBucketNames": [
+          {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+        ],
+        "SourceObjectKeys": [
+          "KEY.zip",
+        ],
+        "WaitForDistributionInvalidation": true,
+      },
+      "Type": "Custom::CDKBucketDeployment",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevdistribution9F21C34D": {
+      "Properties": {
+        "DistributionConfig": {
+          "CustomErrorResponses": [
+            {
+              "ErrorCode": 403,
+              "ResponseCode": 200,
+              "ResponsePagePath": "/",
+            },
+          ],
+          "DefaultCacheBehavior": {
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "Compress": true,
+            "TargetOriginId": "doubletsgamedevdoubletsgamedevdistributionOrigin1F8A4AB2A",
+            "ViewerProtocolPolicy": "allow-all",
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "IPV6Enabled": true,
+          "Origins": [
+            {
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevbucketA9F6D051",
+                  "RegionalDomainName",
+                ],
+              },
+              "Id": "doubletsgamedevdoubletsgamedevdistributionOrigin1F8A4AB2A",
+              "OriginAccessControlId": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevdistributionOrigin1S3OriginAccessControl51C43488",
+                  "Id",
+                ],
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+              },
+            },
+          ],
+        },
+      },
+      "Type": "AWS::CloudFront::Distribution",
+    },
+    "doubletsgamedevdistributionOrigin1S3OriginAccessControl51C43488": {
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": "doubletsgamedevdoubletsgamedOrigin1S3OriginAccessControl977C0A68",
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4",
+        },
+      },
+      "Type": "AWS::CloudFront::OriginAccessControl",
+    },
+    "doubletsgamedevstatsapi138D48EF": {
+      "Properties": {
+        "CorsConfiguration": {
+          "AllowHeaders": [
+            "Authorization",
+          ],
+          "AllowMethods": [
+            "GET",
+            "POST",
+            "PUT",
+          ],
+          "AllowOrigins": [
+            "https://www.doublets.app",
+            "test-domain",
+          ],
+        },
+        "Name": "doublets-game-dev-stats-api",
+        "ProtocolType": "HTTP",
+      },
+      "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "doubletsgamedevstatsapiDefaultStageB5472E4F": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AutoDeploy": true,
+        "StageName": "$default",
+      },
+      "Type": "AWS::ApiGatewayV2::Stage",
+    },
+    "doubletsgamedevstatsapiGETgameusersyncAE276893": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "GET /game/{user}/sync",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiGETgameusersyncdoubletsgamedevstatsapilambdaintegrationPermissionCF8F9E9E": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/sync",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiGETstatsuser840B622D": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "GET /stats/{user}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiGETstatsuserdoubletsgamedevstatsapilambdaintegrationPermissionE0B2B3B8": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/stats/{user}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficulty2758B623": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "POST /game/{user}/attempted/{difficulty}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "PayloadFormatVersion": "2.0",
+      },
+      "Type": "AWS::ApiGatewayV2::Integration",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegrationPermissionFFFFD71C": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/attempted/{difficulty}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultyD3A1115E": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "PUT /game/{user}/solved/{difficulty}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultydoubletsgamedevstatsapilambdaintegrationPermissionF2D5525A": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/solved/{difficulty}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizerType": "JWT",
+        "IdentitySource": [
+          "$request.header.Authorization",
+        ],
+        "JwtConfiguration": {
+          "Audience": [
+            "test-id",
+          ],
+          "Issuer": "https://cognito-idp.eu-west-2.amazonaws.com/test-id",
+        },
+        "Name": "doublets-game-dev-stats-authorizer",
+      },
+      "Type": "AWS::ApiGatewayV2::Authorizer",
+    },
+    "doubletsgamedevstatsapilambda8DE1952B": {
+      "DependsOn": [
+        "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
+        "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "DEV_DOMAIN": "test-domain",
+            "TABLE_NAME": "doublets-game-dev-stats-table",
+          },
+        },
+        "FunctionName": "doublets-game-dev-stats-api-lambda",
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "doubletsgamedevstatsapilambdaServiceRole95A2C9DA": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+            {
+              "Action": [
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
+        "Roles": [
+          {
+            "Ref": "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "doubletsgamedevstatstableC7B4E555": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "username",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "puzzle",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "username",
+            "KeyType": "HASH",
+          },
+          {
+            "AttributeName": "puzzle",
+            "KeyType": "RANGE",
+          },
+        ],
+        "Replicas": [
+          {
+            "Region": {
+              "Ref": "AWS::Region",
+            },
+          },
+        ],
+        "TableName": "doublets-game-dev-stats-table",
+      },
+      "Type": "AWS::DynamoDB::GlobalTable",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevuserpoolBA76519F": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AccountRecoverySetting": {
+          "RecoveryMechanisms": [
+            {
+              "Name": "verified_phone_number",
+              "Priority": 1,
+            },
+            {
+              "Name": "verified_email",
+              "Priority": 2,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "EmailVerificationMessage": "The verification code to your new account is {####}",
+        "EmailVerificationSubject": "Verify your new account",
+        "LambdaConfig": {
+          "PreSignUp": {
+            "Fn::GetAtt": [
+              "doubletsgamedevautoconfirmlambda62DB5C67",
+              "Arn",
+            ],
+          },
+        },
+        "Policies": {
+          "PasswordPolicy": {
+            "MinimumLength": 8,
+            "RequireLowercase": true,
+            "RequireNumbers": true,
+            "RequireSymbols": true,
+            "RequireUppercase": true,
+          },
+        },
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "VerificationMessageTemplate": {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "The verification code to your new account is {####}",
+          "EmailSubject": "Verify your new account",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevuserpoolPreSignUpCognitoFC30D8CC": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevautoconfirmlambda62DB5C67",
+            "Arn",
+          ],
+        },
+        "Principal": "cognito-idp.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "doubletsgamedevuserpoolBA76519F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevuserpooldoubletsgamedevclient8C3BF65A": {
+      "Properties": {
+        "AllowedOAuthFlows": [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": [
+          "https://example.com",
+        ],
+        "ExplicitAuthFlows": [
+          "ALLOW_USER_SRP_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": [
+          "COGNITO",
+        ],
+        "UserPoolId": {
+          "Ref": "doubletsgamedevuserpoolBA76519F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Stack > synthesises correctly for prod 1`] = `
+{
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": {
+      "DependsOn": [
+        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+        "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "AWS_CA_BUNDLE": "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",
+          },
+        },
+        "Handler": "index.handler",
+        "Layers": [
+          {
+            "Ref": "doubletsgamedevbucketdeploymentAwsCliLayerB5B483D6",
+          },
+        ],
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.13",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::",
+                      {
+                        "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+                      },
+                    ],
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition",
+                      },
+                      ":s3:::",
+                      {
+                        "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+        "Roles": [
+          {
+            "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
+      "DependsOn": [
+        "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Lambda function for auto-deleting objects in ",
+              {
+                "Ref": "doubletsgamedevbucketA9F6D051",
+              },
+              " S3 bucket.",
+            ],
+          ],
+        },
+        "Handler": "index.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevautoconfirmlambda62DB5C67": {
+      "DependsOn": [
+        "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "FunctionName": "doublets-game-dev-auto-confirm-lambda",
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "doubletsgamedevautoconfirmlambdaServiceRole4CD8BDAA": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevbucketA9F6D051": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "BucketName": "doublets-game-dev-bucket",
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true,
+        },
+        "Tags": [
+          {
+            "Key": "aws-cdk:auto-delete-objects",
+            "Value": "true",
+          },
+          {
+            "Key": "aws-cdk:cr-owned:e10db672",
+            "Value": "true",
+          },
+        ],
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevbucketAutoDeleteObjectsCustomResourceCB5C059D": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "doubletsgamedevbucketPolicy63E12697",
+      ],
+      "Properties": {
+        "BucketName": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::S3AutoDeleteObjects",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevbucketPolicy63E12697": {
+      "Properties": {
+        "Bucket": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": {
+                "AWS": "*",
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": [
+                "s3:PutBucketPolicy",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+              ],
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": {
+                  "Fn::GetAtt": [
+                    "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092",
+                    "Arn",
+                  ],
+                },
+              },
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "doubletsgamedevbucketA9F6D051",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "doubletsgamedevbucketA9F6D051",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            {
+              "Action": "s3:GetObject",
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":cloudfront::",
+                        {
+                          "Ref": "AWS::AccountId",
+                        },
+                        ":distribution/",
+                        {
+                          "Ref": "doubletsgamedevdistribution9F21C34D",
+                        },
+                      ],
+                    ],
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    {
+                      "Fn::GetAtt": [
+                        "doubletsgamedevbucketA9F6D051",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
+    "doubletsgamedevbucketdeploymentAwsCliLayerB5B483D6": {
+      "Properties": {
+        "Content": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Description": "/opt/awscli/aws",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "doubletsgamedevbucketdeploymentCustomResource0397B4F5": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "DestinationBucketName": {
+          "Ref": "doubletsgamedevbucketA9F6D051",
+        },
+        "OutputObjectKeys": true,
+        "Prune": true,
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+            "Arn",
+          ],
+        },
+        "SourceBucketNames": [
+          {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+        ],
+        "SourceObjectKeys": [
+          "KEY.zip",
+        ],
+        "WaitForDistributionInvalidation": true,
+      },
+      "Type": "Custom::CDKBucketDeployment",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "doubletsgamedevdistribution9F21C34D": {
+      "Properties": {
+        "DistributionConfig": {
+          "Aliases": [
+            "www.doublets.app",
+          ],
+          "CustomErrorResponses": [
+            {
+              "ErrorCode": 403,
+              "ResponseCode": 200,
+              "ResponsePagePath": "/",
+            },
+          ],
+          "DefaultCacheBehavior": {
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "Compress": true,
+            "TargetOriginId": "doubletsgamedevdoubletsgamedevdistributionOrigin1F8A4AB2A",
+            "ViewerProtocolPolicy": "allow-all",
+          },
+          "DefaultRootObject": "index.html",
+          "Enabled": true,
+          "HttpVersion": "http2",
+          "IPV6Enabled": true,
+          "Origins": [
+            {
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevbucketA9F6D051",
+                  "RegionalDomainName",
+                ],
+              },
+              "Id": "doubletsgamedevdoubletsgamedevdistributionOrigin1F8A4AB2A",
+              "OriginAccessControlId": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevdistributionOrigin1S3OriginAccessControl51C43488",
+                  "Id",
+                ],
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": "",
+              },
+            },
+          ],
+          "ViewerCertificate": {
+            "AcmCertificateArn": "arn:1:2:us-east-1:3:4:test-arn",
+            "MinimumProtocolVersion": "TLSv1.2_2021",
+            "SslSupportMethod": "sni-only",
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::Distribution",
+    },
+    "doubletsgamedevdistributionOrigin1S3OriginAccessControl51C43488": {
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": "doubletsgamedevdoubletsgamedOrigin1S3OriginAccessControl977C0A68",
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4",
+        },
+      },
+      "Type": "AWS::CloudFront::OriginAccessControl",
+    },
+    "doubletsgamedevstatsapi138D48EF": {
+      "Properties": {
+        "CorsConfiguration": {
+          "AllowHeaders": [
+            "Authorization",
+          ],
+          "AllowMethods": [
+            "GET",
+            "POST",
+            "PUT",
+          ],
+          "AllowOrigins": [
+            "https://www.doublets.app",
+            "test-domain",
+          ],
+        },
+        "Name": "doublets-game-dev-stats-api",
+        "ProtocolType": "HTTP",
+      },
+      "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "doubletsgamedevstatsapiDefaultStageB5472E4F": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AutoDeploy": true,
+        "StageName": "$default",
+      },
+      "Type": "AWS::ApiGatewayV2::Stage",
+    },
+    "doubletsgamedevstatsapiGETgameusersyncAE276893": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "GET /game/{user}/sync",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiGETgameusersyncdoubletsgamedevstatsapilambdaintegrationPermissionCF8F9E9E": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/sync",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiGETstatsuser840B622D": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "GET /stats/{user}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiGETstatsuserdoubletsgamedevstatsapilambdaintegrationPermissionE0B2B3B8": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/stats/{user}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficulty2758B623": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "POST /game/{user}/attempted/{difficulty}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "PayloadFormatVersion": "2.0",
+      },
+      "Type": "AWS::ApiGatewayV2::Integration",
+    },
+    "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegrationPermissionFFFFD71C": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/attempted/{difficulty}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultyD3A1115E": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390",
+        },
+        "RouteKey": "PUT /game/{user}/solved/{difficulty}",
+        "Target": {
+          "Fn::Join": [
+            "",
+            [
+              "integrations/",
+              {
+                "Ref": "doubletsgamedevstatsapiPOSTgameuserattempteddifficultydoubletsgamedevstatsapilambdaintegration83E373F9",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "doubletsgamedevstatsapiPUTgameusersolveddifficultydoubletsgamedevstatsapilambdaintegrationPermissionF2D5525A": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambda8DE1952B",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "doubletsgamedevstatsapi138D48EF",
+              },
+              "/*/*/game/{user}/solved/{difficulty}",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevstatsapidoubletsgamedevstatsauthorizer5E933390": {
+      "Properties": {
+        "ApiId": {
+          "Ref": "doubletsgamedevstatsapi138D48EF",
+        },
+        "AuthorizerType": "JWT",
+        "IdentitySource": [
+          "$request.header.Authorization",
+        ],
+        "JwtConfiguration": {
+          "Audience": [
+            "test-id",
+          ],
+          "Issuer": "https://cognito-idp.eu-west-2.amazonaws.com/test-id",
+        },
+        "Name": "doublets-game-dev-stats-authorizer",
+      },
+      "Type": "AWS::ApiGatewayV2::Authorizer",
+    },
+    "doubletsgamedevstatsapilambda8DE1952B": {
+      "DependsOn": [
+        "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
+        "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "KEY.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "DEV_DOMAIN": "test-domain",
+            "TABLE_NAME": "doublets-game-dev-stats-table",
+          },
+        },
+        "FunctionName": "doublets-game-dev-stats-api-lambda",
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs24.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "doubletsgamedevstatsapilambdaServiceRole95A2C9DA": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+            {
+              "Action": [
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "doubletsgamedevstatstableC7B4E555",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "doubletsgamedevstatsapilambdaServiceRoleDefaultPolicy3379CC18",
+        "Roles": [
+          {
+            "Ref": "doubletsgamedevstatsapilambdaServiceRole95A2C9DA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "doubletsgamedevstatstableC7B4E555": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "username",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "puzzle",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "username",
+            "KeyType": "HASH",
+          },
+          {
+            "AttributeName": "puzzle",
+            "KeyType": "RANGE",
+          },
+        ],
+        "Replicas": [
+          {
+            "Region": {
+              "Ref": "AWS::Region",
+            },
+          },
+        ],
+        "TableName": "doublets-game-dev-stats-table",
+      },
+      "Type": "AWS::DynamoDB::GlobalTable",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "doubletsgamedevuserpoolBA76519F": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AccountRecoverySetting": {
+          "RecoveryMechanisms": [
+            {
+              "Name": "verified_phone_number",
+              "Priority": 1,
+            },
+            {
+              "Name": "verified_email",
+              "Priority": 2,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "EmailVerificationMessage": "The verification code to your new account is {####}",
+        "EmailVerificationSubject": "Verify your new account",
+        "LambdaConfig": {
+          "PreSignUp": {
+            "Fn::GetAtt": [
+              "doubletsgamedevautoconfirmlambda62DB5C67",
+              "Arn",
+            ],
+          },
+        },
+        "Policies": {
+          "PasswordPolicy": {
+            "MinimumLength": 8,
+            "RequireLowercase": true,
+            "RequireNumbers": true,
+            "RequireSymbols": true,
+            "RequireUppercase": true,
+          },
+        },
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "VerificationMessageTemplate": {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "The verification code to your new account is {####}",
+          "EmailSubject": "Verify your new account",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "doubletsgamedevuserpoolPreSignUpCognitoFC30D8CC": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "doubletsgamedevautoconfirmlambda62DB5C67",
+            "Arn",
+          ],
+        },
+        "Principal": "cognito-idp.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "doubletsgamedevuserpoolBA76519F",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "doubletsgamedevuserpooldoubletsgamedevclient8C3BF65A": {
+      "Properties": {
+        "AllowedOAuthFlows": [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": [
+          "https://example.com",
+        ],
+        "ExplicitAuthFlows": [
+          "ALLOW_USER_SRP_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": [
+          "COGNITO",
+        ],
+        "UserPoolId": {
+          "Ref": "doubletsgamedevuserpoolBA76519F",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
