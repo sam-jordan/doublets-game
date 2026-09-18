@@ -14,7 +14,11 @@ A NYT-Games style web app for playing the word game Doublets.
 
 The aim of this project is to showcase and expand on the knowledge gained from my placement at UoY IT Services.
 
-The backend uses the AWS JavaScript CDK in order to provide: - An S3 bucket and CloudFront distribution for hosting the app - Signup and login capabilities via Cognito - A statistics API using API Gateway, DynamoDB, and a Lambda proxy function
+The backend uses the AWS JavaScript CDK in order to provide:
+
+- An S3 bucket and CloudFront distribution for hosting the app
+- Signup and login capabilities via Cognito
+- A statistics API using API Gateway, DynamoDB, and a Lambda proxy function
 
 The frontend is built using React and TypeScript; routing is handled via React Router in `frontend/src/main.tsx`, while API calls are made using TanStack Query.
 
