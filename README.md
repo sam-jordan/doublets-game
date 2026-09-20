@@ -20,9 +20,10 @@ The backend uses the AWS JavaScript CDK in order to provide:
 - Signup and login capabilities via Cognito
 - A statistics API using API Gateway, DynamoDB, and a Lambda proxy function
 
-The frontend is built using React and TypeScript; routing is handled via React Router in `frontend/src/main.tsx`, while API calls are made using TanStack Query.
+The frontend is written in React and TypeScript and built using Vite; routing is handled via React Router in `frontend/src/main.tsx`, while API calls are made using TanStack Query. Styling is provided by TailwindCSS.
 
 AWS Deployments are performed through GitHub Actions, with OIDC authentication.
+Vitest and React Testing Library are used for unit tests throughout.
 
 ## Project structure
 
@@ -110,3 +111,10 @@ For help solving a puzzle:
 ```shell
 npm run solve-puzzle
 ```
+
+## Tooling
+
+- Linting is performed through [xo](https://github.com/xojs/xo#readme), an opinionated ESLint wrapper
+- Formatting is done by [Prettier](https://prettier.io/) and [sort-package-json](https://github.com/keithamus/sort-package-json#readme)
+- [Knip](https://knip.dev/) is used to detect unused code
+- [Husky](https://typicode.github.io/husky/) and [lint-staged](https://github.com/lint-staged/lint-staged#readme) allow for checks to be ran as pre-commit hooks.
