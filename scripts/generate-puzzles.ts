@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as fs from 'node:fs';
 import { styleText } from 'node:util';
 import process from 'node:process';
@@ -60,7 +62,7 @@ function generateData(
     return validPuzzles.toSorted((_a, _b) => 0.5 - Math.random());
 }
 
-if (process.argv[1] === import.meta.filename) {
+try {
     const wordLinkMapping = findLinkedWords(3500);
 
     // This script will generate 500k+ puzzles per difficulty - store only 1000 each
@@ -69,10 +71,18 @@ if (process.argv[1] === import.meta.filename) {
     const hard = generateData(wordLinkMapping, 7).slice(0, 1000);
 
     fs.writeFileSync(
-        './frontend/static/puzzles.json',
+        './frontend/src/static/puzzles.json',
         JSON.stringify({ easy, medium, hard })
     );
+
     console.log(
-        styleText('magenta', 'Puzzles written to frontend/static/puzzles.json!')
+        styleText(
+            'magenta',
+            'Puzzles written to frontend/src/static/puzzles.json!'
+        )
     );
+    process.exit(0);
+} catch (error) {
+    console.error(error);
+    process.exit(1);
 }
