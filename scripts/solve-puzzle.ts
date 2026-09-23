@@ -6,6 +6,7 @@ import { input } from '@inquirer/prompts';
 import { type ScriptPuzzle } from '../shared/types.js';
 import { findLinkedWords } from './find-linked-words.js';
 
+// Solver for a given start and end word
 function solvePuzzle(puzzle: ScriptPuzzle) {
     const wordLinkMapping = findLinkedWords();
 
@@ -73,9 +74,23 @@ function solvePuzzle(puzzle: ScriptPuzzle) {
 try {
     const start = await input({
         message: styleText('magenta', 'Enter the start word: '),
+        validate(text) {
+            if (!/^[a-z]{5}$/iv.test(text)) {
+                return 'Please enter a 5 letter word.';
+            }
+
+            return true;
+        },
     });
     const end = await input({
         message: styleText('magenta', 'Enter the end word: '),
+        validate(text) {
+            if (!/^[a-z]{5}$/iv.test(text)) {
+                return 'Please enter a 5 letter word.';
+            }
+
+            return true;
+        },
     });
 
     solvePuzzle({ startWord: start.toUpperCase(), endWord: end.toUpperCase() });
