@@ -7,6 +7,7 @@ import { EOL } from 'node:os';
 import { styleText } from 'node:util';
 import process from 'node:process';
 
+// Generates the allow list for guesses - converts the source text file into JSON
 function convertWordsToJson() {
     const words = fs
         .readFileSync('./scripts/five-letter-words.txt', 'utf8')

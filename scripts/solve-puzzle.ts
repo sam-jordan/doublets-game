@@ -3,9 +3,10 @@
 import { styleText } from 'node:util';
 import process from 'node:process';
 import { input } from '@inquirer/prompts';
+import { type ScriptPuzzle } from '../shared/types.js';
 import { findLinkedWords } from './find-linked-words.js';
 
-function solvePuzzle(puzzle: { startWord: string; endWord: string }) {
+function solvePuzzle(puzzle: ScriptPuzzle) {
     const wordLinkMapping = findLinkedWords();
 
     const chains: string[][] = [];

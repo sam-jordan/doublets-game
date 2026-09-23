@@ -9,6 +9,7 @@ export const DIFFICULTIES = ['easy', 'medium', 'hard'] as const;
 export type Difficulties = (typeof DIFFICULTIES)[number];
 
 export type Puzzle = { index: number; startWord: string; endWord: string };
+export type ScriptPuzzle = Pick<Puzzle, 'startWord' | 'endWord'>;
 
 const guessSchema = z.object({
     index: z.number(),

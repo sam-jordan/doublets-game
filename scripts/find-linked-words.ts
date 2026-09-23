@@ -17,7 +17,11 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
             .split(EOL)
             .map(word => word.toUpperCase());
 
-        const signature = md5(JSON.stringify(fromFile));
+        const words =
+            wordCount === undefined ? fromFile : fromFile.slice(0, wordCount);
+
+        // Generate a hash of the source words
+        const signature = md5(JSON.stringify(words));
         try {
             console.log(
                 styleText(
@@ -26,6 +30,7 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
                 )
             );
 
+            // Attempt to read the mapping from the intermediate file
             const fromJson = linkedWordsSchema.parse(
                 JSON.parse(
                     fs.readFileSync('./scripts/linked-words.json', 'utf8')
@@ -39,6 +44,7 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
                 )
             );
 
+            // Return the mapping on file if source has not changed from the one that generated it
             if (fromJson.signature === signature) {
                 console.log(styleText('green', 'No mapping update required!'));
                 return new Map(Object.entries(fromJson.records));
@@ -49,14 +55,14 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
             console.log(styleText('red', 'Failed to read mapping from file.'));
         }
 
-        const words =
-            wordCount === undefined ? fromFile : fromFile.slice(0, wordCount);
         const wordLinkMapping = new Map<string, string[]>();
-
         console.log(styleText('cyan', 'Linking words...'));
+
         for (const word of words) {
             const linkedWords: string[] = [];
 
+            // For every word: test all possible words that can be created by changing one letter
+            // If they are valid, add them to the mapping (if they are not already present)
             for (let i = 0; i < word.length; i++) {
                 for (const letter of LETTERS) {
                     const updatedWord = word
@@ -87,6 +93,7 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
 
         console.log(styleText('green', 'Linking words complete!'));
 
+        // Write the newly generated mapping to file for future use
         console.log(styleText('cyan', 'Writing mapping to file...'));
         fs.writeFileSync(
             './scripts/linked-words.json',

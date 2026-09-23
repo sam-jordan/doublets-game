@@ -3,12 +3,14 @@
 import * as fs from 'node:fs';
 import { styleText } from 'node:util';
 import process from 'node:process';
+import { type ScriptPuzzle } from '../shared/types.js';
 import { findLinkedWords } from './find-linked-words.js';
 
+// Generates an array of puzzles of a given length from a given mapping
 function generateData(
     wordLinkMapping: Map<string, string[]>,
     chainLength: number
-) {
+): ScriptPuzzle[] {
     console.log(
         styleText(
             'cyan',
