@@ -23,6 +23,7 @@ function generateData(
     for (const startWord of puzzleWords) {
         const endWords = new Map<string, number>();
 
+        // Uses depth-first graph traversal to find chains of words with a single letter changed
         function findEndWords(word: string, index: number, chain: string[]) {
             const nextChain = [...chain, word];
 
@@ -38,6 +39,7 @@ function generateData(
         }
 
         findEndWords(startWord, 0, []);
+        // Filter out any chains of incorrect length and format puzzles
         const pairs = endWords
             .entries()
             .filter(([_key, value]) => value === chainLength)
