@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/max-nested-calls -- prefer to keep Zod schemas together */
+
 import { Duration } from 'luxon';
 import z from 'zod';
 import { type JWT } from 'aws-amplify/auth';
@@ -180,3 +182,8 @@ export type ApiStats = {
     averageTime: Duration;
     averageGuesses: number;
 };
+
+export const linkedWordsSchema = z.object({
+    signature: z.string(),
+    records: z.record(z.string(), z.array(z.string())),
+});

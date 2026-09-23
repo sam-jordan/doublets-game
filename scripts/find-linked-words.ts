@@ -3,6 +3,8 @@
 import { styleText } from 'node:util';
 import { EOL } from 'node:os';
 import * as fs from 'node:fs';
+import { md5 } from 'js-md5';
+import { linkedWordsSchema } from '../shared/types.js';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
@@ -14,6 +16,38 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
             .readFileSync('./scripts/five-letter-words.txt', 'utf8')
             .split(EOL)
             .map(word => word.toUpperCase());
+
+        const signature = md5(JSON.stringify(fromFile));
+        try {
+            console.log(
+                styleText(
+                    'cyan',
+                    'Attempting to read word link mapping from file...'
+                )
+            );
+
+            const fromJson = linkedWordsSchema.parse(
+                JSON.parse(
+                    fs.readFileSync('./scripts/linked-words.json', 'utf8')
+                )
+            );
+
+            console.log(
+                styleText(
+                    'cyan',
+                    'Mapping read from file, checking if update required...'
+                )
+            );
+
+            if (fromJson.signature === signature) {
+                console.log(styleText('green', 'No mapping update required!'));
+                return new Map(Object.entries(fromJson.records));
+            }
+
+            console.log(styleText('cyan', 'Mapping update required!'));
+        } catch {
+            console.log(styleText('red', 'Failed to read mapping from file.'));
+        }
 
         const words =
             wordCount === undefined ? fromFile : fromFile.slice(0, wordCount);
@@ -52,9 +86,21 @@ export function findLinkedWords(wordCount?: number): Map<string, string[]> {
         }
 
         console.log(styleText('green', 'Linking words complete!'));
-        // TODO - consider writing this to a file for faster use
+
+        console.log(styleText('cyan', 'Writing mapping to file...'));
+        fs.writeFileSync(
+            './scripts/linked-words.json',
+            JSON.stringify({
+                signature,
+                records: Object.fromEntries(wordLinkMapping),
+            })
+        );
+        console.log(styleText('green', 'Writing mapping to file complete!'));
+
         return wordLinkMapping;
     } catch {
-        throw new Error(styleText('red', 'Unable to read the file of words!'));
+        throw new Error(
+            styleText('red', 'An error ocurred when generating the word links!')
+        );
     }
 }

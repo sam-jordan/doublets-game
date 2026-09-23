@@ -78,6 +78,7 @@ try {
     });
 
     solvePuzzle({ startWord: start.toUpperCase(), endWord: end.toUpperCase() });
+    process.exit(0);
 } catch (error) {
     if (error instanceof Error) {
         console.error(

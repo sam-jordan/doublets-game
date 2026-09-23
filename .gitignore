@@ -5,6 +5,7 @@ cdk.out
 coverage
 
 scripts/five-letter-words.txt
+scripts/linked-words.json
 .env
 
 local-test.js
