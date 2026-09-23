@@ -22,20 +22,23 @@ function solvePuzzle(puzzle: ScriptPuzzle) {
             chains.push(nextChain);
         }
 
+        // Early exit if 50 solutions have been found to speed up response
         if (chains.length > 50) {
             return;
         }
 
+        // Traverse through mapping to see if a chain of the right length exists
         for (const linkedWord of wordLinkMapping.get(word)!) {
             if (
                 !nextChain.includes(linkedWord) &&
-                nextChain.length < solutionBand
+                nextChain.length <= solutionBand
             ) {
                 findSolutions(linkedWord, solutionBand, nextChain);
             }
         }
     }
 
+    // Speed up response by splitting solving into "solution bands" of maximum chain length
     const solutionBands = [5, 10, 15, 20];
     for (const solutionBand of solutionBands) {
         console.log(

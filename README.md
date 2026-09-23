@@ -8,7 +8,6 @@ A NYT-Games style web app for playing the word game Doublets.
 - More logic and component tests for frontend
 - Playwright/MSW integration tests for frontend
 - More comprehensive error handling
-- Fixes/improvements for scripts
 
 ## Overview
 
