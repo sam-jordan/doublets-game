@@ -24,6 +24,9 @@ export default defineConfig(({ mode }) => {
                     '**/*.config.{ts,js}',
                 ],
             },
+            env: {
+                DEV_DOMAIN: 'test-domain',
+            },
         },
         root: mode === 'test' ? '.' : 'frontend',
         build: {
