@@ -168,7 +168,7 @@ export default function Stats({
             <div className='border-b-2 border-y-white flex justify-between p-4'>
                 <div className='w-24 sm:w-36'>
                     <p className='text-3xl text-center'>
-                        {stats.data[statsDifficulty].averageGuesses}
+                        {stats.data[statsDifficulty].averageGuesses.toFixed(2)}
                     </p>
                     <p className='text-center'>Average guesses</p>
                 </div>
