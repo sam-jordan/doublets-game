@@ -2,6 +2,8 @@
 
 A NYT-Games style web app for playing the word game Doublets.
 
+[www.doublets.app](https://www.doublets.app)
+
 ## **CURRENTLY IN DEVELOPMENT** - Planned features
 
 - Complete backend unit/integration testing
